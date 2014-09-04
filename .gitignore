@@ -39,7 +39,8 @@ node_modules
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -67,7 +68,11 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# Batch files
+# =========================
+# Project specific
+# =========================
+
 *.bat
 coverage.html
 doc.html
+Modules/deprecated

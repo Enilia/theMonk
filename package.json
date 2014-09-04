@@ -1,6 +1,13 @@
 {
   "name": "theMonk",
   "version": "0.1.0",
+  "author": "Enilia",
+  "description": "Dps simulator for monk",
+  "keywords": [
+    "ff14",
+    "ffxiv",
+    "dps"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "mocha",
@@ -18,10 +25,25 @@
     "blanket": "^1.1.6",
     "mocha": "^1.21.4"
   },
-  "description": "Dps simulator for monk",
+  "files": [
+    "Models",
+    "Modules",
+    "Rotations",
+    "Reporters",
+    "test",
+    "index.js"
+  ],
   "directories": {
     "test": "test"
   },
-  "author": "Enilia",
-  "license": "ISC"
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Enilia/theMonk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Enilia/theMonk/issues"
+  },
+  "homepage": "https://github.com/Enilia/theMonk",
+  "private": true
 }
