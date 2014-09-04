@@ -1,0 +1,9 @@
+{ 
+	"weaponDamage": 				51,
+	"weaponAutoAttack": 			40.8,
+	"weaponAutoAttackDelay": 		2.4,
+	"strength": 					562,
+	"critical": 					513,
+	"determination": 				308,
+	"skillSpeed": 					415
+}
