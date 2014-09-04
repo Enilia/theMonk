@@ -76,3 +76,4 @@ $RECYCLE.BIN/
 coverage.html
 doc.html
 Modules/deprecated
+test/deprecated
