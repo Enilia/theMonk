@@ -13,8 +13,6 @@ function Simulation(conf) {
 		inactive: true,
 	});
 	this.reporter = conf.reporter;
-
-	this.actors.push(this.target);
 }
 
 extend(Simulation.prototype, {
@@ -32,6 +30,7 @@ extend(Simulation.prototype, {
 			next;
 
 		reporter && reporter.hook(actors);
+		reporter && reporter.hook(target);
 
 		scheduled.register("tick", this.tick, 3, this);
 		scheduled.register("checkActors", this.checkActors, 0, this);
@@ -39,6 +38,8 @@ extend(Simulation.prototype, {
 		actors.forEach(function(actor) {
 			actor.prepareForBattle(scheduled.time);
 		}, this);
+
+		actors.push(target);
 
 		reporter && reporter.start();
 

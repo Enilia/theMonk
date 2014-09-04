@@ -16,8 +16,8 @@ assert.strictEqual(actor.nextTimeOfInterest(time - 3), 3);</code></pre></dd>
         <section class="suite">
           <h1>#action</h1>
           <dl>
-            <dt>should register auto attack damage when auto attacking</dt>
-            <dd><pre><code>actor.on(actor.events.autoattack, function(damage, critical, _time) {
+            <dt class="error">should register auto attack damage when auto attacking</dt>
+            <dd class="error"><pre><code>actor.on(actor.events.autoattack, function(damage, critical, _time) {
 				assert.strictEqual(_time, time);
 				assert.strictEqual(damage.toFixed(2), &quot;158.75&quot;);
 				assert.strictEqual(critical.toFixed(2), &quot;0.12&quot;);
@@ -25,16 +25,14 @@ assert.strictEqual(actor.nextTimeOfInterest(time - 3), 3);</code></pre></dd>
 			});
 			actor.action(time, target); // Auto Attack
 			assert(registered);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;NaN&quot; === &quot;158.75&quot;</dd>
             <dt>should update actor.nextAutoAttack according to stats</dt>
             <dd><pre><code>actor.action(time, target); // Auto Attack
 			assert.strictEqual(actor.nextAutoAttack, actor.getStats().getAutoAttackDelay() + time);</code></pre></dd>
             <dt>should apply skill effects</dt>
-            <dd><pre><code>actor.nextAutoAttack += 10; // bypassing auto attack
+            <dd><pre><code>actor.nextAutoAttack += 1; // bypassing auto attack
 			SteelPeak.nextAvailable = time + SteelPeak.recast; // bypassing SteelPeak
 			actor.action(time, target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			target.action(target.nextTimeOfInterest(), target); // Demolish (onGCD)
 			assert.strictEqual(actor.findAura(&quot;GreasedLigthning&quot;, actor).name, &quot;GreasedLigthning&quot;);
 			assert.strictEqual(actor.findAura(&quot;OpoOpoForm&quot;, actor).name, &quot;OpoOpoForm&quot;);
 			assert.strictEqual(target.findAura(&quot;DemolishDOT&quot;, actor).name, &quot;DemolishDOT&quot;);</code></pre></dd>
@@ -93,8 +91,8 @@ assert(registered);</code></pre></dd>
           <dl>
             <dt>should remove expired auras from the actor</dt>
             <dd><pre><code>assert.strictEqual(actor.activeAuras.length, 0);
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-			actor.applyAuraImmediate(actor.model.auras.TwinSnakes, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.TwinSnakes, actor, time);
 			assert.strictEqual(actor.activeAuras.length, 2);
 			actor.preTick(time+13); // GreasedLigthning expired
 			assert.strictEqual(actor.activeAuras.length, 1);
@@ -105,31 +103,24 @@ assert(registered);</code></pre></dd>
         <section class="suite">
           <h1>#tick</h1>
           <dl>
-            <dt>should register DoTs damage</dt>
-            <dd><pre><code>var registered = false;
+            <dt class="error">should register DoTs damage</dt>
+            <dd class="error"><pre><code>var registered = false;
 			actor.on(actor.events.auraTick, function(damage, critical, name, _time) {
 				assert.strictEqual(_time, time);
 				assert.strictEqual(name, &quot;DemolishDOT&quot;);
-				assert.strictEqual(damage.toFixed(2), &quot;74.12&quot;);
+				assert.strictEqual(damage.toFixed(2), &quot;77.18&quot;);
 				assert.strictEqual(critical.toFixed(2), &quot;0.12&quot;);
 				registered = true;
 			});
-			actor.applyAuraImmediate(actor.model.auras.DemolishDOT, actor, time);
+			actor.applyAura(actor.model.auras.DemolishDOT, actor, time);
 			actor.tick(time);
 			assert(registered);</code></pre></dd>
+            <dd class="error">AssertionError: false == true</dd>
           </dl>
         </section>
         <section class="suite">
           <h1>#prepareForBattle</h1>
           <dl>
-            <dt>should do nothing on inactive actor</dt>
-            <dd><pre><code>var target = new Actor({
-		model: &quot;Monk&quot;,
-		name: &quot;Target&quot;,
-		inactive: true,
-	});
-target.prepareForBattle(time);
-assert.strictEqual(actor.findAura(&quot;FistOfFire&quot;, actor), false);</code></pre></dd>
             <dt>should apply auras according to model</dt>
             <dd><pre><code>actor.prepareForBattle(time);
 assert.strictEqual(actor.findAura(&quot;FistOfFire&quot;, actor).name, &quot;FistOfFire&quot;);</code></pre></dd>
@@ -141,27 +132,27 @@ assert.strictEqual(actor.nextOffGCD, time + actor.getStats().getGCD() / 2);</cod
           </dl>
         </section>
         <section class="suite">
-          <h1>#applyAuraImmediate</h1>
+          <h1>#registerDamage</h1>
           <dl>
-            <dt>should register new aura</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-assert.strictEqual(actor.activeAuras[0].name, &quot;GreasedLigthning&quot;);
-assert.strictEqual(actor.activeAuras[0].owner, actor);</code></pre></dd>
-            <dt>should refresh aura</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-assert.strictEqual(actor.activeAuras[0].name, &quot;GreasedLigthning&quot;);
-assert.strictEqual(actor.activeAuras[0].count, 2);</code></pre></dd>
-            <dt>should not register new aura if the aura cancels itself</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.PerfectBalance, actor, time);
-actor.applyAuraImmediate(actor.model.auras.RaptorForm, actor, time);
-assert.strictEqual(actor.findAura(&quot;PerfectBalance&quot;, actor).name, &quot;PerfectBalance&quot;);
-assert.strictEqual(actor.findAura(&quot;RaptorForm&quot;, actor), false);</code></pre></dd>
           </dl>
         </section>
         <section class="suite">
           <h1>#applyAura</h1>
           <dl>
+            <dt>should register new aura</dt>
+            <dd><pre><code>actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+assert.strictEqual(actor.activeAuras[0].name, &quot;GreasedLigthning&quot;);
+assert.strictEqual(actor.activeAuras[0].owner, actor);</code></pre></dd>
+            <dt>should refresh aura</dt>
+            <dd><pre><code>actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+assert.strictEqual(actor.activeAuras[0].name, &quot;GreasedLigthning&quot;);
+assert.strictEqual(actor.activeAuras[0].count, 2);</code></pre></dd>
+            <dt>should not register new aura if the aura cancels itself</dt>
+            <dd><pre><code>actor.applyAura(actor.model.auras.PerfectBalance, actor, time);
+actor.applyAura(actor.model.auras.RaptorForm, actor, time);
+assert.strictEqual(actor.findAura(&quot;PerfectBalance&quot;, actor).name, &quot;PerfectBalance&quot;);
+assert.strictEqual(actor.findAura(&quot;RaptorForm&quot;, actor), false);</code></pre></dd>
           </dl>
         </section>
         <section class="suite">
@@ -170,7 +161,7 @@ assert.strictEqual(actor.findAura(&quot;RaptorForm&quot;, actor), false);</code>
             <dt>should return false if the aura is not present</dt>
             <dd><pre><code>assert.strictEqual(actor.findAura(&quot;GreasedLigthning&quot;, actor), false);</code></pre></dd>
             <dt>should return the aura if present</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+            <dd><pre><code>actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(actor.findAura(&quot;GreasedLigthning&quot;, actor).name, &quot;GreasedLigthning&quot;);</code></pre></dd>
           </dl>
         </section>
@@ -178,7 +169,7 @@ assert.strictEqual(actor.findAura(&quot;GreasedLigthning&quot;, actor).name, &qu
           <h1>#removeAura</h1>
           <dl>
             <dt>should remove the provided aura</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.InternalRelease, actor, time);
+            <dd><pre><code>actor.applyAura(actor.model.auras.InternalRelease, actor, time);
 assert.strictEqual(actor.activeAuras.length, 1);
 actor.removeAura(actor.findAura(&quot;InternalRelease&quot;, actor));
 assert.strictEqual(actor.activeAuras.length, 0);</code></pre></dd>
@@ -193,7 +184,7 @@ assert.doesNotThrow(function() {
           <h1>#getStats</h1>
           <dl>
             <dt>should return the actor stats buffed with auras</dt>
-            <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.InternalRelease, actor, time);
+            <dd><pre><code>actor.applyAura(actor.model.auras.InternalRelease, actor, time);
 assert.strictEqual(actor.getStats().criticalHitChance, 0.3);</code></pre></dd>
           </dl>
         </section>
@@ -210,8 +201,8 @@ assert.strictEqual(actor.getStats().criticalHitChance, 0.3);</code></pre></dd>
               <dl>
                 <dt>should create an Aura constructor</dt>
                 <dd><pre><code>assert.strictEqual(Aura.prototype.isPrototypeOf(new partyBonus), true);</code></pre></dd>
-                <dt>should setup the aura with the provided configuration object</dt>
-                <dd><pre><code>var pb = new partyBonus({
+                <dt class="error">should setup the aura with the provided configuration object</dt>
+                <dd class="error"><pre><code>var pb = new partyBonus({
 		time: time,
 	}),
 	gl = new greasedLigthning({
@@ -223,9 +214,10 @@ assert.strictEqual(actor.getStats().criticalHitChance, 0.3);</code></pre></dd>
 	});
 assert.strictEqual(pb.expireTime, Infinity);
 assert.strictEqual(gl.expireTime, time+gl.duration);
-assert.strictEqual(dml.tickDamage.toFixed(2), &quot;74.12&quot;);
+assert.strictEqual(dml.tickDamage.toFixed(2), &quot;77.18&quot;);
 assert.strictEqual(dml.tickCriticalRate.toFixed(2), &quot;0.12&quot;);
 assert.strictEqual(gl.count, 1);</code></pre></dd>
+                <dd class="error">TypeError: Cannot call method 'toFixed' of undefined</dd>
               </dl>
             </section>
             <section class="suite">
@@ -256,10 +248,10 @@ assert.strictEqual(gl.count, 3);</code></pre></dd>
               <h1>#onApply</h1>
               <dl>
                 <dt>should execute when the aura is applied on the actor</dt>
-                <dd><pre><code>actor.applyAuraImmediate(actor.model.auras.RaptorForm, actor, 0);
+                <dd><pre><code>actor.applyAura(actor.model.auras.RaptorForm, actor, 0);
 				assert.strictEqual(actor.activeAuras.length, 1);
 				assert.strictEqual(actor.findAura(&quot;RaptorForm&quot;, actor), actor.activeAuras[0]);
-				actor.applyAuraImmediate(actor.model.auras.CoeurlForm, actor, 0);
+				actor.applyAura(actor.model.auras.CoeurlForm, actor, 0);
 				assert.strictEqual(actor.activeAuras.length, 1);
 				assert.strictEqual(actor.findAura(&quot;CoeurlForm&quot;, actor), actor.activeAuras[0]);</code></pre></dd>
               </dl>
@@ -292,17 +284,17 @@ assert.throws(function() {
           <dl>
             <dt>should return 0 if the searched aura does not validate the provided condition (name and source)</dt>
             <dd><pre><code>var rotation = getRotation(&quot;bad.AuraCount&quot;);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 0);</code></pre></dd>
             <dt>should return the stack count of the searched aura</dt>
             <dd><pre><code>var rotation = getRotation(&quot;good.AuraCount&quot;);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 1);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 2);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 3);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 3);</code></pre></dd>
           </dl>
         </section>
@@ -339,7 +331,7 @@ assert.strictEqual(rotation.run(actor, target, actor.nextOffGCD), true);</code><
 assert.strictEqual(rotation.run(actor, target, time), 0);</code></pre></dd>
             <dt>should return the time remaining of the searched aura</dt>
             <dd><pre><code>var rotation = getRotation(&quot;AuraTimeRemaining&quot;);
-actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 assert.strictEqual(rotation.run(actor, target, time), 12);</code></pre></dd>
           </dl>
         </section>
@@ -432,17 +424,22 @@ assert.strictEqual(HowlingFist.isAvailable(time), false);</code></pre></dd>
         <section class="suite">
           <h1>#getSkillDamage</h1>
           <dl>
-            <dt>should return 192.95 for 100 potency</dt>
-            <dd><pre><code>assert.strictEqual(stats.getSkillDamage(100).toFixed(2), &quot;192.95&quot;);</code></pre></dd>
-            <dt>should return 220.22 for 100 potency with 30% crit bonus</dt>
-            <dd><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 0.3}).getSkillDamage(100).toFixed(2), &quot;220.22&quot;);</code></pre></dd>
-            <dt>should return 242.24 for 100 potency with 30% crit bonus and 10% damage bonus</dt>
-            <dd><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 0.3, increaseDamage: 1.1}).getSkillDamage(100).toFixed(2), &quot;242.24&quot;);</code></pre></dd>
-            <dt>should return 212.24 for 100 potency with 10% damage bonus</dt>
-            <dd><pre><code>assert.strictEqual(stats.buff({increaseDamage: 1.1}).getSkillDamage(100).toFixed(2), &quot;212.24&quot;);</code></pre></dd>
-            <dt>should return 272.66 for 100 potency with 100% crit bonus</dt>
-            <dd><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 1}).getSkillDamage(100).toFixed(2), &quot;272.66&quot;);
-assert.strictEqual(stats.buff({criticalHitChance: 2}).getSkillDamage(100).toFixed(2), &quot;272.66&quot;);</code></pre></dd>
+            <dt class="error">should return 185.30 for 100 potency</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.getSkillDamage(100).toFixed(2), &quot;185.30&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;192.95&quot; === &quot;185.30&quot;</dd>
+            <dt class="error">should return 211.49 for 100 potency with 30% crit bonus</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 0.3}).getSkillDamage(100).toFixed(2), &quot;211.49&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;220.22&quot; === &quot;211.49&quot;</dd>
+            <dt class="error">should return 232.64 for 100 potency with 30% crit bonus and 10% damage bonus</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 0.3, increaseDamage: 1.1}).getSkillDamage(100).toFixed(2), &quot;232.64&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;242.24&quot; === &quot;232.64&quot;</dd>
+            <dt class="error">should return 203.83 for 100 potency with 10% damage bonus</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.buff({increaseDamage: 1.1}).getSkillDamage(100).toFixed(2), &quot;203.83&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;212.24&quot; === &quot;203.83&quot;</dd>
+            <dt class="error">should return 261.85 for 100 potency with 100% crit bonus</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.buff({criticalHitChance: 1}).getSkillDamage(100).toFixed(2), &quot;261.85&quot;);
+assert.strictEqual(stats.buff({criticalHitChance: 2}).getSkillDamage(100).toFixed(2), &quot;261.85&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;272.66&quot; === &quot;261.85&quot;</dd>
           </dl>
         </section>
         <section class="suite">
@@ -526,8 +523,9 @@ assert.strictEqual(stats.buff({criticalHitChance: 2}).getSkillDamage(100).toFixe
         <section class="suite">
           <h1>#getAutoAttackDamage</h1>
           <dl>
-            <dt>should return 158.75</dt>
-            <dd><pre><code>assert.strictEqual(stats.getAutoAttackDamage().toFixed(2), &quot;158.75&quot;);</code></pre></dd>
+            <dt class="error">should return 163.79</dt>
+            <dd class="error"><pre><code>assert.strictEqual(stats.getAutoAttackDamage().toFixed(2), &quot;163.79&quot;);</code></pre></dd>
+            <dd class="error">AssertionError: &quot;158.75&quot; === &quot;163.79&quot;</dd>
           </dl>
         </section>
       </dl>

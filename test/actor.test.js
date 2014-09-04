@@ -30,7 +30,6 @@ describe("Actor", function() {
 
 			actor.prepareForBattle(time = 10);
 			actor.activeAuras.splice(0, actor.activeAuras.length);
-			actor.pendingAuras.splice(0, actor.pendingAuras.length);
 		};
 	}());
 
@@ -88,13 +87,10 @@ describe("Actor", function() {
 		});
 		it("should apply skill effects", function() {
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+			actor.nextAutoAttack += 1; // bypassing auto attack
+			SteelPeak.nextAvailable = time + SteelPeak.recast; // bypassing SteelPeak
 
 			actor.action(time, target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			target.action(target.nextTimeOfInterest(), target); // Demolish (onGCD)
 
 			assert.strictEqual(actor.findAura("GreasedLigthning", actor).name, "GreasedLigthning");
 			assert.strictEqual(actor.findAura("OpoOpoForm", actor).name, "OpoOpoForm");
@@ -108,8 +104,8 @@ describe("Actor", function() {
 				registered = true;
 			});
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+			actor.nextAutoAttack += 1; // bypassing auto attack
+			SteelPeak.nextAvailable = time + SteelPeak.recast; // bypassing SteelPeak
 
 			actor.action(time, target); // Demolish (onGCD)
 
@@ -125,7 +121,7 @@ describe("Actor", function() {
 				registered = true;
 			});
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
+			actor.nextAutoAttack += 1; // bypassing auto attack
 
 			actor.action(time, target); // SteelPeak (offGCD)
 
@@ -146,7 +142,7 @@ describe("Actor", function() {
 			actor.nextOffGCD = time + GCD / 2;
 			time = actor.nextOffGCD;
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
+			actor.nextAutoAttack += 1; // bypassing auto attack
 
 			actor.action(time, target); // SteelPeak (offGCD)
 
@@ -166,8 +162,8 @@ describe("Actor", function() {
 			actor.nextOffGCD = time + GCD / 2;
 			time = actor.nextOffGCD;
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+			actor.nextAutoAttack += 1; // bypassing auto attack
+			SteelPeak.nextAvailable = time + SteelPeak.recast; // bypassing SteelPeak
 
 			actor.action(time, target); // Demolish (onGCD)
 
@@ -184,8 +180,8 @@ describe("Actor", function() {
 
 			assert.strictEqual(actor.activeAuras.length, 0);
 
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-			actor.applyAuraImmediate(actor.model.auras.TwinSnakes, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.TwinSnakes, actor, time);
 
 			assert.strictEqual(actor.activeAuras.length, 2);
 
@@ -213,7 +209,7 @@ describe("Actor", function() {
 				registered = true;
 			});
 
-			actor.applyAuraImmediate(actor.model.auras.DemolishDOT, actor, time);
+			actor.applyAura(actor.model.auras.DemolishDOT, actor, time);
 
 			actor.tick(time);
 
@@ -222,18 +218,6 @@ describe("Actor", function() {
 
 	});
 	describe("#prepareForBattle", function() {
-
-		it("should do nothing on inactive actor", function() {
-			var target = new Actor({
-					model: "Monk",
-					name: "Target",
-					inactive: true,
-				});
-
-			target.prepareForBattle(time);
-
-			assert.strictEqual(actor.findAura("FistOfFire", actor), false);
-		});
 
 		it("should apply auras according to model", function() {
 			actor.prepareForBattle(time);
@@ -249,33 +233,28 @@ describe("Actor", function() {
 		});
 
 	});
-	describe("#applyAuraImmediate", function() {
+	describe("#applyAura", function() {
 
 		it("should register new aura", function() {
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(actor.activeAuras[0].name, "GreasedLigthning");
 			assert.strictEqual(actor.activeAuras[0].owner, actor);
 		});
 		it("should refresh aura", function() {
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(actor.activeAuras[0].name, "GreasedLigthning");
 			assert.strictEqual(actor.activeAuras[0].count, 2);
 		});
 		it("should not register new aura if the aura cancels itself", function() {
-			actor.applyAuraImmediate(actor.model.auras.PerfectBalance, actor, time);
-			actor.applyAuraImmediate(actor.model.auras.RaptorForm, actor, time);
+			actor.applyAura(actor.model.auras.PerfectBalance, actor, time);
+			actor.applyAura(actor.model.auras.RaptorForm, actor, time);
 
 			assert.strictEqual(actor.findAura("PerfectBalance", actor).name, "PerfectBalance");
 			assert.strictEqual(actor.findAura("RaptorForm", actor), false);
 		})
-
-	});
-	describe("#applyAura", function() {
-
-		it("should register new auras in pending auras");
 
 	});
 	describe("#findAura", function() {
@@ -284,7 +263,7 @@ describe("Actor", function() {
 			assert.strictEqual(actor.findAura("GreasedLigthning", actor), false);
 		});
 		it("should return the aura if present", function() {
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(actor.findAura("GreasedLigthning", actor).name, "GreasedLigthning");
 		});
@@ -293,7 +272,7 @@ describe("Actor", function() {
 	describe("#removeAura", function() {
 
 		it("should remove the provided aura", function() {
-			actor.applyAuraImmediate(actor.model.auras.InternalRelease, actor, time);
+			actor.applyAura(actor.model.auras.InternalRelease, actor, time);
 
 			assert.strictEqual(actor.activeAuras.length, 1);
 
@@ -313,7 +292,7 @@ describe("Actor", function() {
 	describe("#getStats", function() {
 
 		it("should return the actor stats buffed with auras", function() {
-			actor.applyAuraImmediate(actor.model.auras.InternalRelease, actor, time);
+			actor.applyAura(actor.model.auras.InternalRelease, actor, time);
 
 			assert.strictEqual(actor.getStats().criticalHitChance, 0.3);
 		});
