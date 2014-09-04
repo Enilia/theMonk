@@ -1,0 +1,27 @@
+{
+  "name": "theMonk",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "posttest": "npm run test-coverage && npm run test-doc",
+    "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
+    "test-doc": "mocha -R doc > doc.html",
+    "test-watch": "mocha -wb"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "Modules"
+    }
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "mocha": "^1.21.4"
+  },
+  "description": "Dps simulator for monk",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Enilia",
+  "license": "ISC"
+}

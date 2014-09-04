@@ -1,0 +1,1190 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Skill",
+				"skill"
+			],
+			[
+				"repo",
+				"reportRotation"
+			],
+			[
+				"st",
+				"startTime"
+			],
+			[
+				"actor",
+				"actor"
+			],
+			[
+				"au",
+				"auraRefresh"
+			],
+			[
+				"is",
+				"isExpired"
+			],
+			[
+				"next",
+				"nextAction"
+			],
+			[
+				"bef",
+				"beforeEach"
+			],
+			[
+				"pre",
+				"prepareForBattle"
+			],
+			[
+				"ski",
+				"skillName"
+			],
+			[
+				"mod",
+				"model"
+			],
+			[
+				"si",
+				"simpleReporter"
+			],
+			[
+				"da",
+				"damageList"
+			],
+			[
+				"se",
+				"strictEqual"
+			],
+			[
+				"nex",
+				"nextAutoAttack"
+			],
+			[
+				"reg",
+				"registered"
+			],
+			[
+				"re",
+				"registerDamage"
+			],
+			[
+				"ac",
+				"activeAuras"
+			],
+			[
+				"get",
+				"getGCD"
+			],
+			[
+				"stats",
+				"stats"
+			],
+			[
+				"a",
+				"actor"
+			],
+			[
+				"ne",
+				"nextTimeOfInterest"
+			],
+			[
+				"de",
+				"describe"
+			],
+			[
+				"T",
+				"TouchOfDeath"
+			],
+			[
+				"In",
+				"InternalRelease"
+			],
+			[
+				"rota",
+				"rotation"
+			],
+			[
+				"th",
+				"throws"
+			],
+			[
+				"rec",
+				"recast"
+			],
+			[
+				"cre",
+				"createSkill"
+			],
+			[
+				"pro",
+				"properties"
+			],
+			[
+				"str",
+				"strictEqual"
+			],
+			[
+				"create",
+				"createAura"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"in",
+				"inactive"
+			],
+			[
+				"skill",
+				"skillName"
+			],
+			[
+				"stat",
+				"stats"
+			],
+			[
+				"na",
+				"nextAction"
+			],
+			[
+				"nextA",
+				"nextAutoAttack"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"readfile",
+				"fs.readFileSync(path, encoding);"
+			],
+			[
+				"m",
+				"model"
+			],
+			[
+				"mode",
+				"models"
+			],
+			[
+				"aura",
+				"aura"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"l",
+				"l"
+			],
+			[
+				"set",
+				"setTimeout(function, milliseconds);"
+			],
+			[
+				"time",
+				"time"
+			],
+			[
+				"p",
+				"potency"
+			],
+			[
+				"B",
+				"BootshineRear"
+			],
+			[
+				"c",
+				"checkActors"
+			],
+			[
+				"li",
+				"listener"
+			],
+			[
+				"lis",
+				"listeners"
+			],
+			[
+				"s",
+				"strictEqual"
+			],
+			[
+				"wea",
+				"weapon_damage"
+			],
+			[
+				"criti",
+				"critical_rate"
+			],
+			[
+				"fo",
+				"formula"
+			],
+			[
+				"data",
+				"dataMob"
+			],
+			[
+				"fil",
+				"filters"
+			],
+			[
+				"RankA",
+				"RankA"
+			],
+			[
+				"Ra",
+				"RankS"
+			],
+			[
+				"cli",
+				"click_filter"
+			],
+			[
+				"refresh",
+				"refresh"
+			],
+			[
+				"filter",
+				"filter"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.js",
+			"settings":
+			{
+				"buffer_size": 3279,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/stats.ccbrown.test.js",
+			"settings":
+			{
+				"buffer_size": 1713,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/stats.valkky.test.js",
+			"settings":
+			{
+				"buffer_size": 1711,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Actor.js",
+			"settings":
+			{
+				"buffer_size": 4854,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Aura.js",
+			"settings":
+			{
+				"buffer_size": 1772,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Reporter.js",
+			"settings":
+			{
+				"buffer_size": 1490,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Rotation.js",
+			"settings":
+			{
+				"buffer_size": 1462,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Scheduled2.js",
+			"settings":
+			{
+				"buffer_size": 1125,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Simulation.js",
+			"settings":
+			{
+				"buffer_size": 1719,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Skill.js",
+			"settings":
+			{
+				"buffer_size": 1008,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Models/Monk.js",
+			"settings":
+			{
+				"buffer_size": 8067,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Stats.js",
+			"settings":
+			{
+				"buffer_size": 1735,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Stats.ccbrown.js",
+			"settings":
+			{
+				"buffer_size": 928,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Stats.valkky.js",
+			"settings":
+			{
+				"buffer_size": 830,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Reporters/simpleReporter.reporter.js",
+			"settings":
+			{
+				"buffer_size": 3984,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 462,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Nodejs/Nodejs.sublime-build",
+	"command_palette":
+	{
+		"height": 311.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"Snippet: ",
+				"Snippet: Object Method"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/E/Mes documents/ff14/js/theMonk/npm-debug.log",
+		"/E/Mes documents/ff14/js/theMonk/node_modules/blanket/README.md",
+		"/E/Mes documents/ff14/js/theMonk/test.bat",
+		"/E/Mes documents/ff14/js/theMonk/watch.bat",
+		"/E/Mes documents/ff14/js/theMonk/go.bat",
+		"/E/Mes documents/ff14/js/theMonk/v8.log",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Actor.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Aura.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Reporter.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Scheduled2.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Simulation.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Skill.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.ccbrown.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.valkky.js",
+		"/E/Mes documents/ff14/js/theMonk/Reporters/simpleReporter.reporter.js",
+		"/E/Mes documents/ff14/js/theMonk/test/scheduled2.test.js",
+		"/E/Mes documents/ff14/js/theMonk/Models/Monk.js",
+		"/E/Mes documents/ff14/js/theMonk/test/skill.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/stats.ccbrown.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/stats.valkky.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/stats.test.js",
+		"/E/Mes documents/ff14/js/theMonk/index.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotation.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/aura.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/actor.test.js",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
+		"/E/Mes documents/ff14/js/theMonk/package.json",
+		"/E/Mes documents/ff14/js/theMonk/test/mocha.opts",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.demolish.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/Rotations/monk.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.AuraTimeRemaining.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.IsOffGCD.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.IsReady.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.good.AuraCount.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.throw.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.bad.AuraCount.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.empty.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.skillname.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/test/scheduled.test.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/context.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/runnable.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/suite.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/runner.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/interfaces/bdd.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/bin/_mocha",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/index.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/mocha.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/interfaces/exports.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/package.json",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/bin/mocha",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Scheduled.js",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/C++/C++.sublime-build",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/Nodejs/Nodejs.sublime-settings",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/User/Nodejs.sublime-settings",
+		"/E/Program Files (x86)/Sublime Text 2/Pristine Packages/C++.sublime-package",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/lib/test.js",
+		"/C/Users/Florian/AppData/Roaming/npm/node_modules/mocha/mocha.js",
+		"/C/Users/Florian/Desktop/ROT13.js",
+		"/E/Mes documents/BnS/NCSOFT/ClientConfiguration.xml",
+		"/E/jeux/Blade and Soul/Blade and Soul.gdf",
+		"/C/Users/Florian/AppData/Local/BNSUpdater/1.0/data",
+		"/E/Mes documents/ff14/js/theMonk/theMonk.sublime-workspace",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/E/Mes documents/ff14/js/theMonk/node_modules/mocha/mocha.js",
+		"/E/Mes documents/ff14/js/theMonk/node_modules/mocha/lib/mocha.js",
+		"/E/Mes documents/ff14/js/theMonk/node_modules/mocha/lib/runner.js",
+		"/E/Mes documents/ff14/js/theMonk/node_modules/mocha/lib/context.js",
+		"/E/Mes documents/ff14/js/theMonk/theMonk.sublime-project",
+		"/E/Mes documents/ff14/js/theHunt/hunt.js",
+		"/C/Users/Florian/AppData/Roaming/REngLauncher/REngLauncher.xml",
+		"/C/Program Files/Logitech Gaming Software/Firewall.wsf",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/Object-Method.sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/Object-key-key-value.sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
+		"/E/Mes documents/ff14/MonkTests-CritVSDet2.act",
+		"/E/Mes documents/ff14/MonkTests-CritVSDet.act",
+		"/E/Downloads/gearCalculator.js",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/Get-Elements.sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/for-()-{}-(faster).sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/for-()-{}.sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/XML/cdata.sublime-snippet",
+		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/JavaScript/Comments.tmPreferences"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"E:\\Mes documents\\ff14\\js\\theMonk\\Modules,E:\\Mes documents\\ff14\\js\\theMonk\\test",
+			"E:\\Mes documents\\ff14\\js\\theMonk,-*.html,-node_modules\\*",
+			"E:\\Mes documents\\ff14\\js\\theMonk,-*.html,-\\node_modules",
+			"E:\\Mes documents\\ff14\\js\\theMonk,-*.html",
+			"E:\\Mes documents\\ff14\\js\\theMonk",
+			"C:\\Users\\Florian\\AppData\\Roaming\\npm\\node_modules\\mocha\\lib\\",
+			"C:\\Users\\Florian\\AppData\\Roaming\\npm\\node_modules\\mocha\\lib\\*",
+			"C:\\Users\\Florian\\AppData\\Roaming\\npm\\node_modules\\mocha\\lib",
+			"E:\\Mes documents\\ff14\\js\\theMonk\\"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"require(\"util\")",
+			"%s|",
+			"CURRENT",
+			"\\s",
+			"determination",
+			"strength",
+			"weaponDamage",
+			"this.",
+			"strength",
+			"this.",
+			"192.95",
+			"242.24",
+			"212.24",
+			"272.66",
+			"158.75",
+			"simpleReporter",
+			" | this.reportSkill",
+			"\n						|| origin & this.reportAutoAttack && origin === \"reportAutoAttack\"",
+			"strictEqual",
+			"1-this",
+			"stats",
+			"strictEqual",
+			"equal",
+			"stats",
+			"mili",
+			"Reporter",
+			"reporter",
+			"10",
+			"autoatack",
+			" ",
+			"transformIncomingDamage",
+			"Fracture",
+			"TouchOfDeath",
+			"Demolish",
+			"} else if(this.nextAction === time) {\n			\n		",
+			"actorName",
+			"\n\n		TouchOfDeath: Aura({\n			name: \"TouchOfDeath\",\n			duration: 30,\n			potency: 25,\n		}),",
+			"Rotation",
+			"new Actor",
+			"Actor",
+			",\n",
+			"registerDamage",
+			"\n\n			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);\n\n			assert.strictEqual(rotation.run(actor, target, time), 1);",
+			"bootshine",
+			"Stats",
+			"stats.getGCD()",
+			"nextHGCD",
+			"IsHGCD",
+			"0",
+			"Skill",
+			"skill",
+			"GCDRemaining",
+			"target",
+			"aura",
+			"actor",
+			"'post-require'",
+			"'require'",
+			".on",
+			"post-require",
+			"auras",
+			", time",
+			"onUse: function(source, target, time)",
+			", time",
+			"createAura",
+			"createSkill",
+			"RaptorForm",
+			"\n\n		RaptorForm: createAura({\n			name: \"RaptorForm\",\n			duration: 10,\n		}),",
+			"actor",
+			"Actor",
+			"'require'",
+			"pre-require",
+			".on",
+			"actor.nextTimeOfInterest(scheduled.time)",
+			".on",
+			"EventEmitter",
+			"process",
+			"push",
+			"empty",
+			"0",
+			"push",
+			"name",
+			"multiply",
+			" + \"",
+			" + ",
+			" ",
+			"weaponAutoAttack",
+			" = ",
+			"Aura",
+			"weapon_damage",
+			"weapon_auto_attack",
+			"weapon_auto_attack_delay",
+			"skill_speed",
+			"));",
+			"F5",
+			"C5",
+			"apot",
+			"grease",
+			"(str)",
+			"(bzk*hawk)",
+			"true",
+			"formulas",
+			"Jzzf_Calculator",
+			"open",
+			"Open",
+			"open",
+			"ctrl+d",
+			"open",
+			"safe",
+			"select",
+			"active",
+			"select"
+		],
+		"highlight": true,
+		"in_selection": true,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"\\n",
+			"buff",
+			"weaponDamage",
+			"weaponAutoAttack",
+			"weaponAutoAttackDelay",
+			"skillSpeed",
+			"str",
+			"",
+			"rank"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.js",
+					"settings":
+					{
+						"buffer_size": 3279,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								832,
+								1030
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test/stats.ccbrown.test.js",
+					"settings":
+					{
+						"buffer_size": 1713,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								156
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "test/stats.valkky.test.js",
+					"settings":
+					{
+						"buffer_size": 1711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								126,
+								126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 8,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "Modules/Actor.js",
+					"settings":
+					{
+						"buffer_size": 4854,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								130
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Modules/Aura.js",
+					"settings":
+					{
+						"buffer_size": 1772,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Modules/Reporter.js",
+					"settings":
+					{
+						"buffer_size": 1490,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Modules/Rotation.js",
+					"settings":
+					{
+						"buffer_size": 1462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Modules/Scheduled2.js",
+					"settings":
+					{
+						"buffer_size": 1125,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Modules/Simulation.js",
+					"settings":
+					{
+						"buffer_size": 1719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Modules/Skill.js",
+					"settings":
+					{
+						"buffer_size": 1008,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Models/Monk.js",
+					"settings":
+					{
+						"buffer_size": 8067,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "Modules/Stats.js",
+					"settings":
+					{
+						"buffer_size": 1735,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								202,
+								216
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Modules/Stats.ccbrown.js",
+					"settings":
+					{
+						"buffer_size": 928,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								928,
+								928
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Modules/Stats.valkky.js",
+					"settings":
+					{
+						"buffer_size": 830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "Reporters/simpleReporter.reporter.js",
+					"settings":
+					{
+						"buffer_size": 3984,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2353,
+								2353
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 148.0,
+						"translation.y": 765.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "package.json",
+					"settings":
+					{
+						"buffer_size": 462,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								64,
+								64
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.520338983051,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/E/Mes documents/ff14/js/theMonk/theMonk.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}

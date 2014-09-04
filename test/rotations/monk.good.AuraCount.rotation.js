@@ -1,0 +1,1 @@
+return AuraCount(self, "GreasedLigthning", self);
