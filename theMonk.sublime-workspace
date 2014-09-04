@@ -4,10 +4,6 @@
 		"selected_items":
 		[
 			[
-				"S",
-				"SnapPunchFlank"
-			],
-			[
 				"Skill",
 				"skill"
 			],
@@ -267,15 +263,23 @@
 			"file": "index.js",
 			"settings":
 			{
-				"buffer_size": 3318,
+				"buffer_size": 3279,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "test/actor.test.js",
+			"file": "test/stats.ccbrown.test.js",
 			"settings":
 			{
-				"buffer_size": 8850,
+				"buffer_size": 1713,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/stats.valkky.test.js",
+			"settings":
+			{
+				"buffer_size": 1711,
 				"line_ending": "Windows"
 			}
 		},
@@ -283,7 +287,7 @@
 			"file": "Modules/Actor.js",
 			"settings":
 			{
-				"buffer_size": 4568,
+				"buffer_size": 4854,
 				"line_ending": "Windows"
 			}
 		},
@@ -344,6 +348,30 @@
 			}
 		},
 		{
+			"file": "Modules/Stats.js",
+			"settings":
+			{
+				"buffer_size": 1735,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Stats.ccbrown.js",
+			"settings":
+			{
+				"buffer_size": 928,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Modules/Stats.valkky.js",
+			"settings":
+			{
+				"buffer_size": 830,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "Reporters/simpleReporter.reporter.js",
 			"settings":
 			{
@@ -355,16 +383,8 @@
 			"file": "package.json",
 			"settings":
 			{
-				"buffer_size": 585,
+				"buffer_size": 462,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Modules/Stats.js",
-			"settings":
-			{
-				"buffer_size": 3295,
-				"line_ending": "Windows"
 			}
 		}
 	],
@@ -400,16 +420,6 @@
 	},
 	"file_history":
 	[
-		"/E/Mes documents/ff14/js/theMonk/test/stats.valkky.test.js",
-		"/E/Mes documents/ff14/js/theMonk/test/stats.ccbrown.test.js",
-		"/E/Mes documents/ff14/js/theMonk/Rotations/monk.rotation.js",
-		"/E/Mes documents/ff14/js/theMonk/Rotations/monk.rotation_2.js",
-		"/E/Mes documents/ff14/js/theMonk/test/aura.test.js",
-		"/E/Mes documents/ff14/js/theMonk/test/actor.test.js",
-		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.js",
-		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.valkky.js",
-		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.ccbrown.js",
-		"/E/Mes documents/ff14/hunt.txt",
 		"/E/Mes documents/ff14/js/theMonk/npm-debug.log",
 		"/E/Mes documents/ff14/js/theMonk/node_modules/blanket/README.md",
 		"/E/Mes documents/ff14/js/theMonk/test.bat",
@@ -423,17 +433,25 @@
 		"/E/Mes documents/ff14/js/theMonk/Modules/Scheduled2.js",
 		"/E/Mes documents/ff14/js/theMonk/Modules/Simulation.js",
 		"/E/Mes documents/ff14/js/theMonk/Modules/Skill.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.ccbrown.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.js",
+		"/E/Mes documents/ff14/js/theMonk/Modules/Stats.valkky.js",
 		"/E/Mes documents/ff14/js/theMonk/Reporters/simpleReporter.reporter.js",
 		"/E/Mes documents/ff14/js/theMonk/test/scheduled2.test.js",
 		"/E/Mes documents/ff14/js/theMonk/Models/Monk.js",
 		"/E/Mes documents/ff14/js/theMonk/test/skill.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/stats.ccbrown.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/stats.valkky.test.js",
 		"/E/Mes documents/ff14/js/theMonk/test/stats.test.js",
 		"/E/Mes documents/ff14/js/theMonk/index.js",
 		"/E/Mes documents/ff14/js/theMonk/test/rotation.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/aura.test.js",
+		"/E/Mes documents/ff14/js/theMonk/test/actor.test.js",
 		"/C/Users/Florian/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
 		"/E/Mes documents/ff14/js/theMonk/package.json",
 		"/E/Mes documents/ff14/js/theMonk/test/mocha.opts",
 		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.demolish.rotation.js",
+		"/E/Mes documents/ff14/js/theMonk/Rotations/monk.rotation.js",
 		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.AuraTimeRemaining.rotation.js",
 		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.IsOffGCD.rotation.js",
 		"/E/Mes documents/ff14/js/theMonk/test/rotations/monk.IsReady.rotation.js",
@@ -513,13 +531,6 @@
 		"case_sensitive": true,
 		"find_history":
 		[
-			"163.79",
-			"261.85",
-			"203.83",
-			"232.64",
-			"211.49",
-			"185.30",
-			"Simulation",
 			"require(\"util\")",
 			"%s|",
 			"CURRENT",
@@ -658,7 +669,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -666,15 +677,15 @@
 					"file": "index.js",
 					"settings":
 					{
-						"buffer_size": 3318,
+						"buffer_size": 3279,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								848,
-								848
+								832,
+								1030
 							]
 						],
 						"settings":
@@ -683,58 +694,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 179.0,
+						"translation.y": 315.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "test/actor.test.js",
+					"file": "test/stats.ccbrown.test.js",
 					"settings":
 					{
-						"buffer_size": 8850,
+						"buffer_size": 1713,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6663,
-								6663
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 997.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 9,
-			"sheets":
-			[
-				{
-					"buffer": 2,
-					"file": "Modules/Actor.js",
-					"settings":
-					{
-						"buffer_size": 4568,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								542,
-								542
+								151,
+								156
 							]
 						],
 						"settings":
@@ -749,7 +727,67 @@
 					"type": "text"
 				},
 				{
+					"buffer": 2,
+					"file": "test/stats.valkky.test.js",
+					"settings":
+					{
+						"buffer_size": 1711,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								126,
+								126
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 8,
+			"sheets":
+			[
+				{
 					"buffer": 3,
+					"file": "Modules/Actor.js",
+					"settings":
+					{
+						"buffer_size": 4854,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								125,
+								130
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
 					"file": "Modules/Aura.js",
 					"settings":
 					{
@@ -776,7 +814,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "Modules/Reporter.js",
 					"settings":
 					{
@@ -803,7 +841,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "Modules/Rotation.js",
 					"settings":
 					{
@@ -824,13 +862,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "Modules/Scheduled2.js",
 					"settings":
 					{
@@ -857,7 +895,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "Modules/Simulation.js",
 					"settings":
 					{
@@ -868,35 +906,8 @@
 						"selection":
 						[
 							[
-								443,
-								449
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Modules/Skill.js",
-					"settings":
-					{
-						"buffer_size": 1008,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								309,
-								313
+								0,
+								0
 							]
 						],
 						"settings":
@@ -912,6 +923,33 @@
 				},
 				{
 					"buffer": 9,
+					"file": "Modules/Skill.js",
+					"settings":
+					{
+						"buffer_size": 1008,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
 					"file": "Models/Monk.js",
 					"settings":
 					{
@@ -922,8 +960,8 @@
 						"selection":
 						[
 							[
-								7434,
-								7434
+								0,
+								0
 							]
 						],
 						"settings":
@@ -932,13 +970,94 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4094.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
+					"file": "Modules/Stats.js",
+					"settings":
+					{
+						"buffer_size": 1735,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								202,
+								216
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "Modules/Stats.ccbrown.js",
+					"settings":
+					{
+						"buffer_size": 928,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								928,
+								928
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "Modules/Stats.valkky.js",
+					"settings":
+					{
+						"buffer_size": 830,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
 					"file": "Reporters/simpleReporter.reporter.js",
 					"settings":
 					{
@@ -949,8 +1068,8 @@
 						"selection":
 						[
 							[
-								2139,
-								2139
+								2353,
+								2353
 							]
 						],
 						"settings":
@@ -958,26 +1077,26 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
+						"translation.x": 148.0,
 						"translation.y": 765.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 15,
 					"file": "package.json",
 					"settings":
 					{
-						"buffer_size": 585,
+						"buffer_size": 462,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								541,
-								541
+								64,
+								64
 							]
 						],
 						"settings":
@@ -988,33 +1107,6 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "Modules/Stats.js",
-					"settings":
-					{
-						"buffer_size": 3295,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1566,
-								1583
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1035.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1050,7 +1142,7 @@
 		"cols":
 		[
 			0.0,
-			0.442937853107,
+			0.520338983051,
 			1.0
 		],
 		"rows":

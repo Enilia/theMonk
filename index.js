@@ -34,7 +34,7 @@ function sim(stats, rotation, time, reporter) {
 	);
 }
 
-var time = 60;
+var time = 30;
 
 var Enilia = { // MNK ENILIA
 		weaponDamage: 				53,
@@ -91,10 +91,10 @@ var Enilia = { // MNK ENILIA
 		skillSpeed: 				443,
 	};
 
-// console.log("");
-// console.log("=== MNK TELRAL (valkky) ===");
-// require("./Modules/Stats.valkky")
-// sim(Telral, "Rotations/monk.rotation.js", time, new Reporter);
+console.log("");
+console.log("=== MNK TELRAL (valkky) ===");
+Stats.useValkkyFormulas();
+sim(Telral, "Rotations/monk.rotation_2.js", time, new Reporter);
 
 // console.log("");
 // console.log("=== MNK TELRAL (ccbrown) ===");
@@ -111,18 +111,18 @@ sim(Enilia, "Rotations/monk.rotation_2.js", time, new Reporter);
 // require("./Modules/Stats.ccbrown")
 // sim(Enilia, "Rotations/monk.rotation.js", time, new Reporter);
 
-// console.log("");
-// console.log("=== MNK 110 DTR ===");
-// sim(MNK_110_DTR, "Rotations/monk.rotation.js", time, new Reporter);
+console.log("");
+console.log("=== MNK 110 DTR ===");
+sim(MNK_110_DTR, "Rotations/monk.rotation_2.js", time, new Reporter);
 
-// console.log("");
-// console.log("=== MNK 110 CC ===");
-// sim(MNK_110_CC, "Rotations/monk.rotation.js", time, new Reporter);
+console.log("");
+console.log("=== MNK 110 CC ===");
+sim(MNK_110_CC, "Rotations/monk.rotation_2.js", time, new Reporter);
 
-// console.log("");
-// console.log("=== MNK 115 DTR ===");
-// sim(MNK_115_DTR, "Rotations/monk.rotation.js", time, new Reporter);
+console.log("");
+console.log("=== MNK 115 DTR ===");
+sim(MNK_115_DTR, "Rotations/monk.rotation_2.js", time, new Reporter);
 
-// console.log("");
-// console.log("=== MNK 115 CC ===");
-// sim(MNK_115_CC, "Rotations/monk.rotation.js", time, new Reporter);
+console.log("");
+console.log("=== MNK 115 CC ===");
+sim(MNK_115_CC, "Rotations/monk.rotation_2.js", time, new Reporter);

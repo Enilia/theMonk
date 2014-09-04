@@ -18,6 +18,7 @@ function Actor(conf) {
 	var model = require(models[conf.model]);
 
 	this.activeAuras = [];
+	this.pendingAuras = [];
 
 	this.stats = new Stats(conf.stats);
 	this.rotation = new Rotation(conf.rotation || "");
@@ -32,9 +33,9 @@ extend(Actor.prototype, {
 
 	name: "Actor",
 
-	nextAction:0,
-	nextOffGCD:0,
-	nextAutoAttack:0,
+	nextAction:Infinity,
+	nextOffGCD:Infinity,
+	nextAutoAttack:Infinity,
 
 	inactive: false,
 
@@ -48,12 +49,17 @@ extend(Actor.prototype, {
 	},
 
 	activeAuras: null,
+	pendingAuras: null,
 	stats: null,
 	model: null,
 	rotation: null,
 
 	nextTimeOfInterest: function(time) {
-		return this.inactive ? Infinity : Math.min(this.nextAction, this.nextAutoAttack, this.nextOffGCD) - time;
+		var next = this.pendingAuras.reduce(function(previousValue, currentValue) {
+			return Math.min(previousValue, currentValue.time);
+		}, Infinity);
+
+		return Math.min(this.nextAction, this.nextAutoAttack, this.nextOffGCD, next) - (time || 0);
 	},
 
 	action: function(time, target) {
@@ -61,9 +67,18 @@ extend(Actor.prototype, {
 		this.preTick(time);
 
 		var stats = this.getStats(),
-			GCD, skillName;
+			GCD, skillName,
+			pendingAura = this.pendingAuras.reduce(function(previousValue, currentValue) {
+				return previousValue.time < currentValue.time ?
+						previousValue : currentValue;
+			}, false);
 
-		if(this.nextAutoAttack === time) {
+		if(pendingAura && pendingAura.time === time) {
+
+			this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
+			this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
+
+		} else if(this.nextAutoAttack === time) {
 
 			this.emit(this.events.autoattack,
 				stats.getAutoAttackDamage()*target.getStats().transformIncomingDamage,
@@ -106,7 +121,7 @@ extend(Actor.prototype, {
 			  		skill.name,
 			  		time
 			  	);
-				skill._onUse(time, this, target);
+				skill._onUse(time + GCD / 2, this, target);
 			}
 		}
 	},
@@ -133,14 +148,30 @@ extend(Actor.prototype, {
 	},
 
 	prepareForBattle: function(time) {
+		if(this.inactive) {
+			return;
+		}
+
 		this.model.prepareForBattle(time, this);
 		this.nextAction = this.nextAutoAttack = time;
 		this.nextOffGCD = time + this.getStats().getGCD() / 2;
+		
 	},
 
 	applyAura: function(aura, source, time) {
-		var _aura, conf = {
+		this.pendingAuras.push({
+			aura: aura,
 			stats: source.getStats(),
+			time: time,
+			owner: source,
+		});
+	},
+
+	applyAuraImmediate: function(aura, source, time, stats) {
+		var _aura;
+
+		conf = {
+			stats: stats || source.getStats(),
 			time: time,
 			owner: source,
 		};
