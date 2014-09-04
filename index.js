@@ -35,26 +35,15 @@ function sim(stats, rotation, time, reporter) {
 }
 
 var time = 30;
+Stats.useValkkyFormulas();
 
 console.log("");
 console.log("=== MNK TELRAL (valkky) ===");
-Stats.useValkkyFormulas();
 sim("Telral", "monk_2", time, new Reporter);
-
-// console.log("");
-// console.log("=== MNK TELRAL (ccbrown) ===");
-// require("./Modules/Stats.ccbrown")
-// sim("Telral", "monk", time, new Reporter);
 
 console.log("");
 console.log("=== MNK ENILIA (valkky) ===");
-Stats.useValkkyFormulas();
 sim("Enilia", "monk_2", time, new Reporter);
-
-// console.log("");
-// console.log("=== MNK ENILIA (ccbrown) ===");
-// require("./Modules/Stats.ccbrown")
-// sim(Enilia, "monk", time, new Reporter);
 
 console.log("");
 console.log("=== MNK 110 DTR ===");
