@@ -24,8 +24,8 @@ build/Release
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
 
-# Batch files
-*.bat
+# Sublime workspace files
+*.sublime-workspace
 
 # =========================
 # Operating System Files
@@ -66,3 +66,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
+# Batch files
+*.bat
