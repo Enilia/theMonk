@@ -123,12 +123,12 @@ describe('Aura', function() {
 
 			it("should execute when the aura is applied on the actor", function() {
 
-				actor.applyAura(actor.model.auras.RaptorForm, actor, 0);
+				actor.applyAuraImmediate(actor.model.auras.RaptorForm, actor, 0);
 
 				assert.strictEqual(actor.activeAuras.length, 1);
 				assert.strictEqual(actor.findAura("RaptorForm", actor), actor.activeAuras[0]);
 
-				actor.applyAura(actor.model.auras.CoeurlForm, actor, 0);
+				actor.applyAuraImmediate(actor.model.auras.CoeurlForm, actor, 0);
 
 				assert.strictEqual(actor.activeAuras.length, 1);
 				assert.strictEqual(actor.findAura("CoeurlForm", actor), actor.activeAuras[0]);

@@ -16,7 +16,7 @@ extend(Monk.prototype, {
 
 	prepareForBattle: function(time, source) {
 		// source.applyAura(source.model.auras.PartyBonus, source, time);
-		source.applyAura(source.model.auras.FistOfFire, source, time);
+		source.applyAuraImmediate(source.model.auras.FistOfFire, source, time);
 		// source.applyAura(source.model.auras.GreasedLigthning, source, time);
 		// source.applyAura(source.model.auras.GreasedLigthning, source, time);
 		// source.applyAura(source.model.auras.GreasedLigthning, source, time);

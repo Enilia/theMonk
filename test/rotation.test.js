@@ -68,7 +68,7 @@ describe("Rotation", function() {
 		it("should return 0 if the searched aura does not validate the provided condition (name and source)", function() {
 			var rotation = getRotation("bad.AuraCount");
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 0);
 		});
@@ -76,19 +76,19 @@ describe("Rotation", function() {
 		it("should return the stack count of the searched aura", function() {
 			var rotation = getRotation("good.AuraCount");
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 1);
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 2);
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 3);
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 3);
 		});
@@ -143,7 +143,7 @@ describe("Rotation", function() {
 		it("should return the time remaining of the searched aura", function() {
 			var rotation = getRotation("AuraTimeRemaining");
 
-			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
 			assert.strictEqual(rotation.run(actor, target, time), 12);
 		});
