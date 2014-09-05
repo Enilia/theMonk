@@ -85,7 +85,7 @@ extend(SimpleReporter.prototype, {
 		actors = actors || Object.keys(this.actors);
 
 		if(options & this.reportRotation && (options & (this.reportSkill | this.reportAutoAttack | this.reportDoT))) {
-			printf("%s|%s|%s|%s|%s",
+			console.log("%s|%s|%s|%s|%s",
 				makeTitle("Time", 10, '-'),
 				makeTitle("Actor", 12, '-'),
 				makeTitle("Skill", 22, '-'),
@@ -106,7 +106,7 @@ extend(SimpleReporter.prototype, {
 						|| (options & this.reportDoT) && origin === "DoT")
 					) {
 
-					printf("%s | %s | %s | %s | %s%%",
+					console.log("%s | %s | %s | %s | %s%%",
 						this.formatTime(time),
 						makeTitle(actor, 10, ' '),
 						(skillName + Array(21).join(' ')).slice(0, 20),
@@ -125,17 +125,17 @@ extend(SimpleReporter.prototype, {
 				});
 			}
 
-			printf("DPS: %s", 
+			console.log("DPS: %s", 
 				(sum(this.damageList) / this.simDuration).toFixed(2)
 			);
 
-			printf("CC: %s%%", 
+			console.log("CC: %s%%", 
 				(sum(this.criticalList) / this.criticalList.length * 100).toFixed(1)
 			);
 
 			if(options & this.reportDamage) {
 				for(var skill in this.skillList) {
-					printf(" - %s [%s] : %s",
+					console.log(" - %s [%s] : %s",
 						skill,
 						this.skillList[skill].length,
 						(sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2)
@@ -145,10 +145,6 @@ extend(SimpleReporter.prototype, {
 
 		}
 
-		printf("%ss", (this.duration/1000).toFixed(3));
+		console.log("%ss", (this.duration/1000).toFixed(3));
 	}
 });
-
-function printf() {
-	console.log(format.apply(util, arguments));
-}

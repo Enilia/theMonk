@@ -1,62 +1,105 @@
 var Actor = require('./Modules/Actor'),
-	Reporter = require("./Reporters/simpleReporter.reporter"),
 	Simulation = require("./Modules/Simulation"),
 	Stats = require("./Modules/Stats"),
-	inherits = require("util").inherits,
-	extend = require("util")._extend,
-	path = require("path"),
-	fs = require("fs");
+	extend = require("util")._extend;
 
-function sim(stats, rotation, time, reporter) {
-	var monk = new Actor({
-			model: "Monk",
-			name: "Monk",
-			stats: JSON.parse(fs.readFileSync(path.resolve(__dirname, "Rotations", stats + ".stats.json"), "utf8")),
-			rotation: fs.readFileSync(path.resolve(__dirname, "Rotations", rotation + ".rotation.js"), "utf8"),
-		}),
-		simulation = new Simulation({
-			actors: [monk],
-			reporter: reporter,
+exports = module.exports = theMonk;
+
+function theMonk(options) {
+	options = options || {};
+	this.actors = [];
+	this.setReporter(options.reporter);
+	options.actors && this.addActors(options.actors);
+}
+
+extend(theMonk.prototype, {
+
+	simulation: null,
+	reporter: null,
+	actors: null,
+
+	maxTime: 60*3,
+
+	addActor: function(model, name, stats, rotation) {
+		if(this.actors.some(function(actor) {
+			return actor.name === name;
+		})) {
+			console.warn("duplicate Actor '%s'. this may leads in unexpected results in reporter", name);
+		}
+
+		this.actors.push(new Actor({
+			model: model,
+			name: name,
+			stats: stats,
+			rotation: rotation,
+		}));
+
+		return this;
+	},
+
+	addActors: function(actors) {
+		actors.forEach(function(actor) {
+			this.addActor.apply(this, actor);
+		}, this);
+
+		return this;
+	},
+
+	setReporter: function(reporter) {
+		reporter = reporter || "simpleReporter";
+
+		if("function" == typeof reporter) {
+			this.reporter = new reporter;
+		} else {
+			try {
+				this.reporter = new (require('./Reporters/'+reporter+'.reporter'));
+			} catch(err) {
+				try {
+					this.reporter = new (require(reporter));
+				} catch(err) {
+					throw new Error('invalid reporter "' + reporter + '"');
+				}
+			}
+		}
+
+		return this;
+	},
+
+	setMaxTime: function(time) {
+		this.maxTime = time;
+		return this;
+	},
+
+	run: function() {
+
+		this.simulation = new Simulation({
+			actors: this.actors,
+			reporter: this.reporter,
 			Scheduled: {
-				maxTime: time,
+				maxTime: this.maxTime,
 			}
 		});
 
-	simulation.run();
+		this.simulation.run();
 
-	reporter.report(
-		reporter.reportResume
-		| reporter.reportRotation
-		| reporter.reportSkill
-		// | reporter.reportAutoAttack
-		// | reporter.reportDoT
-		| reporter.reportDamage
-	);
-}
+		return this;
+	},
 
-var time = 30;
-Stats.useValkkyFormulas();
+	report: function(options) {
 
-console.log("");
-console.log("=== MNK TELRAL (valkky) ===");
-sim("Telral", "monk_2", time, new Reporter);
+		this.reporter.report(options);
 
-console.log("");
-console.log("=== MNK ENILIA (valkky) ===");
-sim("Enilia", "monk_2", time, new Reporter);
+		return this;
+	},
 
-console.log("");
-console.log("=== MNK 110 DTR ===");
-sim("MNK_110_DTR", "monk_2", time, new Reporter);
+	useValkkyFormulas: function() {
+		Stats.useValkkyFormulas();
+		return this;
+	},
 
-console.log("");
-console.log("=== MNK 110 CC ===");
-sim("MNK_110_CC", "monk_2", time, new Reporter);
+	useCcbrownFormulas: function() {
+		Stats.useCcbrownFormulas();
+		return this;
+	},
 
-console.log("");
-console.log("=== MNK 115 DTR ===");
-sim("MNK_115_DTR", "monk_2", time, new Reporter);
-
-console.log("");
-console.log("=== MNK 115 CC ===");
-sim("MNK_115_CC", "monk_2", time, new Reporter);
+});
