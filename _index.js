@@ -12,10 +12,11 @@ function sim(stats, rotation, time, reporter) {
 				 .setReporter(reporter)
 				 .setMaxTime(time)
 				 .run()
+				 // .useCcbrownFormulas()
 				 .report(
 						Reporter.prototype.reportResume
 						| Reporter.prototype.reportRotation
-						| Reporter.prototype.reportSkill
+						// | Reporter.prototype.reportSkill
 						// | Reporter.prototype.reportAutoAttack
 						// | Reporter.prototype.reportDoT
 						| Reporter.prototype.reportDamage
@@ -29,8 +30,12 @@ console.log("=== MNK TELRAL (valkky) ===");
 sim("Telral", "monk_2", time, Reporter);
 
 // console.log("");
-// console.log("=== MNK ENILIA (valkky) ===");
-// sim("Enilia", "monk_2", time, Reporter);
+// console.log("=== MNK TELRAL (valkky) ===");
+// sim("Telral", "monk_3", time, Reporter);
+
+console.log("");
+console.log("=== MNK ENILIA (valkky) ===");
+sim("Enilia", "monk_2", time, Reporter);
 
 // console.log("");
 // console.log("=== MNK 110 DTR ===");
