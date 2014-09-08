@@ -9,6 +9,9 @@
     "dps"
   ],
   "main": "index.js",
+  "bin": {
+    "themonk": "./bin/themonk"
+  },
   "scripts": {
     "test": "mocha",
     "posttest": "npm run test-coverage && npm run test-doc",
