@@ -27,6 +27,9 @@ node_modules
 # Sublime workspace files
 *.sublime-workspace
 
+# npmignore
+.npmignore
+
 # =========================
 # Operating System Files
 # =========================

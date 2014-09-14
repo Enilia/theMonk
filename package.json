@@ -10,11 +10,15 @@
   ],
   "main": "index.js",
   "bin": {
-    "themonk": "./bin/themonk"
+    "themonk": "bin/themonk.js"
+  },
+  "engines": {
+    "node": ">= 0.4.x"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
+    "test-unit": "mocha",
     "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
     "test-doc": "mocha -R doc > doc.html",
     "test-watch": "mocha -wb"
@@ -24,11 +28,16 @@
       "pattern": "Modules"
     }
   },
+  "dependencies": {
+    "argparser": "^0.2.2",
+    "commander": "2.0.0"
+  },
   "devDependencies": {
     "blanket": "^1.1.6",
     "mocha": "^1.21.4"
   },
   "files": [
+    "bin",
     "Models",
     "Modules",
     "Rotations",

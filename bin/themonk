@@ -1,4 +1,0 @@
-
-require("commander");
-
-console.log("hello world!");
