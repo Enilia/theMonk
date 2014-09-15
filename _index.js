@@ -1,4 +1,4 @@
-var Reporter = require("./Reporters/simpleReporter.reporter"),
+var Reporter = require("./Reporters/simpleReporter"),
 	theMonk = require("./"),
 	path = require("path"),
 	fs = require("fs");

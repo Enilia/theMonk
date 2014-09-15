@@ -81,7 +81,12 @@ extend(SimpleReporter.prototype, {
 
 		var makeTitle = this.makeTitle;
 
-		options = options || this.reportResume;
+		options = options || this.reportResume
+						   | this.reportRotation
+						   | this.reportSkill
+						   | this.reportAutoAttack
+						   | this.reportDoT
+						   | this.reportDamage;
 		actors = actors || Object.keys(this.actors);
 
 		if(options & this.reportRotation && (options & (this.reportSkill | this.reportAutoAttack | this.reportDoT))) {

@@ -1,4 +1,5 @@
 { 
+	"model":						"Monk",
 	"weaponDamage": 				51,
 	"weaponAutoAttack": 			40.8,
 	"weaponAutoAttackDelay": 		2.4,
