@@ -21,11 +21,14 @@ extend(Aura.prototype, {
 	potency: 0,
 	tickDamage: 0,
 	tickCriticalRate: 0,
+
 	increaseDamage: 1,
 	increasedAutoAttackSpeed: 0,
 	reducedGlobalCooldown: 0,
 	additionalCriticalHitChance: 0,
+	additionalSkillCriticalHitChance: 0,
 	transformIncomingDamage: 1,
+
 	statsMultiplier: {
 	},
 

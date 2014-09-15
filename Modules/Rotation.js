@@ -58,7 +58,7 @@ extend(Rotation.prototype, {
 	},
 
 	IsReady: function(time, actor, skillName) {
-		return actor.model.skills[skillName].isAvailable(time);
+		return actor.model.skills[skillName].isAvailable(time, actor);
 	},
 
 	IsOffGCD: function(time, actor) {

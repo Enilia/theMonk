@@ -20,30 +20,30 @@ inherits(SimpleReporter, Reporter);
 extend(SimpleReporter.prototype, {
 
 	registerAutoattack: function(actorName, damage, critical, time) {
-		this.registerSkill(actorName, damage, critical, "autoattack", time, "autoattack");
+		this.registerSkill(actorName, damage, critical, {name: "autoattack"}, time, "autoattack");
 	},
 
-	registerSkill: function(actorName, damage, critical, skillName, time, origin) {
+	registerSkill: function(actorName, damage, critical, skill, time, origin) {
 		this.damageList.push(damage);
 		if(damage) this.criticalList.push(critical);
-		this.skillList[skillName] = this.skillList[skillName] || [];
-		this.skillList[skillName].push(damage);
-		this.rotation.push([time, actorName, damage, critical, skillName, origin || "skill"]);
+		this.skillList[skill.name] = this.skillList[skill.name] || [];
+		this.skillList[skill.name].push(damage);
+		this.rotation.push([time, actorName, damage, critical, skill.name, origin || "skill"]);
 	},
 
-	registerAuraApply: function(actorName, auraName, time) {
-
-	},
-
-	registerAuraTick: function(actorName, damage, critical, auraName, time) {
-		this.registerSkill(actorName, damage, critical, auraName, time, "DoT");
-	},
-
-	registerAuraRefresh: function(actorName, auraName, time) {
+	registerAuraApply: function(actorName, aura, time) {
 
 	},
 
-	registerAuraExpire: function(actorName, auraName, isExpired, time) {
+	registerAuraTick: function(actorName, damage, critical, aura, time) {
+		this.registerSkill(actorName, damage, critical, aura, time, "DoT");
+	},
+
+	registerAuraRefresh: function(actorName, aura, time) {
+
+	},
+
+	registerAuraExpire: function(actorName, aura, isExpired, time) {
 
 	},
 
