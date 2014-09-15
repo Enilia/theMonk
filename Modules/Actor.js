@@ -4,7 +4,8 @@ var extend = require("util")._extend,
 	Stats = require('./Stats'),
 	Rotation = require('./Rotation'),
 	models = {
-		Monk: "../Models/Monk"
+		Monk: "../Models/Monk",
+		Dragoon: "../Models/Dragoon"
 	};
 
 exports = module.exports = Actor;
@@ -19,6 +20,10 @@ function Actor(conf) {
 
 	this.activeAuras = [];
 	this.pendingAuras = [];
+	this.combo = {
+		name: "",
+		time: null,
+	};
 
 	this.stats = new Stats(conf.stats);
 	this.rotation = new Rotation(conf.rotation || "");
@@ -41,11 +46,11 @@ extend(Actor.prototype, {
 
 	events: {
 		autoattack: "autoattack",	// (damage, critical, time)
-		skill: "skill",				// (damage, critical, skillName, time)
-		auraApply: "auraApply",		// (auraName, time)
-		auraTick: "auraTick",		// (damage, critical, auraName, time)
-		auraRefresh: "auraRefresh",	// (auraName, time)
-		auraExpire: "auraExpire",	// (auraName, isExpired, time)
+		skill: "skill",				// (damage, critical, skill, time)
+		auraApply: "auraApply",		// (aura, time)
+		auraTick: "auraTick",		// (damage, critical, aura, time)
+		auraRefresh: "auraRefresh",	// (aura, time)
+		auraExpire: "auraExpire",	// (aura, isExpired, time)
 	},
 
 	activeAuras: null,
@@ -53,6 +58,7 @@ extend(Actor.prototype, {
 	stats: null,
 	model: null,
 	rotation: null,
+	combo: null,
 
 	nextTimeOfInterest: function(time) {
 		var next = this.pendingAuras.reduce(function(previousValue, currentValue) {
@@ -112,13 +118,14 @@ extend(Actor.prototype, {
 						this.nextOffGCD = time + GCD;
 						return;
 					}
+					this.setCombo(skill.name, time);
 				}
 
 				stats = stats.buff(skill.stats);
 				this.emit(this.events.skill,
-			  		stats.getSkillDamage(skill.potency)*target.getStats().transformIncomingDamage,
+			  		stats.getSkillDamage(skill.getPotency(this, target, time))*target.getStats().transformIncomingDamage,
 			  		stats.getCriticalRate(),
-			  		skill.name,
+			  		skill,
 			  		time
 			  	);
 				skill._onUse(time + GCD / 2, this, target);
@@ -140,7 +147,7 @@ extend(Actor.prototype, {
 				this.emit(this.events.auraTick,
 			  		aura.tickDamage,
 			  		aura.tickCriticalRate,
-			  		aura.name,
+			  		aura,
 			  		time
 			  	);
 			}
@@ -156,6 +163,17 @@ extend(Actor.prototype, {
 		this.nextAction = this.nextAutoAttack = time;
 		this.nextOffGCD = time + this.getStats().getGCD() / 2;
 		
+	},
+
+	setCombo: function(combo, time) {
+		this.combo = {
+			name: combo,
+			time: time, 
+		};
+	},
+
+	hasCombo: function(combo, time) {
+		return (this.combo.name === combo) && (time - this.combo.time <= 10);
 	},
 
 	applyAura: function(aura, source, time) {
@@ -176,13 +194,15 @@ extend(Actor.prototype, {
 			owner: source,
 		};
 
+		conf.stats.skillCriticalHitChance = 0; // DoTs don't benefit this
+
 		if(_aura = this.findAura(aura.prototype.name, source)) {
 			_aura.refresh(conf);
-			this.emit(this.events.auraRefresh, aura.name, time);
+			this.emit(this.events.auraRefresh, aura, time);
 		} else {
 			if(_aura = new aura(conf)) {
 				this.activeAuras.push(_aura);
-				this.emit(this.events.auraApply, aura.name, time);
+				this.emit(this.events.auraApply, aura, time);
 			}
 		}
 	},
@@ -202,7 +222,7 @@ extend(Actor.prototype, {
 		var pos = this.activeAuras.indexOf(aura);
 		if(~pos) {
 			this.activeAuras.splice(pos, 1);
-			this.emit(this.events.auraExpire, aura.name, isExpired, time);
+			this.emit(this.events.auraExpire, aura, isExpired, time);
 		}
 	},
 
@@ -210,6 +230,7 @@ extend(Actor.prototype, {
 		return this.activeAuras.reduce(function(stats, aura) {
 			return stats.buff(extend(extend({}, aura.statsMultiplier), {
 				criticalHitChance: aura.additionalCriticalHitChance,
+				skillCriticalHitChance: aura.additionalSkillCriticalHitChance,
 				increaseDamage: aura.increaseDamage,
 				increasedAutoAttackSpeed: aura.increasedAutoAttackSpeed,
 				reducedGlobalCooldown: aura.reducedGlobalCooldown,
