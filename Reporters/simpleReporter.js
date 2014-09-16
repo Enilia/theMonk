@@ -52,13 +52,6 @@ extend(SimpleReporter.prototype, {
 		this.actors[actor.name] = [];
 	},
 
-	reportResume: 		0x000001,
-	reportRotation: 	0x000002,
-	reportSkill:		0x000004,
-	reportAutoAttack:	0x000008,
-	reportDoT:			0x000010,
-	reportDamage:		0x000020,
-
 	formatTime: function(time) {
 		time = parseFloat(time.toFixed(2));
 
@@ -77,19 +70,28 @@ extend(SimpleReporter.prototype, {
 				+ Array(-Math.round(-HalfLength)+1).join(filler || ' ');
 	},
 
+	reportOptions: {
+		Resume: 		0x000001,
+		Rotation: 		0x000002,
+		Skill:			0x000004,
+		AutoAttack:		0x000008,
+		DoT:			0x000010,
+		Damage:			0x000020,
+	},
+
 	report: function(options, actors) {
 
 		var makeTitle = this.makeTitle;
 
-		options = options || this.reportResume
-						   | this.reportRotation
-						   | this.reportSkill
-						   | this.reportAutoAttack
-						   | this.reportDoT
-						   | this.reportDamage;
+		options = options || this.reportOptions.Resume
+						   | this.reportOptions.Rotation
+						   | this.reportOptions.Skill
+						   | this.reportOptions.AutoAttack
+						   | this.reportOptions.DoT
+						   | this.reportOptions.Damage;
 		actors = actors || Object.keys(this.actors);
 
-		if(options & this.reportRotation && (options & (this.reportSkill | this.reportAutoAttack | this.reportDoT))) {
+		if(options & this.reportOptions.Rotation && (options & (this.reportOptions.Skill | this.reportOptions.AutoAttack | this.reportOptions.DoT))) {
 			console.log("%s|%s|%s|%s|%s",
 				makeTitle("Time", 10, '-'),
 				makeTitle("Actor", 12, '-'),
@@ -106,9 +108,9 @@ extend(SimpleReporter.prototype, {
 					origin = line[5];
 
 				if(~actors.indexOf(actor)
-					&& ( (options & this.reportSkill) && origin === "skill"
-						|| (options & this.reportAutoAttack) && origin === "autoattack"
-						|| (options & this.reportDoT) && origin === "DoT")
+					&& ( (options & this.reportOptions.Skill) && origin === "skill"
+						|| (options & this.reportOptions.AutoAttack) && origin === "autoattack"
+						|| (options & this.reportOptions.DoT) && origin === "DoT")
 					) {
 
 					console.log("%s | %s | %s | %s | %s%%",
@@ -122,7 +124,7 @@ extend(SimpleReporter.prototype, {
 			}, this);
 		}
 
-		if(options & this.reportResume) {
+		if(options & this.reportOptions.Resume) {
 
 			function sum(array) {
 				return array.reduce(function(p,c) {
@@ -138,7 +140,7 @@ extend(SimpleReporter.prototype, {
 				(sum(this.criticalList) / this.criticalList.length * 100).toFixed(1)
 			);
 
-			if(options & this.reportDamage) {
+			if(options & this.reportOptions.Damage) {
 				for(var skill in this.skillList) {
 					console.log(" - %s [%s] : %s",
 						skill,
