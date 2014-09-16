@@ -10,6 +10,9 @@ if(IsOffGCD()) {
 		return "BloodForBlood";
 
 	if(AuraTimeRemaining(target, "Disembowel", self)) {
+		if(IsReady("LegSweep"))
+			return "LegSweep";
+		
 		if(IsReady("PowerSurge"))
 			if(IsReady("Jump") || IsReady("SpineshatterDive"))
 				return "PowerSurge";
@@ -18,6 +21,8 @@ if(IsOffGCD()) {
 			return "Jump";
 		if(IsReady("SpineshatterDive"))
 			return "SpineshatterDive";
+		if(IsReady("DragonfireDive"))
+			return "DragonfireDive";
 	}
 }
 
@@ -40,10 +45,10 @@ if(IsReady("ChaosThrust")) {
 if(AuraTimeRemaining(self, "HeavyThrust", self) < 4)
 	return "HeavyThrust";
 
-if(AuraTimeRemaining(target, "PhlebotomizeDOT", self) < 4)
-	return "Phlebotomize";
-
 if(AuraTimeRemaining(target, "ChaosThrustDOT", self) < GCD() * 3)
 	return "ImpulseDrive";
+
+if(AuraTimeRemaining(target, "PhlebotomizeDOT", self) < 4)
+	return "Phlebotomize";
 
 return "TrueThrust";
