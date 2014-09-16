@@ -70,6 +70,10 @@ describe('Skill', function() {
 			});
 		});
 
+		describe("#cooldownRemaining", function() {
+			it("should return the time remaining before the skill next use");
+		});
+
 	});
 
 	describe(".createCombo", function() {

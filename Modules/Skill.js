@@ -40,6 +40,10 @@ extend(Skill.prototype, {
 		return this.nextAvailable <= time;
 	},
 
+	cooldownRemaining: function(time) {
+		return Math.max(this.nextAvailable - time, 0);
+	},
+
 });
 
 function createSkill(properties, specialProperties) {

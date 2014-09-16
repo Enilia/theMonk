@@ -42,6 +42,7 @@ extend(Rotation.prototype, {
 			IsOffGCD: this.IsOffGCD.bind(this, time, actor),
 			AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
 			GCD: this.GCD.bind(this, actor),
+			CooldownRemaining: this.CooldownRemaining.bind(this, time, actor),
 			use: use,
 
 		});
@@ -78,5 +79,9 @@ extend(Rotation.prototype, {
 	GCD: function(actor) {
 		return actor.getStats().getGCD();
 	},
+
+	CooldownRemaining: function(time, actor, skillName) {
+		return actor.model.skills[skillName].cooldownRemaining(time);
+	}
 
 });

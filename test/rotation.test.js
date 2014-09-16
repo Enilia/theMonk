@@ -160,4 +160,10 @@ describe("Rotation", function() {
 
 	});
 
+	describe("#CooldownRemaining", function() {
+
+		it("should return the time remaining before the skill next use");
+
+	});
+
 });
