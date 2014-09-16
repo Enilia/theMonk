@@ -1,16 +1,21 @@
-var Actor = require('./Modules/Actor'),
+var extend = require("util")._extend,
+	inherits = require("util").inherits,
+	EventEmitter = require("events").EventEmitter,
+	Actor = require('./Modules/Actor'),
 	Simulation = require("./Modules/Simulation"),
-	Stats = require("./Modules/Stats"),
-	extend = require("util")._extend;
+	Stats = require("./Modules/Stats");
 
 exports = module.exports = theMonk;
 
 function theMonk(options) {
+	EventEmitter.call(this);
 	options = options || {};
 	this.actors = [];
 	this.setReporter(options.reporter);
 	options.actors && this.addActors(options.actors);
 }
+
+inherits(theMonk, EventEmitter);
 
 extend(theMonk.prototype, {
 
@@ -81,8 +86,14 @@ extend(theMonk.prototype, {
 		});
 
 		this.simulation.run();
+		this.simulation.on("end", this.emit.bind(this, "end", this));
 
 		return this;
+	},
+
+	cancel: function() {
+		this.simulation.cancel();
+		this.simulation.end();
 	},
 
 	report: function(options) {

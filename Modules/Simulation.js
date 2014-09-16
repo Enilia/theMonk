@@ -1,10 +1,14 @@
 var extend = require("util")._extend,
+	inherits = require("util").inherits,
+	EventEmitter = require("events").EventEmitter,
 	Scheduled = require("./Scheduled2"),
 	Actor = require("./Actor");
 
 exports = module.exports = Simulation;
 
 function Simulation(conf) {
+	EventEmitter.call(this);
+
 	this.scheduled = new Scheduled(conf.Scheduled);
 	this.actors = conf.actors || [];
 	this.target = new Actor({
@@ -17,12 +21,15 @@ function Simulation(conf) {
 	this.actors.push(this.target);
 }
 
+inherits(Simulation, EventEmitter);
+
 extend(Simulation.prototype, {
 
 	scheduled: null,
 	actors: null,
 	target: null,
 	reporter: null,
+	stopped: false,
 
 	run: function() {
 		var scheduled = this.scheduled,
@@ -42,14 +49,29 @@ extend(Simulation.prototype, {
 
 		reporter && reporter.start();
 
-		while(next = scheduled.next()) {
-			next();
-			actors.forEach(function(actor) {
-				scheduled.register("checkActors", this.checkActors, actor.nextTimeOfInterest(scheduled.time), this);
-			}, this);
-		};
+		setImmediate(this.loop.bind(this));
+	},
 
-		reporter && reporter.end(scheduled.maxTime);
+	loop: function() {
+		if(this.stopped) return;
+		if(next = this.scheduled.next()) {
+			next();
+			this.actors.forEach(function(actor) {
+				this.scheduled.register("checkActors", this.checkActors, actor.nextTimeOfInterest(this.scheduled.time), this);
+			}, this);
+			setImmediate(this.loop.bind(this));
+		} else {
+			setImmediate(this.end.bind(this));
+		}
+	},
+
+	end: function() {
+		this.reporter && this.reporter.end(this.scheduled.maxTime);
+		this.emit("end");
+	},
+
+	cancel: function() {
+		this.stopped = true;
 	},
 
 	tick: function() {
