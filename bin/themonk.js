@@ -12,6 +12,7 @@ program
 	.option("-m, --model <name>", "specify the model to use")
 	.option("-t, --time <seconds>", "set the simulation duration", 60*5)
 	.option("-R, --reporter <name>", "specify the reporter to use", "simpleReporter")
+	.option("-o, --reporter-options <options>", "specify the options to use in reporter")
 	.parse(process.argv);
 
 
@@ -54,8 +55,14 @@ try {
 	}
 }
 
+if(program.reporterOptions) {
+	program.reporterOptions = program.reporterOptions.split("|").reduce(function(p, c) {
+		return p | program.reporter.prototype.reportOptions[c];
+	}, 0);
+}
+
 (new TheMonk).addActor(program.model, program.model, program.stats, program.rotation)
 			 .setReporter(program.reporter)
 			 .setMaxTime(program.time)
 			 .run()
-			 .report();
+			 .report(program.reporterOptions);
