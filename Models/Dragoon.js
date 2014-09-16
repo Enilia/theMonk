@@ -64,7 +64,7 @@ extend(Dragoon.prototype, {
 			name: "ChaosThrust",
 			potency: 200,
 			onUse: function(time, source, target) {
-				target.applyAura(source.model.auras.ChaosThrust, source, time);
+				target.applyAura(source.model.auras.ChaosThrustDOT, source, time);
 			}
 		}),
 
@@ -72,7 +72,7 @@ extend(Dragoon.prototype, {
 			name: "Phlebotomize",
 			potency: 170,
 			onUse: function(time, source, target) {
-				target.applyAura(source.model.auras.Phlebotomize, source, time);
+				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
 		}),
 
@@ -235,8 +235,8 @@ extend(Dragoon.prototype, {
 			potency: 30,
 		}),
 
-		Phlebotomize: Aura({
-			name: "Phlebotomize",
+		PhlebotomizeDOT: Aura({
+			name: "PhlebotomizeDOT",
 			duration: 18,
 			potency: 25,
 		}),
