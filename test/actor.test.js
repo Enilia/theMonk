@@ -86,21 +86,33 @@ describe("Actor", function() {
 				name: "Target",
 				inactive: true,
 			},
-			target, registered, SteelPeak, Demolish, GCD;
+			target, registered, SteelPeak, Demolish, GCD,
+			eventDamage, eventCritical, eventSkill, eventTime;
 
 		before(function() {
 			GCD = actor.getStats().getGCD();
 		});
 
 		beforeEach(function() {
+			eventDamage = null;
+			eventCritical = null;
+			eventSkill = null;
+			eventTime = null;
 			registered = false;
 			target = new Actor(targetConf);
 			SteelPeak = actor.model.skills.SteelPeak;
 			Demolish = actor.model.skills.Demolish;
 		});
 
+		it("throws if not auto attacking nor using skills", function() {
+			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+			Demolish.nextAvailable = Infinity; // bypassing Demolish
+			assert.throws(function() {
+				actor.action(Infinity, target);
+			});
+		});
+
 		describe("when auto attacking", function() {
-			var eventDamage, eventCritical, eventTime;
 
 			beforeEach(function() {
 				actor.nextAction = Infinity; // bypassing action
@@ -136,14 +148,8 @@ describe("Actor", function() {
 		});
 		
 		describe("when using skills", function() {
-			var eventDamage, eventCritical, eventSkill, eventTime;
 
 			beforeEach(function() {
-				eventDamage = null;
-				eventCritical = null;
-				eventSkill = null;
-				eventTime = null;
-
 				actor.nextAutoAttack = Infinity; // bypassing auto attack
 				actor.on(actor.events.skill, function(damage, critical, skill, _time) {
 					eventDamage = damage;
@@ -193,9 +199,6 @@ describe("Actor", function() {
 			});
 
 			describe("on GCD", function() {
-
-				// beforeEach(function() {
-				// });
 
 				describe("with on GCD skill", function() {
 
