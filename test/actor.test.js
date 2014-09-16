@@ -139,6 +139,11 @@ describe("Actor", function() {
 			var eventDamage, eventCritical, eventSkill, eventTime;
 
 			beforeEach(function() {
+				eventDamage = null;
+				eventCritical = null;
+				eventSkill = null;
+				eventTime = null;
+
 				actor.nextAutoAttack = Infinity; // bypassing auto attack
 				actor.on(actor.events.skill, function(damage, critical, skill, _time) {
 					eventDamage = damage;
@@ -186,160 +191,108 @@ describe("Actor", function() {
 					actor.action(time, target);
 				});
 			});
-		});
 
-		xit("should apply skill effects", function() {
+			describe("on GCD", function() {
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+				// beforeEach(function() {
+				// });
 
-			actor.action(time, target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // OpoOpoForm (auraApply)
-			actor.action(actor.nextTimeOfInterest(), target); // GreasedLigthning (auraApply)
-			target.action(target.nextTimeOfInterest(), target); // Demolish (auraApply)
+				describe("with on GCD skill", function() {
 
-			assert.strictEqual(actor.findAura("GreasedLigthning", actor).name, "GreasedLigthning");
-			assert.strictEqual(actor.findAura("OpoOpoForm", actor).name, "OpoOpoForm");
-			assert.strictEqual(target.findAura("DemolishDOT", actor).name, "DemolishDOT");
+					beforeEach(function() {
+						SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+						actor.action(time, target);
+					});
 
-		});
-		it("should set actor.combo when using onGCD skills", function() {
+					it("should emit a skill event", function() {
+						assert(registered);
+					});
+					it("should register the skill as combo", function() {
+						assert.strictEqual(actor.combo.name, eventSkill.name);
+					});
+					it("should update actor.nextAction", function() {
+						assert.strictEqual(actor.nextAction,  time + GCD);
+					});
+					it("should update actor.nextOffGCD", function() {
+						assert.strictEqual(actor.nextOffGCD,  time + GCD / 2);
+					});
+				});
 
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "Demolish");
-				registered = true;
+				describe("with off GCD skill", function() {
+
+					beforeEach(function() {
+						Demolish.nextAvailable = Infinity; // bypassing SteelPeak
+						actor.action(time, target);
+					});
+
+					it("should emit a skill event", function() {
+						assert(registered);
+					});
+					it("should not register the skill as combo", function() {
+						assert.strictEqual(actor.combo.name, "");
+					});
+					it("should update actor.nextAction", function() {
+						assert.strictEqual(actor.nextAction, time + GCD / 2);
+					});
+					it("should update actor.nextOffGCD", function() {
+						assert.strictEqual(actor.nextOffGCD,  time + GCD);
+					});
+				});
 			});
 
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+			describe("off GCD", function() {
 
-			actor.action(time, target); // Demolish (onGCD)
+				beforeEach(function() {
+					actor.nextAction = time + GCD;
+					actor.nextOffGCD = time + GCD / 2;
+					time = actor.nextOffGCD;
+				});
 
-			assert.strictEqual(actor.combo.name, "Demolish");
-			assert.strictEqual(actor.combo.time, time);
+				describe("with on GCD skill", function() {
 
-			assert(registered);
-		});
-		it("should not set actor.combo when using offGCD skills", function() {
+					beforeEach(function() {
+						SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+						actor.action(time, target);
+					});
 
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "SteelPeak");
-				registered = true;
+					it("should not emit a skill event", function() {
+						assert(!registered);
+					});
+					it("should not register the skill as combo", function() {
+						assert.strictEqual(actor.combo.name, "");
+					});
+					it("should not update actor.nextAction", function() {
+						assert.strictEqual(actor.nextAction,  time + GCD / 2);
+					});
+					it("should update actor.nextOffGCD", function() {
+						assert.strictEqual(actor.nextOffGCD,  time + GCD);
+					});
+				});
+
+				describe("with off GCD skill", function() {
+
+					beforeEach(function() {
+						Demolish.nextAvailable = Infinity; // bypassing SteelPeak
+						actor.action(time, target);
+					});
+
+					it("should emit a skill event", function() {
+						assert(registered);
+					});
+					it("should not register the skill as combo", function() {
+						assert.strictEqual(actor.combo.name, "");
+					});
+					it("should not update actor.nextAction", function() {
+						assert.strictEqual(actor.nextAction,  time + GCD / 2);
+					});
+					it("should update actor.nextOffGCD", function() {
+						assert.strictEqual(actor.nextOffGCD,  time + GCD);
+					});
+				});
 			});
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-
-			actor.action(time, target); // SteelPeak (offGCD)
-
-			assert.strictEqual(actor.combo.name, "");
-			assert.strictEqual(actor.combo.time, null);
-
-			assert(registered);
 		});
-		it("should preserve actor.combo when using offGCD skills", function() {
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
-
-			// DEMOLISH
-			actor.once(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "Demolish");
-				registered = true;
-			});
-			actor.action(time, target); // Demolish (onGCD)
-			assert(registered);
-			registered = false;
-
-			// STEELPEAK
-			actor.once(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "SteelPeak");
-				registered = true;
-			});
-			SteelPeak.nextAvailable = 0; // enabling SteelPeak
-			actor.action(time + GCD, target); // SteelPeak (offGCD)
-
-			assert.strictEqual(actor.combo.name, "Demolish");
-			assert.strictEqual(actor.combo.time, time);
-
-			assert(registered);
-		});
-		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using onGCD skills in Action window", function() {
-			
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "Demolish");
-				registered = true;
-			});
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
-
-			actor.action(time, target); // Demolish (onGCD)
-
-			assert.strictEqual(actor.nextAction, time + GCD);
-			assert.strictEqual(actor.nextOffGCD, time + GCD / 2);
-
-			assert(registered);
-		});
-		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using offGCD skills in Action window", function() {
-
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "SteelPeak");
-				registered = true;
-			});
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-
-			actor.action(time, target); // SteelPeak (offGCD)
-
-			assert.strictEqual(actor.nextAction, time + GCD / 2);
-			assert.strictEqual(actor.nextOffGCD, time + GCD);
-
-			assert(registered);
-
-		});
-		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using offGCD skills in OffGCD window", function() {
-
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "SteelPeak");
-				registered = true;
-			});
-
-			actor.nextAction = time + GCD;
-			actor.nextOffGCD = time + GCD / 2;
-			time = actor.nextOffGCD;
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-
-			actor.action(time, target); // SteelPeak (offGCD)
-
-			assert.strictEqual(actor.nextAction, time + GCD / 2);
-			assert.strictEqual(actor.nextOffGCD, time + GCD);
-
-			assert(registered);
-		});
-		it("should not register skill damage and update actor.nextAction and actor.nextOffGCD when using onGCD skills in OffGCD window", function() {
-
-			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
-				assert.strictEqual(skill.name, "Demolish");
-				registered = true;
-			});
-
-			actor.nextAction = time + GCD;
-			actor.nextOffGCD = time + GCD / 2;
-			time = actor.nextOffGCD;
-
-			actor.nextAutoAttack = Infinity; // bypassing auto attack
-			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
-
-			actor.action(time, target); // Demolish (onGCD)
-
-			assert.strictEqual(actor.nextAction, time + GCD / 2);
-			assert.strictEqual(actor.nextOffGCD, time + GCD);
-
-			assert(!registered);
-		});
-
 	});
+
 	describe("#preTick", function() {
 
 		it("should remove expired auras from the actor", function() {
