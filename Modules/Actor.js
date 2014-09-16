@@ -11,6 +11,8 @@ var extend = require("util")._extend,
 exports = module.exports = Actor;
 
 function Actor(conf) {
+	if(!arguments.length)
+		throw "no configuration provided";
 	if(!(conf.model in models))
 		throw "invalid model : " + conf.model;
 
@@ -79,59 +81,63 @@ extend(Actor.prototype, {
 						previousValue : currentValue;
 			}, false);
 
-		if(pendingAura && pendingAura.time === time) {
+		switch(time) {
+			case pendingAura && pendingAura.time:
+				this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
+				this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
+				break;
+			case this.nextAutoAttack:
+				this.emit(this.events.autoattack,
+					stats.getAutoAttackDamage()*target.getStats().transformIncomingDamage,
+					stats.getCriticalRate(),
+					time
+				);
 
-			this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
-			this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
+				this.nextAutoAttack = stats.getAutoAttackDelay() + time;
+				break;
+			case this.nextAction:
+			case this.nextOffGCD:
+				skillName = this.rotation.run(this, target, time);
 
-		} else if(this.nextAutoAttack === time) {
+				if(skillName && (skill = this.model.skills[skillName])) {
+					GCD = stats.getGCD();
 
-			this.emit(this.events.autoattack,
-				stats.getAutoAttackDamage()*target.getStats().transformIncomingDamage,
-				stats.getCriticalRate(),
-				time
-			);
-
-			this.nextAutoAttack = stats.getAutoAttackDelay() + time;
-
-		} 
-		else {
-			skillName = this.rotation.run(this, target, time);
-
-			if(skillName && (skill = this.model.skills[skillName])) {
-				GCD = stats.getGCD();
-
-				if(skill.isOffGCD) {
-					if(this.nextAction === time) {
-						this.nextAction = time + GCD / 2;
-						this.nextOffGCD = time + GCD;
+					if(skill.isOffGCD) {
+						if(this.nextAction === time) {
+							this.nextAction = time + GCD / 2;
+							this.nextOffGCD = time + GCD;
+						} else {
+							// this.nextAction = time + GCD / 2;
+							this.nextOffGCD = time + GCD;
+						}
 					} else {
-						// this.nextAction = time + GCD / 2;
-						this.nextOffGCD = time + GCD;
+						if(this.nextAction === time) {
+							this.nextAction = time + GCD;
+							this.nextOffGCD = time + GCD / 2;
+						} else {
+							// this.nextAction = time + GCD / 2;
+							this.nextOffGCD = time + GCD;
+							break;
+						}
+						this.setCombo(skill.name, time);
 					}
+
+					stats = stats.buff(skill.stats);
+					this.emit(this.events.skill,
+				  		stats.getSkillDamage(skill.getPotency(this, target, time))*target.getStats().transformIncomingDamage,
+				  		stats.getSkillCriticalRate(),
+				  		skill,
+				  		time
+				  	);
+					skill._onUse(time + GCD / 2, this, target);
 				} else {
-					if(this.nextAction === time) {
-						this.nextAction = time + GCD;
-						this.nextOffGCD = time + GCD / 2;
-					} else {
-						// this.nextAction = time + GCD / 2;
-						this.nextOffGCD = time + GCD;
-						return;
-					}
-					this.setCombo(skill.name, time);
+					throw new Error(skillName + " is not a valid skill");
 				}
-
-				stats = stats.buff(skill.stats);
-				this.emit(this.events.skill,
-			  		stats.getSkillDamage(skill.getPotency(this, target, time))*target.getStats().transformIncomingDamage,
-			  		stats.getSkillCriticalRate(),
-			  		skill,
-			  		time
-			  	);
-				skill._onUse(time + GCD / 2, this, target);
-			} else {
-				throw new Error(skillName + " is not a valid skill", skillName);
-			}
+				break;
+			default:
+				throw new Error("unoptimized action call \n"
+								+ "name: " + this.name + "\n"
+								+ "time: " + time);
 		}
 	},
 
