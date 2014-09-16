@@ -60,6 +60,10 @@ extend(Dragoon.prototype, {
 			}
 		}),
 
+		/*
+			--- DOTs ---
+		*/
+
 		ChaosThrust: Combo("Disembowel", {
 			name: "ChaosThrust",
 			potency: 200,
@@ -75,10 +79,6 @@ extend(Dragoon.prototype, {
 				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
 		}),
-
-		/*
-			--- DOTs ---
-		*/
 
 		/*
 			--- Buffs ---
