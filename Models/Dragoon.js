@@ -80,6 +80,14 @@ extend(Dragoon.prototype, {
 			}
 		}),
 
+		Fracture: Skill({
+			name: "Fracture",
+			potency: 100,
+			onUse: function(time, source, target) {
+				target.applyAura(source.model.auras.FractureDOT, source, time);
+			}
+		}),
+
 		/*
 			--- Buffs ---
 		*/
@@ -239,6 +247,12 @@ extend(Dragoon.prototype, {
 			name: "PhlebotomizeDOT",
 			duration: 18,
 			potency: 25,
+		}),
+
+		FractureDOT: Aura({
+			name: "FractureDOT",
+			duration: 18,
+			potency: 20,
 		}),
 
 		/*

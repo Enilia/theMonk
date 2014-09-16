@@ -1,4 +1,3 @@
-
 if(IsOffGCD()) {
 	if(IsReady("FullThrust") && IsReady("LifeSurge"))
 		return "LifeSurge";
@@ -50,5 +49,8 @@ if(AuraTimeRemaining(target, "ChaosThrustDOT", self) < GCD() * 3)
 
 if(AuraTimeRemaining(target, "PhlebotomizeDOT", self) < 4)
 	return "Phlebotomize";
+
+// if (AuraTimeRemaining(target, "FractureDOT", self) < 4)
+// 	return "Fracture";
 
 return "TrueThrust";
