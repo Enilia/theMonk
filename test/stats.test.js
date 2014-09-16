@@ -57,6 +57,21 @@ describe('Stats', function() {
 		});
 	});
 
+	describe('#getSkillCriticalRate', function() {
+		it("should return 0.12", function() {
+			assert.strictEqual(stats.getSkillCriticalRate().toFixed(2), "0.12");
+		});
+		it("should return 0.42 with 30% crit bonus", function() {
+			assert.strictEqual(stats.buff({criticalHitChance: 0.3}).getSkillCriticalRate().toFixed(2), "0.42");
+		});
+		it("should return 0.52 with 30% crit bonus and 10% skill crit bonus", function() {
+			assert.strictEqual(stats.buff({criticalHitChance: 0.3, skillCriticalHitChance: 0.1}).getSkillCriticalRate().toFixed(2), "0.52");
+		});
+		it("should not exceed 1", function() {
+			assert.strictEqual(stats.buff({criticalHitChance: 1}).getSkillCriticalRate().toFixed(2), "1.00");
+		});
+	});
+
 	describe('#getGCD', function() {
 		it("should return 2.44", function() {
 			assert.strictEqual(stats.getGCD().toFixed(2), "2.44");
