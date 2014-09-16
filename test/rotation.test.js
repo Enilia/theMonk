@@ -150,4 +150,14 @@ describe("Rotation", function() {
 
 	});
 
+	describe("#GCD", function() {
+
+		it("should return the actor GCD", function() {
+			var rotation = getRotation("GCD");
+
+			assert.strictEqual(rotation.run(actor, target, time).toFixed(2), "2.44");
+		});
+
+	});
+
 });

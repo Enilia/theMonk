@@ -41,6 +41,7 @@ extend(Rotation.prototype, {
 			IsReady: this.IsReady.bind(this, time, actor),
 			IsOffGCD: this.IsOffGCD.bind(this, time, actor),
 			AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
+			GCD: this.GCD.bind(this, actor),
 			use: use,
 
 		});
@@ -72,6 +73,10 @@ extend(Rotation.prototype, {
 		} else {
 			return 0;
 		}
+	},
+
+	GCD: function(actor) {
+		return actor.getStats().getGCD();
 	},
 
 });
