@@ -85,7 +85,10 @@ extend(Simulation.prototype, {
 	},
 
 	checkActors: function() {
-		this.target.preTick(this.scheduled.time);
+		this.actors.forEach(function(actor) {
+			actor.preTick(this.scheduled.time);
+		}, this);
+		
 		this.actors.forEach(function(actor) {
 			if(actor.nextTimeOfInterest(this.scheduled.time) <= 0) {
 				actor.action(this.scheduled.time, this.target);
