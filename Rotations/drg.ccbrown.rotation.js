@@ -45,7 +45,7 @@ if (IsReady("VorpalThrust"))
 	return "VorpalThrust";
 
 if (AuraTimeRemaining(self, "HeavyThrust", self) < 3.0 * GCD())
-	return "HeavyThrust-flank";
+	return "HeavyThrust";
 
 if (AuraTimeRemaining(target, "ChaosThrustDOT", self) < 3.0 * GCD())
 	return "ImpulseDrive";
