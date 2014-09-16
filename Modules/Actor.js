@@ -124,11 +124,13 @@ extend(Actor.prototype, {
 				stats = stats.buff(skill.stats);
 				this.emit(this.events.skill,
 			  		stats.getSkillDamage(skill.getPotency(this, target, time))*target.getStats().transformIncomingDamage,
-			  		stats.getCriticalRate(),
+			  		stats.getSkillCriticalRate(),
 			  		skill,
 			  		time
 			  	);
 				skill._onUse(time + GCD / 2, this, target);
+			} else {
+				throw new Error(skillName + " is not a valid skill", skillName);
 			}
 		}
 	},

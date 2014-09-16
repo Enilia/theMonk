@@ -3,14 +3,6 @@ var vm = require("vm"),
 
 exports = module.exports = Rotation;
 
-// function Rotation(filename) {
-// 	var code = "use(function () {" + 
-// 		"var use;" + 
-// 		fs.readFileSync(filename, "utf8") +
-// 		"}());";
-// 	this.script = vm.createScript(code);
-// }
-
 function Rotation(code) {
 	code =  "use(function () {" + 
 			"var use;" + 
@@ -41,6 +33,8 @@ extend(Rotation.prototype, {
 			IsReady: this.IsReady.bind(this, time, actor),
 			IsOffGCD: this.IsOffGCD.bind(this, time, actor),
 			AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
+			GCD: this.GCD.bind(this, actor),
+			CooldownRemaining: this.CooldownRemaining.bind(this, time, actor),
 			use: use,
 
 		});
@@ -73,5 +67,13 @@ extend(Rotation.prototype, {
 			return 0;
 		}
 	},
+
+	GCD: function(actor) {
+		return actor.getStats().getGCD();
+	},
+
+	CooldownRemaining: function(time, actor, skillName) {
+		return actor.model.skills[skillName].cooldownRemaining(time);
+	}
 
 });

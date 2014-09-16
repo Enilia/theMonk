@@ -14,12 +14,12 @@ function sim(stats, rotation, time, reporter) {
 				 .run()
 				 // .useCcbrownFormulas()
 				 .report(
-						Reporter.prototype.reportResume
-						| Reporter.prototype.reportRotation
+						// Reporter.prototype.reportResume
+						// | Reporter.prototype.reportRotation
 						// | Reporter.prototype.reportSkill
 						// | Reporter.prototype.reportAutoAttack
 						// | Reporter.prototype.reportDoT
-						| Reporter.prototype.reportDamage
+						// | Reporter.prototype.reportDamage
 			 	 );
 }
 

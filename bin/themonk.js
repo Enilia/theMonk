@@ -61,8 +61,18 @@ if(program.reporterOptions) {
 	}, 0);
 }
 
-(new TheMonk).addActor(program.model, program.model, program.stats, program.rotation)
-			 .setReporter(program.reporter)
-			 .setMaxTime(program.time)
-			 .run()
-			 .report(program.reporterOptions);
+var themonk = new TheMonk();
+
+process.on('SIGINT', function() {
+  themonk.cancel();
+  // themonk.report(program.reporterOptions);
+  process.exit(1);
+});
+
+themonk.addActor(program.model, program.model, program.stats, program.rotation)
+		.setReporter(program.reporter)
+		.setMaxTime(program.time)
+		.run()
+		.on("end", function(sim) {
+			sim.report(program.reporterOptions);
+		});

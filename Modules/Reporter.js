@@ -37,6 +37,8 @@ extend(Reporter.prototype, {
 		this.simDuration = simDuration;
 	},
 
+	reportOptions: {},
+
 	report: function() {
 
 	},

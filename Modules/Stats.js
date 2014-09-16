@@ -46,6 +46,10 @@ extend(Stats.prototype, {
 		return Math.max(Math.min((0.0697*this.critical-18.437)/100+this.criticalHitChance, 1), 0);
 	},
 
+	getSkillCriticalRate: function() {
+		return Math.max(Math.min((0.0697*this.critical-18.437)/100+this.criticalHitChance+this.skillCriticalHitChance, 1), 0);
+	},
+
 	/*
 	*/
 	getGCD: function () {
@@ -88,9 +92,7 @@ extend(Stats, {
 					((0.0032*this.strength+0.4162)*this.weaponDamage)
 					+(0.1*this.strength-0.3529)
 					+((this.determination-202)*0.035)
-				)*(1+(0.5*
-					Math.min(this.getCriticalRate()+this.skillCriticalHitChance, 1)
-				))*this.increaseDamage;
+				)*(1+(0.5*this.getSkillCriticalRate()))*this.increaseDamage;
 			},
 
 			getAutoAttackDamage: function () {
@@ -116,9 +118,7 @@ extend(Stats, {
 					this.weaponDamage * (
 						this.strength * 0.00389 + this.determination * 0.0008 + 0.01035
 					) + (this.strength * 0.08034) + (this.determination * 0.02622)
-				)*(1+(0.5*
-					Math.min(this.getCriticalRate()+this.skillCriticalHitChance, 1)
-				))*this.increaseDamage;
+				)*(1+(0.5*this.getSkillCriticalRate()))*this.increaseDamage;
 			},
 
 			getAutoAttackDamage: function () {
