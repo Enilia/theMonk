@@ -13,7 +13,6 @@ describe("Rotation", function() {
 	var actor, time, target;
 
 	beforeEach(function() {
-		var code = fs.readFileSync(path.resolve(__dirname, "rotations/monk.demolish.rotation.js"), "utf8");
 
 		return function() {
 			actor = new Actor({
@@ -28,7 +27,6 @@ describe("Rotation", function() {
 					determination: 				367,
 					skillSpeed: 				397,
 				},
-				rotation: fs.readFileSync(path.resolve(__dirname, "rotations/monk.demolish.rotation.js"), "utf8"),
 			});
 			target = new Actor({
 				model: "Monk",

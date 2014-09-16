@@ -117,8 +117,7 @@ describe('Aura', function() {
 			var actor = new Actor({
 				model: "Monk",
 				name: "Monk",
-				stats: {},
-				rotation: fs.readFileSync(path.resolve(__dirname, "rotations/monk.demolish.rotation.js"), "utf8"),
+				inactive: true,
 			});
 
 			it("should execute when the aura is applied on the actor", function() {

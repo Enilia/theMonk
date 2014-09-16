@@ -63,29 +63,20 @@ extend(Actor.prototype, {
 	combo: null,
 
 	nextTimeOfInterest: function(time) {
+		if(arguments.length === 0) throw new Error("Missing first argument");
 		var next = this.pendingAuras.reduce(function(previousValue, currentValue) {
 			return Math.min(previousValue, currentValue.time);
 		}, Infinity);
 
-		return Math.min(this.nextAction, this.nextAutoAttack, this.nextOffGCD, next) - (time || 0);
+		return Math.min(this.nextAction, this.nextAutoAttack, this.nextOffGCD, next) - time;
 	},
 
 	action: function(time, target) {
 
-		this.preTick(time);
-
 		var stats = this.getStats(),
-			GCD, skillName,
-			pendingAura = this.pendingAuras.reduce(function(previousValue, currentValue) {
-				return previousValue.time < currentValue.time ?
-						previousValue : currentValue;
-			}, false);
+			GCD, skillName;
 
 		switch(time) {
-			case pendingAura && pendingAura.time:
-				this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
-				this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
-				break;
 			case this.nextAutoAttack:
 				this.emit(this.events.autoattack,
 					stats.getAutoAttackDamage()*target.getStats().transformIncomingDamage,
@@ -142,6 +133,14 @@ extend(Actor.prototype, {
 	},
 
 	preTick: function(time) {
+
+		this.pendingAuras.slice().forEach(function(pendingAura) {
+			if(pendingAura.time === time) {
+				this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
+				this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
+			}
+		}, this);
+
 		this.activeAuras.slice().forEach(function(aura) {
 			if(aura.expireTime < time) {
 				this.removeAura(aura, time, true);

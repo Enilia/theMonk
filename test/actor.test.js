@@ -21,7 +21,7 @@ describe("Actor", function() {
 			rotation: fs.readFileSync(
 					path.resolve(
 						__dirname
-						, "rotations/monk.demolish.rotation.js"
+						, "rotations/monk.actor.test.rotation.js"
 					), "utf8"
 				),
 		},
@@ -55,11 +55,13 @@ describe("Actor", function() {
 
 	describe("#nextTimeOfInterest", function() {
 
-		describe("should return the time before the next time of interest", function() {
-
-			it("with no time provided", function() {
-				assert.strictEqual(actor.nextTimeOfInterest(), time);
+		it("throws if missing first argument", function() {
+			assert.throws(function() {
+				actor.nextTimeOfInterest();
 			});
+		});
+
+		describe("should return the time before the next time of interest", function() {
 
 			it("at time", function() {
 				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
@@ -84,7 +86,7 @@ describe("Actor", function() {
 				name: "Target",
 				inactive: true,
 			},
-			target, registered, SteelPeak, GCD;
+			target, registered, SteelPeak, Demolish, GCD;
 
 		before(function() {
 			GCD = actor.getStats().getGCD();
@@ -94,6 +96,7 @@ describe("Actor", function() {
 			registered = false;
 			target = new Actor(targetConf);
 			SteelPeak = actor.model.skills.SteelPeak;
+			Demolish = actor.model.skills.Demolish;
 		});
 
 		describe("when auto attacking", function() {
@@ -133,10 +136,59 @@ describe("Actor", function() {
 		});
 		
 		describe("when using skills", function() {
-			it("");
+			var eventDamage, eventCritical, eventSkill, eventTime;
+
+			beforeEach(function() {
+				actor.nextAutoAttack = Infinity; // bypassing auto attack
+				actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+					eventDamage = damage;
+					eventCritical = critical;
+					eventSkill = skill;
+					eventTime = _time;
+					registered = true;
+				});
+			});
+
+			it("should register skill effects in actor.pendingAuras", function() {
+				SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+				actor.action(time, target); // Demolish (onGCD)
+				assert.strictEqual(actor.pendingAuras.length, 2); // [OpoOpoForm, GreasedLigthning]
+			});
+			it("should register skill effects in target.pendingAuras", function() {
+				SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+				actor.action(time, target); // Demolish (onGCD)
+				assert.strictEqual(target.pendingAuras.length, 1); // [DemolishDOT]
+			});
+			it("should emit a skill event", function() {
+				actor.action(time, target);
+				assert(registered);
+			});
+			it("should pass damage value to event callback", function() {
+				actor.action(time, target);
+				assert.strictEqual(eventDamage.toFixed(2), "277.95");
+			});
+			it("should pass critical value to event callback", function() {
+				actor.action(time, target);
+				assert.strictEqual(eventCritical.toFixed(2), "0.12");
+			});
+			it("should pass skill used to event callback", function() {
+				actor.action(time, target);
+				assert.strictEqual(eventSkill.name, "SteelPeak");
+			});
+			it("should pass time value to event callback", function() {
+				actor.action(time, target);
+				assert.strictEqual(eventTime, time);
+			});
+			it("should throw if the rotation returns an invalid skill name", function() {
+				SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+				Demolish.nextAvailable = Infinity; // bypassing Demolish
+				assert.throws(function() {
+					actor.action(time, target);
+				});
+			});
 		});
 
-		it("should apply skill effects", function() {
+		xit("should apply skill effects", function() {
 
 			actor.nextAutoAttack = Infinity; // bypassing auto attack
 			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
