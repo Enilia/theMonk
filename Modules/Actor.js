@@ -4,8 +4,8 @@ var extend = require("util")._extend,
 	Stats = require('./Stats'),
 	Rotation = require('./Rotation'),
 	models = {
-		Monk: "../Models/Monk",
-		Dragoon: "../Models/Dragoon"
+		Monk: require("../Models/Monk"),
+		Dragoon: require("../Models/Dragoon"),
 	};
 
 exports = module.exports = Actor;
@@ -16,7 +16,7 @@ function Actor(conf) {
 
 	EventEmitter.call(this);
 
-	var model = require(models[conf.model]);
+	var model = models[conf.model];
 
 	this.activeAuras = [];
 	this.pendingAuras = [];
