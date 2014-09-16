@@ -3,14 +3,6 @@ var vm = require("vm"),
 
 exports = module.exports = Rotation;
 
-// function Rotation(filename) {
-// 	var code = "use(function () {" + 
-// 		"var use;" + 
-// 		fs.readFileSync(filename, "utf8") +
-// 		"}());";
-// 	this.script = vm.createScript(code);
-// }
-
 function Rotation(code) {
 	code =  "use(function () {" + 
 			"var use;" + 
