@@ -12,15 +12,16 @@ function sim(stats, rotation, time, reporter) {
 				 .setReporter(reporter)
 				 .setMaxTime(time)
 				 .run()
-				 // .useCcbrownFormulas()
-				 .report(
+				 .on("end", function(sim) {
+				 	sim.report(
 						// Reporter.prototype.reportResume
 						// | Reporter.prototype.reportRotation
 						// | Reporter.prototype.reportSkill
 						// | Reporter.prototype.reportAutoAttack
 						// | Reporter.prototype.reportDoT
 						// | Reporter.prototype.reportDamage
-			 	 );
+				 	);
+				 });
 }
 
 var time = 60*3;
