@@ -52,7 +52,7 @@ extend(theMonk.prototype, {
 			this.reporter = new reporter;
 		} else {
 			try {
-				this.reporter = new (require('./Reporters/'+reporter+'.reporter'));
+				this.reporter = new (require('./Reporters/'+reporter));
 			} catch(err) {
 				try {
 					this.reporter = new (require(reporter));

@@ -101,10 +101,70 @@ describe("Actor", function() {
 			assert.strictEqual(target.findAura("DemolishDOT", actor).name, "DemolishDOT");
 
 		});
+		it("should set actor.combo when using onGCD skills", function() {
+
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "Demolish");
+				registered = true;
+			});
+
+			actor.nextAutoAttack = Infinity; // bypassing auto attack
+			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+
+			actor.action(time, target); // Demolish (onGCD)
+
+			assert.strictEqual(actor.combo.name, "Demolish");
+			assert.strictEqual(actor.combo.time, time);
+
+			assert(registered);
+		});
+		it("should not set actor.combo when using offGCD skills", function() {
+
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "SteelPeak");
+				registered = true;
+			});
+
+			actor.nextAutoAttack = Infinity; // bypassing auto attack
+
+			actor.action(time, target); // SteelPeak (offGCD)
+
+			assert.strictEqual(actor.combo.name, "");
+			assert.strictEqual(actor.combo.time, null);
+
+			assert(registered);
+		});
+		it("should preserve actor.combo when using offGCD skills", function() {
+
+			actor.nextAutoAttack = Infinity; // bypassing auto attack
+			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
+
+			// DEMOLISH
+			actor.once(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "Demolish");
+				registered = true;
+			});
+			actor.action(time, target); // Demolish (onGCD)
+			assert(registered);
+			registered = false;
+
+			// STEELPEAK
+			actor.once(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "SteelPeak");
+				registered = true;
+			});
+			SteelPeak.nextAvailable = 0; // enabling SteelPeak
+			actor.action(time + GCD, target); // SteelPeak (offGCD)
+
+			assert.strictEqual(actor.combo.name, "Demolish");
+			assert.strictEqual(actor.combo.time, time);
+
+			assert(registered);
+		});
 		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using onGCD skills in Action window", function() {
 			
-			actor.on(actor.events.skill, function(damage, critical, name, _time) {
-				assert.strictEqual(name, "Demolish");
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "Demolish");
 				registered = true;
 			});
 
@@ -120,8 +180,8 @@ describe("Actor", function() {
 		});
 		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using offGCD skills in Action window", function() {
 
-			actor.on(actor.events.skill, function(damage, critical, name, _time) {
-				assert.strictEqual(name, "SteelPeak");
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "SteelPeak");
 				registered = true;
 			});
 
@@ -137,8 +197,8 @@ describe("Actor", function() {
 		});
 		it("should register skill damage and update actor.nextAction and actor.nextOffGCD when using offGCD skills in OffGCD window", function() {
 
-			actor.on(actor.events.skill, function(damage, critical, name, _time) {
-				assert.strictEqual(name, "SteelPeak");
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "SteelPeak");
 				registered = true;
 			});
 
@@ -157,8 +217,8 @@ describe("Actor", function() {
 		});
 		it("should not register skill damage and update actor.nextAction and actor.nextOffGCD when using onGCD skills in OffGCD window", function() {
 
-			actor.on(actor.events.skill, function(damage, critical, name, _time) {
-				assert.strictEqual(name, "Demolish");
+			actor.on(actor.events.skill, function(damage, critical, skill, _time) {
+				assert.strictEqual(skill.name, "Demolish");
 				registered = true;
 			});
 
@@ -205,9 +265,9 @@ describe("Actor", function() {
 
 			var registered = false;
 
-			actor.on(actor.events.auraTick, function(damage, critical, name, _time) {
+			actor.on(actor.events.auraTick, function(damage, critical, skill, _time) {
 				assert.strictEqual(_time, time);
-				assert.strictEqual(name, "DemolishDOT");
+				assert.strictEqual(skill.name, "DemolishDOT");
 				assert.strictEqual(damage.toFixed(2), "74.12");
 				assert.strictEqual(critical.toFixed(2), "0.12");
 				registered = true;
@@ -248,6 +308,36 @@ describe("Actor", function() {
 			assert.strictEqual(actor.nextOffGCD, time + actor.getStats().getGCD() / 2);
 		});
 
+	});
+	describe("#setCombo", function() {
+
+		it("should set the actor combo", function() {
+			actor.setCombo("TrueThrust", time);
+
+			assert.strictEqual(actor.combo.name, "TrueThrust");
+			assert.strictEqual(actor.combo.time, time);
+		});
+	});
+	describe("#hasCombo", function() {
+
+		it("should return true if the combo was set within 10 seconds", function() {
+			actor.setCombo("TrueThrust", time);
+
+			assert.strictEqual(actor.hasCombo("TrueThrust", time), true);
+			assert.strictEqual(actor.hasCombo("TrueThrust", time+10), true);
+		});
+
+		it("should return false if the combo name is wrong", function() {
+			actor.setCombo("TrueThrust", time);
+
+			assert.strictEqual(actor.hasCombo("VorpalThrust", time), false);
+		});
+
+		it("should return false if the time since last combo is over 10 seconds", function() {
+			actor.setCombo("TrueThrust", time);
+
+			assert.strictEqual(actor.hasCombo("TrueThrust", time+11), false);
+		});
 	});
 	describe("#applyAuraImmediate", function() {
 
