@@ -6,51 +6,85 @@ var Actor = require("../Modules/Actor"),
 
 describe("Actor", function() {
 
-	var actor,
+	var actorConf = {
+			model: "Monk",
+			name: "Monk",
+			stats: {
+				weaponDamage: 				51,
+				weaponAutoAttack: 			40.8,
+				weaponAutoAttackDelay: 		2.4,
+				strength: 					562,
+				critical: 					441,
+				determination: 				367,
+				skillSpeed: 				397,
+			},
+			rotation: fs.readFileSync(
+					path.resolve(
+						__dirname
+						, "rotations/monk.demolish.rotation.js"
+					), "utf8"
+				),
+		},
+		actor,
 		time;
 
 	beforeEach(function() {
-		var code = fs.readFileSync(path.resolve(__dirname, "rotations/monk.demolish.rotation.js"), "utf8");
+		actor = new Actor(actorConf);
+		time = 10;
 
-		return function() {
-			actor = new Actor({
-				model: "Monk",
-				name: "Monk",
-				stats: {
-					weaponDamage: 				51,
-					weaponAutoAttack: 			40.8,
-					weaponAutoAttackDelay: 		2.4,
-					strength: 					562,
-					critical: 					441,
-					determination: 				367,
-					skillSpeed: 				397,
-				},
-				rotation: code,
+		actor.prepareForBattle(time);
+		actor.activeAuras.splice(0, actor.activeAuras.length);
+		actor.pendingAuras.splice(0, actor.pendingAuras.length);
+	});
+
+	describe("new Actor", function() {
+
+		it("should throw if no argument is provided", function() {
+			assert.throws(function() {
+				new Actor;
 			});
-
-			actor.prepareForBattle(time = 10);
-			actor.activeAuras.splice(0, actor.activeAuras.length);
-			actor.pendingAuras.splice(0, actor.pendingAuras.length);
-		};
-	}());
-
-	it("should throw if no model is provided", function() {
-		assert.throws(function() {
-			new Actor({});
 		});
+
+		it("should throw if no model is provided", function() {
+			assert.throws(function() {
+				new Actor({});
+			});
+		});
+
 	});
 
 	describe("#nextTimeOfInterest", function() {
 
-		it("should return the time before the next time of interest", function() {
-			assert.strictEqual(actor.nextTimeOfInterest(time), 0);
-			assert.strictEqual(actor.nextTimeOfInterest(time - 3), 3);
+		describe("should return the time before the next time of interest", function() {
+
+			it("with no time provided", function() {
+				assert.strictEqual(actor.nextTimeOfInterest(), time);
+			});
+
+			it("at time", function() {
+				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
+			});
+
+			it("at time - x", function() {
+				assert.strictEqual(actor.nextTimeOfInterest(time - 3), 3);
+			});
+
+			it("at time + x", function() {
+				assert.strictEqual(actor.nextTimeOfInterest(time + 3), -3);
+			});
+
 		});
 
 	});
+
 	describe("#action", function() {
 
-		var target, registered, SteelPeak, GCD;
+		var targetConf = {
+				model: "Monk",
+				name: "Target",
+				inactive: true,
+			},
+			target, registered, SteelPeak, GCD;
 
 		before(function() {
 			GCD = actor.getStats().getGCD();
@@ -58,43 +92,59 @@ describe("Actor", function() {
 
 		beforeEach(function() {
 			registered = false;
-			target = new Actor({
-				model: "Monk",
-				name: "Target",
-				inactive: true,
-			});
+			target = new Actor(targetConf);
 			SteelPeak = actor.model.skills.SteelPeak;
 		});
 
-		it("should register auto attack damage when auto attacking", function() {
+		describe("when auto attacking", function() {
+			var eventDamage, eventCritical, eventTime;
 
-			actor.on(actor.events.autoattack, function(damage, critical, _time) {
-				assert.strictEqual(_time, time);
-				assert.strictEqual(damage.toFixed(2), "158.75");
-				assert.strictEqual(critical.toFixed(2), "0.12");
-				registered = true;
+			beforeEach(function() {
+				actor.nextAction = Infinity; // bypassing action
+				actor.nextOffGCD = Infinity; // bypassing OffGCD
+				actor.on(actor.events.autoattack, function(damage, critical, _time) {
+					eventDamage = damage;
+					eventCritical = critical;
+					eventTime = _time;
+					registered = true;
+				});
+				actor.action(time, target); // Auto Attack
 			});
 
-			actor.action(time, target); // Auto Attack
+			it("should emit an autoattack event", function() {
+				assert(registered);
+			});
 
-			assert(registered);
+			it("should pass damage value to event callback", function() {
+				assert.strictEqual(eventDamage.toFixed(2), "158.75");
+			});
 
+			it("should pass critical value to event callback", function() {
+				assert.strictEqual(eventCritical.toFixed(2), "0.12");
+			});
+
+			it("should pass time value to event callback", function() {
+				assert.strictEqual(eventTime, time);
+			});
+
+			it("should update actor.nextAutoAttack", function() {
+				assert.strictEqual(actor.nextAutoAttack, actor.getStats().getAutoAttackDelay() + time);
+			});
 		});
-		it("should update actor.nextAutoAttack according to stats", function() {
-
-			actor.action(time, target); // Auto Attack
-
-			assert.strictEqual(actor.nextAutoAttack, actor.getStats().getAutoAttackDelay() + time);
+		
+		describe("when using skills", function() {
+			it("");
 		});
+
 		it("should apply skill effects", function() {
 
 			actor.nextAutoAttack = Infinity; // bypassing auto attack
 			SteelPeak.nextAvailable = Infinity; // bypassing SteelPeak
 
 			actor.action(time, target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			actor.action(actor.nextTimeOfInterest(), target); // Demolish (onGCD)
-			target.action(target.nextTimeOfInterest(), target); // Demolish (onGCD)
+			actor.action(actor.nextTimeOfInterest(), target); // OpoOpoForm (auraApply)
+			actor.action(actor.nextTimeOfInterest(), target); // GreasedLigthning (auraApply)
+			target.action(target.nextTimeOfInterest(), target); // Demolish (auraApply)
 
 			assert.strictEqual(actor.findAura("GreasedLigthning", actor).name, "GreasedLigthning");
 			assert.strictEqual(actor.findAura("OpoOpoForm", actor).name, "OpoOpoForm");
