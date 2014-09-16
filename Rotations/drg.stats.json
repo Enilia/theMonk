@@ -1,0 +1,10 @@
+{
+	"model":						"Dragoon", 
+	"weaponDamage": 				53,
+	"weaponAutoAttack": 			52.29,
+	"weaponAutoAttackDelay": 		2.96,
+	"strength": 					575,
+	"critical": 					526,
+	"determination": 				290,
+	"skillSpeed": 					431
+}
