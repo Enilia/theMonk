@@ -55,6 +55,10 @@ describe("Actor", function() {
 
 	describe("#nextTimeOfInterest", function() {
 
+		beforeEach(function() {
+			actor.nextAction = actor.nextOffGCD = actor.nextAutoAttack = time;
+		});
+
 		it("throws if missing first argument", function() {
 			assert.throws(function() {
 				actor.nextTimeOfInterest();
@@ -63,15 +67,36 @@ describe("Actor", function() {
 
 		describe("should return the time before the next time of interest", function() {
 
-			it("at time", function() {
+			it("when time of interest is autoattacking", function() {
+				actor.nextAction = actor.nextOffGCD = Infinity;
 				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
 			});
 
-			it("at time - x", function() {
+			it("when time of interest is onGCD", function() {
+				actor.nextAutoAttack = actor.nextOffGCD = Infinity;
+				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
+			});
+
+			it("when time of interest is offGCD", function() {
+				actor.nextAutoAttack = actor.nextAction = Infinity;
+				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
+			});
+
+			it("when time of interest is pending auras", function() {
+				actor.applyAura(actor.model.auras.FistOfFire, actor, time);
+				actor.nextAutoAttack = actor.nextAction = actor.nextAutoAttack = Infinity;
+				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
+			});
+
+			it("when time of interest is now", function() {
+				assert.strictEqual(actor.nextTimeOfInterest(time), 0);
+			});
+
+			it("when time of interest is in the past", function() {
 				assert.strictEqual(actor.nextTimeOfInterest(time - 3), 3);
 			});
 
-			it("at time + x", function() {
+			it("when time of interest is in the future", function() {
 				assert.strictEqual(actor.nextTimeOfInterest(time + 3), -3);
 			});
 
