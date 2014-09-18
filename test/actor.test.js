@@ -322,45 +322,55 @@ describe("Actor", function() {
 	});
 
 	describe("#preTick", function() {
+		var GreasedLigthning;
+
+		beforeEach(function() {
+			GreasedLigthning = actor.model.auras.GreasedLigthning;
+		});
+
+		it("should apply pending auras on the actor", function() {
+			actor.applyAura(GreasedLigthning, actor, time);
+			actor.preTick(time);
+			assert.strictEqual(actor.activeAuras.length, 1);
+		});
 
 		it("should remove expired auras from the actor", function() {
-
-			assert.strictEqual(actor.activeAuras.length, 0);
-
-			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
-			actor.applyAuraImmediate(actor.model.auras.TwinSnakes, actor, time);
-
-			assert.strictEqual(actor.activeAuras.length, 2);
-
-			actor.preTick(time+13); // GreasedLigthning expired
-
-			assert.strictEqual(actor.activeAuras.length, 1);
-
-			actor.preTick(time+16); // TwinSnakes expired
-
+			actor.applyAuraImmediate(GreasedLigthning, actor, time - GreasedLigthning.prototype.duration - 1);
+			actor.preTick(time);
 			assert.strictEqual(actor.activeAuras.length, 0);
 		});
 
 	});
+
 	describe("#tick", function() {
+		var eventDamage, eventCritical, eventAura, eventTime, registered;
 
-		it("should register DoTs damage", function() {
-
-			var registered = false;
-
-			actor.on(actor.events.auraTick, function(damage, critical, skill, _time) {
-				assert.strictEqual(_time, time);
-				assert.strictEqual(skill.name, "DemolishDOT");
-				assert.strictEqual(damage.toFixed(2), "74.12");
-				assert.strictEqual(critical.toFixed(2), "0.12");
-				registered = true;
-			});
-
+		beforeEach(function() {
 			actor.applyAuraImmediate(actor.model.auras.DemolishDOT, actor, time);
-
+			actor.on(actor.events.auraTick, function(damage, critical, aura, _time) {
+					eventDamage = damage;
+					eventCritical = critical;
+					eventAura = aura;
+					eventTime = _time;
+					registered = true;
+			});
 			actor.tick(time);
+		});
 
+		it("should emit an auraTick event", function() {
 			assert(registered);
+		});
+		it("should pass damage value to event callback", function() {
+			assert.strictEqual(eventDamage.toFixed(2), "74.12");
+		});
+		it("should pass critical value to event callback", function() {
+			assert.strictEqual(eventCritical.toFixed(2), "0.12");
+		});
+		it("should pass ticked aura to event callback", function() {
+			assert.strictEqual(eventAura.name, "DemolishDOT");
+		});
+		it("should pass time value to event callback", function() {
+			assert.strictEqual(eventTime, time);
 		});
 
 	});
@@ -375,9 +385,8 @@ describe("Actor", function() {
 
 			target.prepareForBattle(time);
 
-			assert.strictEqual(actor.findAura("FistOfFire", actor), false);
+			assert.strictEqual(target.nextAction, Infinity);
 		});
-
 		it("should apply auras according to model", function() {
 			actor.prepareForBattle(time);
 
