@@ -142,10 +142,11 @@ extend(SimpleReporter.prototype, {
 
 			if(options & this.reportOptions.Damage) {
 				for(var skill in this.skillList) {
-					console.log(" - %s [%s] : %s",
+					console.log(" - %s [%s] : %s (%s)",
 						skill,
 						this.skillList[skill].length,
-						(sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2)
+						(sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2),
+						(sum(this.skillList[skill]) / this.simDuration).toFixed(2)
 					);
 				}
 			}
