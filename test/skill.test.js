@@ -10,23 +10,9 @@ describe('Skill', function() {
 
 	describe(".createSkill", function() {
 
-		var Bootshine = new (createSkill({
-				name: "Bootshine",
-				potency: 150,
-				onUse: function(time, source, target) {
-					called = true;
-				}
-			})),
-			BootshineRear = new (createSkill({
-				name: "BootshineRear",
-				potency: 150,
-				stats: {
-					criticalHitChance:1
-				},
-				onUse: function(time, source, target) {
-					called = true;
-				}
-			})),
+		var HowlingFist, called, time;
+
+		beforeEach(function() {
 			HowlingFist = new (createSkill({
 				name: "HowlingFist",
 				potency: 170,
@@ -35,17 +21,13 @@ describe('Skill', function() {
 				onUse: function(time, source, target) {
 					called = true;
 				}
-			})),
-			called = false,
-			time = 0;
-
-		beforeEach(function() {
+			}));
 			called = false;
 			time = 0;
 		});
 
 		it("should create a Skill constructor", function() {
-			assert.strictEqual(Skill.prototype.isPrototypeOf(Bootshine), true);
+			assert(HowlingFist instanceof Skill);
 		});
 
 		describe("#_onUse", function() {
@@ -71,7 +53,13 @@ describe('Skill', function() {
 		});
 
 		describe("#cooldownRemaining", function() {
-			it("should return the time remaining before the skill next use");
+			it("should return the time remaining before the skill next use", function() {
+				assert.strictEqual(HowlingFist.cooldownRemaining(time), 0);
+
+				HowlingFist._onUse(time);
+
+				assert.strictEqual(HowlingFist.cooldownRemaining(time), HowlingFist.recast);
+			});
 		});
 
 	});
