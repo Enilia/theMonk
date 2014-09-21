@@ -1,0 +1,1 @@
+return CooldownRemaining("InternalRelease");
