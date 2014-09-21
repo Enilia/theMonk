@@ -16,17 +16,17 @@ describe('Stats', function() {
 			})
 		);
 
-	// before(function() {
-	// 	console.log("");
-	// 	console.log("\t" + stats.weaponAutoAttack		+ "\t = weaponDamage");
-	// 	console.log("\t" + stats.weaponDamage			+ "\t = weaponAutoAttack");
-	// 	console.log("\t" + stats.skillSpeed				+ "\t = weaponAutoAttackDelay");
-	// 	console.log("\t" + stats.weaponAutoAttackDelay	+ "\t = strength");
-	// 	console.log("\t" + stats.strength				+ "\t = critical");
-	// 	console.log("\t" + stats.critical				+ "\t = determination");
-	// 	console.log("\t" + stats.determination			+ "\t = skillSpeed");
-	// 	console.log("");
-	// });
+	before(function() {
+		// console.log("");
+		// console.log("    " + stats.weaponAutoAttack		+ " = weaponDamage");
+		// console.log("    " + stats.weaponDamage			+ "\t = weaponAutoAttack");
+		// console.log("    " + stats.skillSpeed				+ "\t = weaponAutoAttackDelay");
+		// console.log("    " + stats.weaponAutoAttackDelay	+ "\t = strength");
+		// console.log("    " + stats.strength				+ "\t = critical");
+		// console.log("    " + stats.critical				+ "\t = determination");
+		// console.log("    " + stats.determination			+ "\t = skillSpeed");
+		// console.log("");
+	});
 
 	describe('#buff', function() {
 		it("should return a new Object", function() {
