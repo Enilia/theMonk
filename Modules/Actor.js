@@ -32,6 +32,8 @@ function Actor(conf) {
 	this.model = new model;
 	this.name = conf.name;
 	this.inactive = !!conf.inactive;
+
+	this.rotation.on("error", this.emit.bind(this, "error"));
 }
 
 inherits(Actor, EventEmitter);
@@ -122,13 +124,13 @@ extend(Actor.prototype, {
 				  	);
 					skill._onUse(time + GCD / 2, this, target);
 				} else {
-					throw new Error(skillName + " is not a valid skill");
+					this.emit("error", new Error(skillName + " is not a valid skill"));
 				}
 				break;
 			default:
-				throw new Error("unoptimized action call \n"
-								+ "name: " + this.name + "\n"
-								+ "time: " + time);
+				this.emit("error", new Error("unoptimized action call \n"
+											+ "name: " + this.name + "\n"
+											+ "time: " + time));
 		}
 	},
 

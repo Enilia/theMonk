@@ -1,5 +1,7 @@
-var extend = require("util")._extend,
-	inherits = require("util").inherits,
+var util = require("util"),
+	format = util.format,
+	extend = util._extend,
+	inherits = util.inherits,
 	EventEmitter = require("events").EventEmitter,
 	Actor = require('./Modules/Actor'),
 	Simulation = require("./Modules/Simulation"),
@@ -26,18 +28,27 @@ extend(theMonk.prototype, {
 	maxTime: 60*3,
 
 	addActor: function(model, name, stats, rotation) {
+		var actor;
+
 		if(this.actors.some(function(actor) {
 			return actor.name === name;
 		})) {
-			console.warn("duplicate Actor '%s'. this may leads in unexpected results in reporter", name);
+			this.emit("warn", format("duplicate Actor '%s'. this may leads in unexpected results in reporter", name));
 		}
 
-		this.actors.push(new Actor({
+		actor = new Actor({
 			model: model,
 			name: name,
 			stats: stats,
 			rotation: rotation,
-		}));
+		});
+
+		actor.on("error", function(e) {
+			this.simulation.cancel();
+			this.emit("error", e);
+		}.bind(this));
+
+		this.actors.push(actor);
 
 		return this;
 	},
@@ -62,7 +73,7 @@ extend(theMonk.prototype, {
 				try {
 					this.reporter = new (require(reporter));
 				} catch(err) {
-					throw new Error('invalid reporter "' + reporter + '"');
+					this.emit("error", new Error('invalid reporter "' + reporter + '"'));
 				}
 			}
 		}
