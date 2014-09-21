@@ -66,7 +66,7 @@ extend(Simulation.prototype, {
 	},
 
 	end: function() {
-		this.reporter && this.reporter.end(this.scheduled.maxTime);
+		this.reporter && this.reporter.end(Math.min(this.scheduled.maxTime, this.scheduled.time));
 		this.emit("end");
 	},
 
