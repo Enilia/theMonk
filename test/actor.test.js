@@ -436,28 +436,32 @@ describe("Actor", function() {
 		it("should register new aura", function() {
 			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
-			assert.strictEqual(actor.activeAuras[0].name, "GreasedLigthning");
+			assert(actor.activeAuras[0] instanceof actor.model.auras.GreasedLigthning);
 			assert.strictEqual(actor.activeAuras[0].owner, actor);
 		});
 		it("should refresh aura", function() {
 			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
-			assert.strictEqual(actor.activeAuras[0].name, "GreasedLigthning");
+			assert(actor.activeAuras[0] instanceof actor.model.auras.GreasedLigthning);
 			assert.strictEqual(actor.activeAuras[0].count, 2);
 		});
 		it("should not register new aura if the aura cancels itself", function() {
 			actor.applyAuraImmediate(actor.model.auras.PerfectBalance, actor, time);
 			actor.applyAuraImmediate(actor.model.auras.RaptorForm, actor, time);
 
-			assert.strictEqual(actor.findAura("PerfectBalance", actor).name, "PerfectBalance");
+			assert(actor.findAura("PerfectBalance", actor) instanceof actor.model.auras.PerfectBalance);
 			assert.strictEqual(actor.findAura("RaptorForm", actor), false);
 		})
 
 	});
 	describe("#applyAura", function() {
 
-		it("should register new auras in pending auras");
+		it("should register new auras in pending auras", function() {
+			actor.applyAura(actor.model.auras.GreasedLigthning, actor, time);
+
+			assert.strictEqual(actor.pendingAuras[0].aura, actor.model.auras.GreasedLigthning);
+		});
 
 	});
 	describe("#findAura", function() {
@@ -468,7 +472,8 @@ describe("Actor", function() {
 		it("should return the aura if present", function() {
 			actor.applyAuraImmediate(actor.model.auras.GreasedLigthning, actor, time);
 
-			assert.strictEqual(actor.findAura("GreasedLigthning", actor).name, "GreasedLigthning");
+			assert(actor.activeAuras[0] instanceof actor.model.auras.GreasedLigthning, 
+				"actor.activeAuras[0] instanceof actor.model.auras.GreasedLigthning");
 		});
 
 	});
