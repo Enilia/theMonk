@@ -62,7 +62,7 @@ describe('Aura', function() {
 
 		describe("new .createAura", function() {
 			it("should create an Aura constructor", function() {
-				assert.strictEqual(Aura.prototype.isPrototypeOf(new partyBonus), true);
+				assert(new partyBonus instanceof Aura);
 			});
 
 			it("should setup the aura with the provided configuration object", function() {
