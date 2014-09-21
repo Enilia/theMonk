@@ -71,7 +71,7 @@ extend(SimpleReporter.prototype, {
 	},
 
 	reportOptions: {
-		Resume: 		0x000001,
+		Summary: 		0x000001,
 		Rotation: 		0x000002,
 		Skill:			0x000004,
 		AutoAttack:		0x000008,
@@ -83,7 +83,7 @@ extend(SimpleReporter.prototype, {
 
 		var makeTitle = this.makeTitle;
 
-		options = options || this.reportOptions.Resume
+		options = options || this.reportOptions.Summary
 						   | this.reportOptions.Rotation
 						   | this.reportOptions.Skill
 						   | this.reportOptions.AutoAttack
@@ -124,13 +124,15 @@ extend(SimpleReporter.prototype, {
 			}, this);
 		}
 
-		if(options & this.reportOptions.Resume) {
+		if(options & this.reportOptions.Summary) {
 
 			function sum(array) {
 				return array.reduce(function(p,c) {
 					return p+c;
 				});
 			}
+
+			console.log("Fight duration: %ds", this.simDuration);
 
 			console.log("DPS: %s", 
 				(sum(this.damageList) / this.simDuration).toFixed(2)

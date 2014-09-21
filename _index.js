@@ -14,7 +14,7 @@ function sim(stats, rotation, time, reporter, model) {
 						.run()
 						.on("end", function(sim) {
 							sim.report(
-								Reporter.prototype.reportOptions.Resume
+								Reporter.prototype.reportOptions.Summary
 								// | Reporter.prototype.reportRotation
 								// | Reporter.prototype.reportSkill
 								// | Reporter.prototype.reportAutoAttack
