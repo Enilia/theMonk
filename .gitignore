@@ -78,3 +78,5 @@ $RECYCLE.BIN/
 *.bat
 coverage.html
 doc.html
+Modules/deprecated
+test/deprecated
