@@ -3,12 +3,12 @@ var Reporter = require("./Reporters/simpleReporter"),
 	path = require("path"),
 	fs = require("fs");
 
-function sim(stats, rotation, time, reporter) {
+function sim(stats, rotation, time, reporter, model) {
 
 	stats = JSON.parse(fs.readFileSync(path.resolve(__dirname, "Rotations", stats + ".stats.json"), "utf8"));
 	rotation = fs.readFileSync(path.resolve(__dirname, "Rotations", rotation + ".rotation.js"), "utf8");
 
-	return (new theMonk).addActor("Monk", "Monk", stats, rotation)
+	return (new theMonk).addActor(model, "Monk", stats, rotation)
 						.setReporter(reporter)
 						.setMaxTime(time)
 						.run()
@@ -19,7 +19,7 @@ function sim(stats, rotation, time, reporter) {
 								// | Reporter.prototype.reportSkill
 								// | Reporter.prototype.reportAutoAttack
 								// | Reporter.prototype.reportDoT
-								// | Reporter.prototype.reportOptions.Damage
+								| Reporter.prototype.reportOptions.Damage
 							);
 						});
 }
@@ -28,33 +28,38 @@ var time = 60*3;
 
 // console.log("");
 // console.log("=== MNK TELRAL (valkky) ===");
-// sim("Telral", "monk_2", time, Reporter);
+// sim("Telral", "monk_2", time, Reporter, "Monk");
 
 // console.log("");
 // console.log("=== MNK TELRAL (valkky) ===");
-// sim("Telral", "monk_3", time, Reporter);
+// sim("Telral", "monk_3", time, Reporter, "Monk");
 
-sim("Enilia", "monk_2", time, Reporter).on("end", function() {
-	console.log("=== MNK ENILIA (valkky) ===");
-	console.log("");
-});
+// sim("drg", "drg", time, Reporter, "Dragoon").on("end", function() {
+// 	console.log("=== DRG BIS CC (valkky) ===");
+// 	console.log("");
+// });
 
-// sim("MNK_110_DTR", "monk_2", time, Reporter).on("end", function() {
+// sim("Enilia", "monk_2", time, Reporter, "Monk").on("end", function() {
+// 	console.log("=== MNK ENILIA (valkky) ===");
+// 	console.log("");
+// });
+
+// sim("MNK_110_DTR", "monk_2", time, Reporter, "Monk").on("end", function() {
 // 	console.log("=== MNK 110 DTR ===");
 // 	console.log("");
 // });
 
-// sim("MNK_110_CC", "monk_2", time, Reporter).on("end", function() {
+// sim("MNK_110_CC", "monk_2", time, Reporter, "Monk").on("end", function() {
 // 	console.log("=== MNK 110 CC ===");
 // 	console.log("");
 // });
 
-sim("MNK_115_DTR", "monk_2", time, Reporter).on("end", function() {
+sim("MNK_115_DTR", "monk_2", time, Reporter, "Monk").on("end", function() {
 	console.log("=== MNK 115 DTR ===");
 	console.log("");
 });
 
-sim("MNK_115_CC", "monk_2", time, Reporter).on("end", function() {
+sim("MNK_115_CC", "monk_2", time, Reporter, "Monk").on("end", function() {
 	console.log("=== MNK 115 CC ===");
 	console.log("");
 });
