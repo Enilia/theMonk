@@ -12,9 +12,9 @@ exports = module.exports = Actor;
 
 function Actor(conf) {
 	if(!arguments.length)
-		throw "no configuration provided";
+		this.emit("error", new Error("no configuration provided"));
 	if(!(conf.model in models))
-		throw "invalid model : " + conf.model;
+		this.emit("error", new Error("invalid model : " + conf.model));
 
 	EventEmitter.call(this);
 
@@ -32,6 +32,8 @@ function Actor(conf) {
 	this.model = new model;
 	this.name = conf.name;
 	this.inactive = !!conf.inactive;
+
+	this.rotation.on("error", this.emit.bind(this, "error"));
 }
 
 inherits(Actor, EventEmitter);
@@ -63,7 +65,8 @@ extend(Actor.prototype, {
 	combo: null,
 
 	nextTimeOfInterest: function(time) {
-		if(arguments.length === 0) throw new Error("Missing first argument");
+		if(arguments.length === 0) 
+			this.emit("error", new Error("Missing first argument"));
 		var next = this.pendingAuras.reduce(function(previousValue, currentValue) {
 			return Math.min(previousValue, currentValue.time);
 		}, Infinity);
@@ -122,13 +125,13 @@ extend(Actor.prototype, {
 				  	);
 					skill._onUse(time + GCD / 2, this, target);
 				} else {
-					throw new Error(skillName + " is not a valid skill");
+					this.emit("error", new Error(skillName + " is not a valid skill"));
 				}
 				break;
 			default:
-				throw new Error("unoptimized action call \n"
-								+ "name: " + this.name + "\n"
-								+ "time: " + time);
+				this.emit("error", new Error("unoptimized action call \n"
+											+ "name: " + this.name + "\n"
+											+ "time: " + time));
 		}
 	},
 

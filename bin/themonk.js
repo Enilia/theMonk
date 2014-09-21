@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// example
+// themonk -s Rotations\Enilia.stats.json -r Rotations\monk_2.rotation.js -t 180 -o "Resume|Damage"
+
 var program = require("commander"),
 	fs = require("fs"),
 	path = require("path"),
@@ -75,4 +78,13 @@ themonk.addActor(program.model, program.model, program.stats, program.rotation)
 		.run()
 		.on("end", function(sim) {
 			sim.report(program.reporterOptions);
+		}).on("error", function(e) {
+			// console.error(e.error.toString());
+			if(e.name === "RotationError") {
+				console.error(e.stack);
+				console.error(e.error.stack);
+			} else {
+				console.error(e.stack);
+			}
+			process.exit(1);
 		});

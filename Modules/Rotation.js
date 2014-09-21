@@ -1,4 +1,5 @@
-var vm = require("vm"),
+var RotationError = require("./Errors").RotationError,
+	vm = require("vm"),
 	EventEmitter = require("events").EventEmitter,
 	inherits = require("util").inherits,
 	extend = require("util")._extend;
@@ -7,8 +8,9 @@ exports = module.exports = Rotation;
 
 function Rotation(code) {
 	EventEmitter.call(this);
+	this.source = code;
 	code =  "use(function () {" + 
-			"var use;" + 
+			"var use;\n" + 
 			code +
 			"}());";
 	this.script = vm.createScript(code);
@@ -18,6 +20,7 @@ inherits(Rotation, EventEmitter);
 
 extend(Rotation.prototype, {
 
+	source: null,
 	script: null,
 
 	run: function(actor, target, time) {
@@ -55,10 +58,11 @@ extend(Rotation.prototype, {
 			// I.E:
 			// assert(e instanceof Error)
 			// will throw.
-			// the following workaround can
+			// the following workarounds can
 			// be used instead :
 			// assert(/^Error/.test(e.toString()))
-			this.emit("error", e);
+			// assert.equal(e.name, "Error")
+			this.emit("error", new RotationError(e, arguments, this.source));
 		}
 
 		return skillName;

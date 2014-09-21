@@ -90,6 +90,7 @@ extend(Simulation.prototype, {
 		}, this);
 		
 		this.actors.forEach(function(actor) {
+			if(this.stopped) return;
 			if(actor.nextTimeOfInterest(this.scheduled.time) <= 0) {
 				actor.action(this.scheduled.time, this.target);
 			}

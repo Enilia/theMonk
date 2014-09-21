@@ -1,5 +1,6 @@
 var Rotation = require("../Modules/Rotation"),
 	Actor = require("../Modules/Actor"),
+	RotationError = require("../Modules/Errors").RotationError,
 	assert = require("assert"),
 	path = require("path"),
 	fs = require("fs");
@@ -48,26 +49,43 @@ describe("Rotation", function() {
 			assert.strictEqual(rotation.run(), "skillname");
 		});
 
-		it("should throw an exception when the rotation fail", function() {
-			var rotation = getRotation("throw");
+		// it("should throw an exception when the rotation fail", function() {
+		// 	var rotation = getRotation("throw");
 
-			assert.throws(function() {
-				rotation.run();
+		// 	assert.throws(function() {
+		// 		rotation.run();
+		// 	});
+		// });
+
+		describe("Exceptions", function() {
+
+			describe("RotationError", function() {
+				var error;
+
+				before(function() {
+					var rotation = getRotation("RotationError");
+
+					rotation.on("error", function(e) {
+						error = e;
+					});
+
+					rotation.run();
+				});
+
+				it("should emit an error event when the rotation fail", function() {
+					assert(error instanceof RotationError);
+				});
+
+				describe("#getSourceErrorPosition", function() {
+
+					it("should return the error position", function() {
+						assert.deepEqual(error.getSourceErrorPosition(), {
+							line: 6,
+							col: 2,
+						});
+					});
+				});
 			});
-		});
-
-		it("should emit an error event when the rotation fail", function() {
-			var rotation = getRotation("throw"),
-				thrown = false;
-
-			rotation.on("error", function(e) {
-				thrown = true;
-				assert(/^ReferenceError/.test(e.toString()));
-			});
-
-			rotation.run();
-
-			assert(thrown);
 		});
 
 	});
