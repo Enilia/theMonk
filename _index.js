@@ -21,6 +21,15 @@ function sim(stats, rotation, time, reporter, model) {
 								// | Reporter.prototype.reportDoT
 								| Reporter.prototype.reportOptions.Damage
 							);
+						}).on("error", function(e) {
+							// console.error(e.error.toString());
+							if(e.name === "RotationError") {
+								console.error(e.stack);
+								console.error(e.error.stack);
+							} else {
+								console.error(e.stack);
+							}
+							process.exit(1);
 						});
 }
 
