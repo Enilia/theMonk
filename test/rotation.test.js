@@ -171,7 +171,15 @@ describe("Rotation", function() {
 
 	describe("#CooldownRemaining", function() {
 
-		it("should return the time remaining before the skill next use");
+		it("should return the time remaining before the skill next use", function() {
+			var rotation = getRotation("CooldownRemaining");
+
+			assert.strictEqual(rotation.run(actor, target, time), 0);
+
+			actor.model.skills.InternalRelease._onUse(time, actor, target);
+
+			assert.strictEqual(rotation.run(actor, target, time), actor.model.skills.InternalRelease.recast);
+		});
 
 	});
 
