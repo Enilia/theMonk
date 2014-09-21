@@ -13,29 +13,26 @@ describe("Rotation", function() {
 	var actor, time, target;
 
 	beforeEach(function() {
-
-		return function() {
-			actor = new Actor({
-				model: "Monk",
-				name: "Monk",
-				stats: {
-					weaponDamage: 				51,
-					weaponAutoAttack: 			40.8,
-					weaponAutoAttackDelay: 		2.4,
-					strength: 					562,
-					critical: 					441,
-					determination: 				367,
-					skillSpeed: 				397,
-				},
-			});
-			target = new Actor({
-				model: "Monk",
-				name: "Target",
-				inactive: true,
-			});
-			actor.prepareForBattle(time = 10);
-		};
-	}());
+		actor = new Actor({
+			model: "Monk",
+			name: "Monk",
+			stats: {
+				weaponDamage: 				51,
+				weaponAutoAttack: 			40.8,
+				weaponAutoAttackDelay: 		2.4,
+				strength: 					562,
+				critical: 					441,
+				determination: 				367,
+				skillSpeed: 				397,
+			},
+		});
+		target = new Actor({
+			model: "Monk",
+			name: "Target",
+			inactive: true,
+		});
+		actor.prepareForBattle(time = 10);
+	});
 
 	describe("#run", function() {
 
@@ -51,12 +48,26 @@ describe("Rotation", function() {
 			assert.strictEqual(rotation.run(), "skillname");
 		});
 
-		it("should throw an exception if the rotation fail", function() {
+		it("should throw an exception when the rotation fail", function() {
 			var rotation = getRotation("throw");
 
 			assert.throws(function() {
 				rotation.run();
 			});
+		});
+
+		it("should emit an error event when the rotation fail", function() {
+			var rotation = getRotation("throw"),
+				thrown = false;
+
+			rotation.on("error", function(e) {
+				thrown = true;
+				assert(/^ReferenceError/.test(e.toString()));
+			});
+
+			rotation.run();
+
+			assert(thrown);
 		});
 
 	});

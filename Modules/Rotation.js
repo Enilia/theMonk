@@ -1,9 +1,12 @@
 var vm = require("vm"),
+	EventEmitter = require("events").EventEmitter,
+	inherits = require("util").inherits,
 	extend = require("util")._extend;
 
 exports = module.exports = Rotation;
 
 function Rotation(code) {
+	EventEmitter.call(this);
 	code =  "use(function () {" + 
 			"var use;" + 
 			code +
@@ -11,33 +14,38 @@ function Rotation(code) {
 	this.script = vm.createScript(code);
 }
 
+inherits(Rotation, EventEmitter);
+
 extend(Rotation.prototype, {
 
 	script: null,
 
 	run: function(actor, target, time) {
-		var skillName;
+		var context = {
+				console: console, // used for debug
+
+				self: actor,
+				target: target,
+
+				AuraCount: this.AuraCount,
+				IsReady: this.IsReady.bind(this, time, actor),
+				IsOffGCD: this.IsOffGCD.bind(this, time, actor),
+				AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
+				GCD: this.GCD.bind(this, actor),
+				CooldownRemaining: this.CooldownRemaining.bind(this, time, actor),
+				use: use,
+			},
+			skillName;
 
 		function use(s) {
 			skillName = s;
 		}
 
-		this.script.runInNewContext({
-
-			console: console, // used for debug
-
-			self: actor,
-			target: target,
-
-			AuraCount: this.AuraCount,
-			IsReady: this.IsReady.bind(this, time, actor),
-			IsOffGCD: this.IsOffGCD.bind(this, time, actor),
-			AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
-			GCD: this.GCD.bind(this, actor),
-			CooldownRemaining: this.CooldownRemaining.bind(this, time, actor),
-			use: use,
-
-		});
+		try {
+			this.script.runInNewContext(context);
+		} catch(e) {
+			this.emit("error", e);
+		}
 
 		return skillName;
 	},
