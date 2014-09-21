@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // example
-// themonk -s Rotations\Enilia.stats.json -r Rotations\monk_2.rotation.js -t 180 -o "Resume|Damage"
+// themonk -s Rotations\Enilia.stats.json -r Rotations\monk_2.rotation.js -t 180 -o "Summary|Damage"
 
 var program = require("commander"),
 	fs = require("fs"),
@@ -67,9 +67,10 @@ if(program.reporterOptions) {
 var themonk = new TheMonk();
 
 process.on('SIGINT', function() {
-  themonk.cancel();
-  // themonk.report(program.reporterOptions);
-  process.exit(1);
+	themonk.cancel();
+	process.nextTick(function() {
+		process.exit(1);
+	});
 });
 
 themonk.addActor(program.model, program.model, program.stats, program.rotation)
