@@ -44,6 +44,20 @@ extend(Rotation.prototype, {
 		try {
 			this.script.runInNewContext(context);
 		} catch(e) {
+			// === WARNING ===
+			// Errors thrown in the virtual
+			// machine belongs to a very 
+			// different context. Therefore
+			// tests on prototype or
+			// inheritance will fail even
+			// when one would consider them
+			// true. 
+			// I.E:
+			// assert(e instanceof Error)
+			// will throw.
+			// the following workaround can
+			// be used instead :
+			// assert(/^Error/.test(e.toString()))
 			this.emit("error", e);
 		}
 
