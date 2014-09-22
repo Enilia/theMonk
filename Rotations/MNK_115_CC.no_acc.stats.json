@@ -1,0 +1,10 @@
+{
+	"model":						"Monk", 
+	"weaponDamage": 				53,
+	"weaponAutoAttack": 			46.64,
+	"weaponAutoAttackDelay": 		2.64,
+	"strength": 					565,
+	"critical": 					549,
+	"determination": 				304,
+	"skillSpeed": 					477
+}
