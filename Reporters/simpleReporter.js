@@ -143,13 +143,25 @@ extend(SimpleReporter.prototype, {
 			);
 
 			if(options & this.reportOptions.Damage) {
+				console.log("%s|%s|%s|%s",
+					makeTitle("Skill", 22, '-'),
+					makeTitle("#", 5, '-'),
+					makeTitle("Mean Dmg", 10, '-'),
+					makeTitle("Dps", 8, '-')
+				);
 				for(var skill in this.skillList) {
-					console.log(" - %s [%s] : %s (%s)",
-						skill,
-						this.skillList[skill].length,
-						(sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2),
-						(sum(this.skillList[skill]) / this.simDuration).toFixed(2)
+					console.log("%s | %s | %s | %s",
+						(skill + Array(21).join(' ')).slice(0, 21),
+						(Array( 5).join(' ') + this.skillList[skill].length).slice(-3),
+						(Array(10).join(' ') + (sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2)).slice(-8),
+						(Array( 7).join(' ') + (sum(this.skillList[skill]) / this.simDuration).toFixed(2)).slice(-7)
 					);
+					// console.log(" - %s [%s] : %s (%s)",
+					// 	skill,
+					// 	this.skillList[skill].length,
+					// 	(sum(this.skillList[skill]) / this.skillList[skill].length).toFixed(2),
+					// 	(sum(this.skillList[skill]) / this.simDuration).toFixed(2)
+					// );
 				}
 			}
 
