@@ -2,11 +2,6 @@ var isOpoOpoForm = AuraCount(self, "OpoOpoForm", self) || AuraCount(self, "Perfe
 var isRaptorForm = AuraCount(self, "RaptorForm", self) || AuraCount(self, "PerfectBalance", self);
 var isCoeurlForm = AuraCount(self, "CoeurlForm", self) || AuraCount(self, "PerfectBalance", self);
 
-if(!AuraCount(target, "TouchOfDeathDOT", self)
-	// && !isOpoOpoForm && !isRaptorForm && !isCoeurlForm
-)
-	return "TouchOfDeath";
-
 if(AuraCount(self, "GreasedLigthning", self) < 3) {
 	if(!AuraCount(self, "PerfectBalance", self) && IsReady("PerfectBalance"))
 		return "PerfectBalance";
@@ -39,6 +34,12 @@ if(AuraCount(self, "PerfectBalance", self))
 				return "DemolishRear";
 			else 
 				return "SnapPunchFlank";
+
+
+if(!AuraCount(target, "TouchOfDeathDOT", self)
+	&& AuraCount(self, "BloodForBlood", self)
+)
+	return "TouchOfDeath";
 
 if(isRaptorForm)
 	if(AuraTimeRemaining(self, "TwinSnakes", self) < 4)
