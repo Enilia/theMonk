@@ -5,9 +5,6 @@ exports = module.exports = Aura;
 exports.createAura = createAura;
 
 function Aura(conf) {
-	if(false === this.onApply(conf && conf.owner)) {
-		return false;
-	}
 	this.refresh(conf);
 }
 

@@ -123,7 +123,7 @@ extend(Actor.prototype, {
 				  		skill,
 				  		time
 				  	);
-					skill._onUse(time + GCD / 2, this, target);
+					skill._onUse(Math.min(this.nextAction, this.nextOffGCD), this, target);
 				} else {
 					this.emit("error", new Error(skillName + " is not a valid skill"));
 				}
@@ -196,7 +196,7 @@ extend(Actor.prototype, {
 	},
 
 	applyAuraImmediate: function(aura, source, time, stats) {
-		var _aura;
+		var _aura = this.findAura(aura.prototype.name, source);
 
 		conf = {
 			stats: stats || source.getStats(),
@@ -206,13 +206,14 @@ extend(Actor.prototype, {
 
 		conf.stats.skillCriticalHitChance = 0; // DoTs don't benefit this
 
-		if(_aura = this.findAura(aura.prototype.name, source)) {
+		if(_aura && _aura.onApply(source, time) !== false) {
 			_aura.refresh(conf);
-			this.emit(this.events.auraRefresh, aura, time);
+			this.emit(this.events.auraRefresh, _aura, time);
 		} else {
-			if(_aura = new aura(conf)) {
+			_aura = new aura(conf);
+			if(_aura.onApply(source, time) !== false) {
 				this.activeAuras.push(_aura);
-				this.emit(this.events.auraApply, aura, time);
+				this.emit(this.events.auraApply, _aura, time);
 			}
 		}
 	},
