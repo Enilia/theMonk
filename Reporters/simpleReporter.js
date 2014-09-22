@@ -32,7 +32,7 @@ extend(SimpleReporter.prototype, {
 	},
 
 	registerAuraApply: function(actorName, aura, time) {
-
+		this.rotation.push([time, actorName, 0, 0, "auraapply:"+aura.name, "auraapply"]);
 	},
 
 	registerAuraTick: function(actorName, damage, critical, aura, time) {
@@ -40,11 +40,11 @@ extend(SimpleReporter.prototype, {
 	},
 
 	registerAuraRefresh: function(actorName, aura, time) {
-
+		this.rotation.push([time, actorName, 0, 0, "aurarefresh:"+aura.name, "aurarefresh"]);
 	},
 
 	registerAuraExpire: function(actorName, aura, isExpired, time) {
-
+		this.rotation.push([time, actorName, 0, 0, (isExpired ? "auraexpire:" : "auracancel:")+aura.name, "auraexpire"]);
 	},
 
 	_hook: function(actor) {
@@ -77,6 +77,7 @@ extend(SimpleReporter.prototype, {
 		AutoAttack:		0x000008,
 		DoT:			0x000010,
 		Damage:			0x000020,
+		Aura: 			0x000040,
 	},
 
 	report: function(options, actors) {
@@ -91,7 +92,7 @@ extend(SimpleReporter.prototype, {
 						   | this.reportOptions.Damage;
 		actors = actors || Object.keys(this.actors);
 
-		if(options & this.reportOptions.Rotation && (options & (this.reportOptions.Skill | this.reportOptions.AutoAttack | this.reportOptions.DoT))) {
+		if(options & this.reportOptions.Rotation && (options & (this.reportOptions.Skill | this.reportOptions.AutoAttack | this.reportOptions.DoT | this.reportOptions.Aura))) {
 			console.log("%s|%s|%s|%s|%s",
 				makeTitle("Time", 10, '-'),
 				makeTitle("Actor", 12, '-'),
@@ -111,8 +112,12 @@ extend(SimpleReporter.prototype, {
 					&& ( (options & this.reportOptions.Skill) && origin === "skill"
 						|| (options & this.reportOptions.AutoAttack) && origin === "autoattack"
 						|| (options & this.reportOptions.DoT) && origin === "DoT")
+						|| (options & this.reportOptions.Aura) && (origin === "auraapply"
+																|| origin === "aurarefresh"
+																|| origin === "auraexpire")
 					) {
 
+					try {
 					console.log("%s | %s | %s | %s | %s%%",
 						this.formatTime(time),
 						makeTitle(actor, 10, ' '),
@@ -120,6 +125,10 @@ extend(SimpleReporter.prototype, {
 						(Array( 4).join(' ') + damage.toFixed(2)).slice(-7),
 						(Array( 3).join(' ') + critical.toFixed(1)).slice(-6)
 					);
+					} catch(e) {
+						console.log(line);
+						// throw e;
+					}
 				}
 			}, this);
 		}
