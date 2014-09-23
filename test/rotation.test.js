@@ -1,6 +1,7 @@
 var Rotation = require("../Modules/Rotation"),
 	Actor = require("../Modules/Actor"),
-	RotationError = require("../Modules/Errors").RotationError,
+	RotationError = require("../Modules/Errors/RotationError").RotationError,
+	RotationSyntaxError = require("../Modules/Errors/RotationSyntaxError").RotationSyntaxError,
 	assert = require("assert"),
 	path = require("path"),
 	fs = require("fs");
@@ -58,6 +59,11 @@ describe("Rotation", function() {
 		// });
 
 		describe("Exceptions", function() {
+
+			describe("RotationSyntaxError", function() {
+
+				it("should emit an error event when the rotation has syntax errors");
+			});
 
 			describe("RotationError", function() {
 				var error;

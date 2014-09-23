@@ -1,4 +1,5 @@
-var RotationError = require("./Errors").RotationError,
+var RotationError = require("./Errors/RotationError").RotationError,
+	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
 	vm = require("vm"),
 	EventEmitter = require("events").EventEmitter,
 	inherits = require("util").inherits,
@@ -13,7 +14,12 @@ function Rotation(code) {
 			"var use;\n" + 
 			code +
 			"}());";
-	this.script = vm.createScript(code);
+	try {
+		this.script = vm.createScript(code);
+	} catch(e) {
+		setImmediate(this.emit.bind(this, "error", new RotationSyntaxError(e, arguments, this.source)));
+		// this.emit("error", new RotationError(e, arguments, this.source));
+	}
 }
 
 inherits(Rotation, EventEmitter);
