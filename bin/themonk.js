@@ -80,12 +80,14 @@ themonk.addActor(program.model, program.model, program.stats, program.rotation)
 		.on("end", function(sim) {
 			sim.report(program.reporterOptions);
 		}).on("error", function(e) {
-			// console.error(e.error.toString());
-			if(e.name === "RotationError") {
-				console.error(e.stack);
-				console.error(e.error.stack);
-			} else {
-				console.error(e.stack);
+			switch(e.name) {
+				case "RotationError":
+				case "RotationSyntaxError":
+					console.error(e.stack);
+					// console.error(e.error.stack);
+					break;
+				default:
+					console.error(e.stack);
 			}
 			process.exit(1);
 		});
