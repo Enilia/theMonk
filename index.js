@@ -44,7 +44,7 @@ extend(theMonk.prototype, {
 		});
 
 		actor.on("error", function(e) {
-			this.simulation.cancel();
+			this.cancel();
 			this.emit("error", e);
 		}.bind(this));
 
@@ -103,8 +103,11 @@ extend(theMonk.prototype, {
 	},
 
 	cancel: function() {
-		this.simulation.cancel();
-		this.simulation.end();
+		if(this.simulation) {
+			this.simulation.cancel();
+			this.simulation.end();
+		}
+		return this;
 	},
 
 	// report: function(options) {
