@@ -9,12 +9,11 @@ var util = require("util"),
 
 exports = module.exports = theMonk;
 
-function theMonk(options) {
+function theMonk() {
 	EventEmitter.call(this);
-	options = options || {};
-	this.actors = [];
-	// this.setReporter(options.reporter);
-	// options.actors && this.addActors(options.actors);
+
+	this.simulation = new Simulation();
+	this.simulation.on("end", this.emit.bind(this, "end", this));
 }
 
 inherits(theMonk, EventEmitter);
@@ -22,33 +21,29 @@ inherits(theMonk, EventEmitter);
 extend(theMonk.prototype, {
 
 	simulation: null,
-	// reporter: null,
-	actors: null,
 
-	maxTime: 60*3,
+	hasActor: function(name) {
+		return this.simulation.actors.some(function(actor) {
+			return actor.name === name;
+		});
+	},
 
 	addActor: function(model, name, stats, rotation) {
-		var actor;
+		var actors = this.simulation.actors;
 
-		if(this.actors.some(function(actor) {
-			return actor.name === name;
-		})) {
-			this.emit("warn", format("duplicate Actor '%s'. this may leads in unexpected results in reporter", name));
+		if(this.hasActor(name)) {
+			this.emit("warn", format("Duplicate Actor '%s'.", name));
 		}
 
-		actor = new Actor({
+		actors.push(new Actor({
 			model: model,
 			name: name,
 			stats: stats,
 			rotation: rotation,
-		});
-
-		actor.on("error", function(e) {
+		}).on("error", function(e) {
 			this.cancel();
 			this.emit("error", e);
-		}.bind(this));
-
-		this.actors.push(actor);
+		}.bind(this)));
 
 		return this;
 	},
@@ -61,61 +56,23 @@ extend(theMonk.prototype, {
 		return this;
 	},
 
-	// setReporter: function(reporter) {
-	// 	reporter = reporter || "simpleReporter";
-
-	// 	if("function" == typeof reporter) {
-	// 		this.reporter = new reporter;
-	// 	} else {
-	// 		try {
-	// 			this.reporter = new (require('./Reporters/'+reporter));
-	// 		} catch(err) {
-	// 			try {
-	// 				this.reporter = new (require(reporter));
-	// 			} catch(err) {
-	// 				this.emit("error", new Error('invalid reporter "' + reporter + '"'));
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return this;
-	// },
-
 	setMaxTime: function(time) {
-		this.maxTime = time;
+		this.simulation.scheduled.maxTime = time;
 		return this;
 	},
 
 	run: function() {
 
-		this.simulation = new Simulation({
-			actors: this.actors,
-			// reporter: this.reporter,
-			Scheduled: {
-				maxTime: this.maxTime,
-			}
-		});
-
-		this.simulation.run();
-		this.simulation.on("end", this.emit.bind(this, "end", this));
+		setImmediate(this.simulation.run.bind(this.simulation));
 
 		return this;
 	},
 
 	cancel: function() {
-		if(this.simulation) {
-			this.simulation.cancel();
-			this.simulation.end();
-		}
+		this.simulation.cancel();
+		this.simulation.end();
 		return this;
 	},
-
-	// report: function(options) {
-
-	// 	this.reporter.report(options);
-
-	// 	return this;
-	// },
 
 	useValkkyFormulas: function() {
 		Stats.useValkkyFormulas();
