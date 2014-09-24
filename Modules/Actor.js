@@ -166,6 +166,7 @@ extend(Actor.prototype, {
 			this.emit("error", new Error("invalid model : " + this.modelName));
 
 		this.model = new (models[this.modelName]);
+		this.rotation.prepare();
 
 		if(this.inactive) {
 			return;
