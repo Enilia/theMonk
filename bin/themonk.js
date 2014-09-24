@@ -99,6 +99,8 @@ var themonk = new TheMonk().on("error", function(e) {
 					console.warn(warn);
 				});
 
+new program.reporter(themonk, program.reporterOptions);
+
 process.on('SIGINT', function() {
 	themonk.cancel();
 	process.nextTick(function() {
@@ -110,6 +112,7 @@ themonk.addActor(program.model, program.model, program.stats, program.rotation)
 		// .setReporter(program.reporter)
 		.setMaxTime(program.time)
 		.run()
-		.on("end", function(simulation) {
+		.on("end", function(duration) {
 			// simulation.report(program.reporterOptions);
 		});
+
