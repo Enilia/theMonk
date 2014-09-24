@@ -13,12 +13,8 @@ exports = module.exports = Actor;
 function Actor(conf) {
 	if(!arguments.length)
 		this.emit("error", new Error("no configuration provided"));
-	if(!(conf.model in models))
-		this.emit("error", new Error("invalid model : " + conf.model));
 
 	EventEmitter.call(this);
-
-	var model = models[conf.model];
 
 	this.activeAuras = [];
 	this.pendingAuras = [];
@@ -29,7 +25,7 @@ function Actor(conf) {
 
 	this.stats = new Stats(conf.stats);
 	this.rotation = new Rotation(conf.rotation || "");
-	this.model = new model;
+	this.modelName = conf.model;
 	this.name = conf.name;
 	this.inactive = !!conf.inactive;
 
@@ -61,6 +57,7 @@ extend(Actor.prototype, {
 	pendingAuras: null,
 	stats: null,
 	model: null,
+	modelName: null,
 	rotation: null,
 	combo: null,
 
@@ -165,6 +162,11 @@ extend(Actor.prototype, {
 	},
 
 	prepareForBattle: function(time) {
+		if(!(this.modelName in models))
+			this.emit("error", new Error("invalid model : " + this.modelName));
+
+		this.model = new (models[this.modelName]);
+
 		if(this.inactive) {
 			return;
 		}
