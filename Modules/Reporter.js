@@ -2,8 +2,9 @@ var extend = require("util")._extend;
 
 exports = module.exports = Reporter;
 
-function Reporter(conf) {
-
+function Reporter(theMonk, options) {
+	theMonk.on("start", this.start.bind(this));
+	theMonk.on("end", this.end.bind(this, options));
 }
 
 extend(Reporter.prototype, {
@@ -12,14 +13,15 @@ extend(Reporter.prototype, {
 	duration: null,
 	simDuration: null,
 
-	hook: function(actors) {
-		if(actors instanceof Array)
-			actors.forEach(this._hook, this);
-		else
-			this._hook(actors);
-	},
+	// hook: function(theMonk) {
+	// 	theMonk.simulation.actors.forEach(this.hookActor, this);
+	// 	// else if(actors instanceof Array)
+	// 	// 	actors.forEach(this.hookActor, this);
+	// 	// else
+	// 	// 	this.hookActor(actors);
+	// },
 
-	_hook: function(actor) {
+	hookActor: function(actor) {
 		actor.on(actor.events.autoattack, this.registerAutoattack.bind(this, actor.name));
 		actor.on(actor.events.skill, this.registerSkill.bind(this, actor.name));
 		actor.on(actor.events.auraApply, this.registerAuraApply.bind(this, actor.name));
@@ -28,13 +30,15 @@ extend(Reporter.prototype, {
 		actor.on(actor.events.auraExpire, this.registerAuraExpire.bind(this, actor.name));
 	},
 
-	start: function() {
+	start: function(actors) {
+		actors.forEach(this.hookActor, this);
 		this.startTime = Date.now();
 	},
 
-	end: function(simDuration) {
+	end: function(options, simDuration) {
 		this.duration = Date.now() - this.startTime;
 		this.simDuration = simDuration;
+		this.report(options);
 	},
 
 	reportOptions: {},
