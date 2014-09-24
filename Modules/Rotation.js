@@ -8,8 +8,6 @@ var RotationError = require("./Errors/RotationError").RotationError,
 exports = module.exports = Rotation;
 
 function Rotation(code) {
-	if(!arguments.length)
-		throw new Error("Missing first argument");
 	EventEmitter.call(this);
 	this.source = code;
 }

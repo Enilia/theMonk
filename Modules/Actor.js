@@ -11,9 +11,6 @@ var extend = require("util")._extend,
 exports = module.exports = Actor;
 
 function Actor(conf) {
-	if(!arguments.length)
-		throw new Error("Missing first argument");
-
 	EventEmitter.call(this);
 
 	this.activeAuras = [];
@@ -62,8 +59,6 @@ extend(Actor.prototype, {
 	combo: null,
 
 	nextTimeOfInterest: function(time) {
-		if(arguments.length === 0) 
-			this.emit("error", new Error("Missing first argument"));
 		var next = this.pendingAuras.reduce(function(previousValue, currentValue) {
 			return Math.min(previousValue, currentValue.time);
 		}, Infinity);
