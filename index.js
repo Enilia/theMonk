@@ -13,7 +13,8 @@ function theMonk() {
 	EventEmitter.call(this);
 
 	this.simulation = new Simulation();
-	this.simulation.on("end", this.emit.bind(this, "end", this));
+	this.simulation.on("start", this.emit.bind(this, "start"));
+	this.simulation.on("end", this.emit.bind(this, "end"));
 }
 
 inherits(theMonk, EventEmitter);
