@@ -13,8 +13,8 @@ function theMonk(options) {
 	EventEmitter.call(this);
 	options = options || {};
 	this.actors = [];
-	this.setReporter(options.reporter);
-	options.actors && this.addActors(options.actors);
+	// this.setReporter(options.reporter);
+	// options.actors && this.addActors(options.actors);
 }
 
 inherits(theMonk, EventEmitter);
@@ -22,7 +22,7 @@ inherits(theMonk, EventEmitter);
 extend(theMonk.prototype, {
 
 	simulation: null,
-	reporter: null,
+	// reporter: null,
 	actors: null,
 
 	maxTime: 60*3,
@@ -61,25 +61,25 @@ extend(theMonk.prototype, {
 		return this;
 	},
 
-	setReporter: function(reporter) {
-		reporter = reporter || "simpleReporter";
+	// setReporter: function(reporter) {
+	// 	reporter = reporter || "simpleReporter";
 
-		if("function" == typeof reporter) {
-			this.reporter = new reporter;
-		} else {
-			try {
-				this.reporter = new (require('./Reporters/'+reporter));
-			} catch(err) {
-				try {
-					this.reporter = new (require(reporter));
-				} catch(err) {
-					this.emit("error", new Error('invalid reporter "' + reporter + '"'));
-				}
-			}
-		}
+	// 	if("function" == typeof reporter) {
+	// 		this.reporter = new reporter;
+	// 	} else {
+	// 		try {
+	// 			this.reporter = new (require('./Reporters/'+reporter));
+	// 		} catch(err) {
+	// 			try {
+	// 				this.reporter = new (require(reporter));
+	// 			} catch(err) {
+	// 				this.emit("error", new Error('invalid reporter "' + reporter + '"'));
+	// 			}
+	// 		}
+	// 	}
 
-		return this;
-	},
+	// 	return this;
+	// },
 
 	setMaxTime: function(time) {
 		this.maxTime = time;
@@ -90,7 +90,7 @@ extend(theMonk.prototype, {
 
 		this.simulation = new Simulation({
 			actors: this.actors,
-			reporter: this.reporter,
+			// reporter: this.reporter,
 			Scheduled: {
 				maxTime: this.maxTime,
 			}
@@ -107,12 +107,12 @@ extend(theMonk.prototype, {
 		this.simulation.end();
 	},
 
-	report: function(options) {
+	// report: function(options) {
 
-		this.reporter.report(options);
+	// 	this.reporter.report(options);
 
-		return this;
-	},
+	// 	return this;
+	// },
 
 	useValkkyFormulas: function() {
 		Stats.useValkkyFormulas();
