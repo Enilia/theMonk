@@ -12,7 +12,7 @@ exports = module.exports = Actor;
 
 function Actor(conf) {
 	if(!arguments.length)
-		this.emit("error", new Error("no configuration provided"));
+		throw new Error("Missing first argument");
 
 	EventEmitter.call(this);
 
