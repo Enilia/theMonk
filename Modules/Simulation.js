@@ -33,7 +33,7 @@ extend(Simulation.prototype, {
 			target = this.target,
 			next;
 
-		// reporter && reporter.hook(actors);
+		this.emit("start", actors);
 
 		scheduled.register("tick", this.tick, 3, this);
 		scheduled.register("checkActors", this.checkActors, 0, this);
@@ -41,8 +41,6 @@ extend(Simulation.prototype, {
 		actors.forEach(function(actor) {
 			actor.prepareForBattle(scheduled.time);
 		}, this);
-
-		// reporter && reporter.start();
 
 		setImmediate(this.loop.bind(this));
 	},
@@ -61,8 +59,7 @@ extend(Simulation.prototype, {
 	},
 
 	end: function() {
-		// this.reporter && this.reporter.end(Math.min(this.scheduled.maxTime, this.scheduled.time));
-		this.emit("end");
+		this.emit("end", Math.min(this.scheduled.maxTime, this.scheduled.time));
 	},
 
 	cancel: function() {
