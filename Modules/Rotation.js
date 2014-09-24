@@ -8,18 +8,10 @@ var RotationError = require("./Errors/RotationError").RotationError,
 exports = module.exports = Rotation;
 
 function Rotation(code) {
+	if(!arguments.length)
+		throw new Error("Missing first argument");
 	EventEmitter.call(this);
 	this.source = code;
-	code =  "use(function () {" + 
-			"var use;\n" + 
-			code +
-			"}());";
-	try {
-		this.script = vm.createScript(code);
-	} catch(e) {
-		setImmediate(this.emit.bind(this, "error", new RotationSyntaxError(e, arguments, this.source)));
-		// this.emit("error", new RotationError(e, arguments, this.source));
-	}
 }
 
 inherits(Rotation, EventEmitter);
@@ -28,6 +20,17 @@ extend(Rotation.prototype, {
 
 	source: null,
 	script: null,
+
+	prepare: function() {
+		var code =  "use(function () {var use;\n" +
+					this.source +
+					"}());";
+		try {
+			this.script = vm.createScript(code);
+		} catch(e) {
+			this.emit.bind(this, "error", new RotationSyntaxError(e, arguments, this.source));
+		}
+	},
 
 	run: function(actor, target, time) {
 		var context = {
@@ -64,8 +67,7 @@ extend(Rotation.prototype, {
 			// I.E:
 			// assert(e instanceof Error)
 			// will throw.
-			// the following workarounds can
-			// be used instead :
+			// Possible workarounds :
 			// assert(/^Error/.test(e.toString()))
 			// assert.equal(e.name, "Error")
 			this.emit("error", new RotationError(e, arguments, this.source));
