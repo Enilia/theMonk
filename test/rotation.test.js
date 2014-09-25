@@ -1,12 +1,14 @@
 var Rotation = require("../Modules/Rotation"),
 	Actor = require("../Modules/Actor"),
-	RotationError = require("../Modules/Errors").RotationError,
+	RotationError = require("../Modules/Errors/RotationError").RotationError,
+	RotationSyntaxError = require("../Modules/Errors/RotationSyntaxError").RotationSyntaxError,
+	Script = require("vm"),
 	assert = require("assert"),
 	path = require("path"),
 	fs = require("fs");
 
 function getRotation(filename) {
-	return new Rotation(fs.readFileSync(path.resolve(__dirname, "rotations", "monk."+filename+".rotation.js"), "utf8"));
+	return new Rotation(fs.readFileSync(path.resolve(__dirname, "rotations", "monk."+filename+".rotation.js"), "utf8")).prepare();
 }
 
 describe("Rotation", function() {
@@ -35,6 +37,28 @@ describe("Rotation", function() {
 		actor.prepareForBattle(time = 10);
 	});
 
+	describe("#prepare", function() {
+
+		it("should create a script instance from the source", function() {
+			var rotation = new Rotation("").prepare();
+
+			assert(rotation.script instanceof Script);
+		});
+
+		describe("Exceptions", function() {
+
+			describe("RotationSyntaxError", function() {
+
+				it("should emit an error event when the rotation has syntax errors", function() {
+					assert.throws(function() {
+						new Rotation("if() &").prepare();
+					}, RotationSyntaxError);
+				});
+			});
+			
+		});
+	});
+
 	describe("#run", function() {
 
 		it("should return undefined when the rotation does not return", function() {
@@ -48,14 +72,6 @@ describe("Rotation", function() {
 
 			assert.strictEqual(rotation.run(), "skillname");
 		});
-
-		// it("should throw an exception when the rotation fail", function() {
-		// 	var rotation = getRotation("throw");
-
-		// 	assert.throws(function() {
-		// 		rotation.run();
-		// 	});
-		// });
 
 		describe("Exceptions", function() {
 

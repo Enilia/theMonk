@@ -1,4 +1,5 @@
-var RotationError = require("./Errors").RotationError,
+var RotationError = require("./Errors/RotationError").RotationError,
+	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
 	vm = require("vm"),
 	EventEmitter = require("events").EventEmitter,
 	inherits = require("util").inherits,
@@ -9,11 +10,6 @@ exports = module.exports = Rotation;
 function Rotation(code) {
 	EventEmitter.call(this);
 	this.source = code;
-	code =  "use(function () {" + 
-			"var use;\n" + 
-			code +
-			"}());";
-	this.script = vm.createScript(code);
 }
 
 inherits(Rotation, EventEmitter);
@@ -22,6 +18,18 @@ extend(Rotation.prototype, {
 
 	source: null,
 	script: null,
+
+	prepare: function() {
+		var code =  "use(function () {var use;\n" +
+					this.source +
+					"}());";
+		try {
+			this.script = vm.createScript(code);
+		} catch(e) {
+			this.emit("error", new RotationSyntaxError(e, arguments, this.source));
+		}
+		return this;
+	},
 
 	run: function(actor, target, time) {
 		var context = {
@@ -58,8 +66,7 @@ extend(Rotation.prototype, {
 			// I.E:
 			// assert(e instanceof Error)
 			// will throw.
-			// the following workarounds can
-			// be used instead :
+			// Possible workarounds :
 			// assert(/^Error/.test(e.toString()))
 			// assert.equal(e.name, "Error")
 			this.emit("error", new RotationError(e, arguments, this.source));

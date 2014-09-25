@@ -118,7 +118,7 @@ describe('Aura', function() {
 				model: "Monk",
 				name: "Monk",
 				inactive: true,
-			});
+			}).prepareForBattle(0);
 
 			it("should execute when the aura is applied on the actor", function() {
 

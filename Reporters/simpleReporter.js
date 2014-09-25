@@ -7,10 +7,10 @@ var Reporter = require("../Modules/Reporter"),
 exports = module.exports = SimpleReporter;
 
 function SimpleReporter() {
+	Reporter.apply(this, arguments);
 	this.damageList = [];
 	this.criticalList = [];
 	this.skillList = {};
-	this.startTime = -Date.now();
 	this.rotation = [];
 	this.actors = {};
 }
@@ -47,8 +47,8 @@ extend(SimpleReporter.prototype, {
 		this.rotation.push([time, actorName, 0, 0, (isExpired ? "auraexpire:" : "auracancel:")+aura.name, "auraexpire"]);
 	},
 
-	_hook: function(actor) {
-		Reporter.prototype._hook.call(this, actor);
+	hookActor: function(actor) {
+		Reporter.prototype.hookActor.call(this, actor);
 		this.actors[actor.name] = [];
 	},
 
