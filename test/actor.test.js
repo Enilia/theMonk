@@ -37,32 +37,10 @@ describe("Actor", function() {
 		actor.pendingAuras.splice(0, actor.pendingAuras.length);
 	});
 
-	describe("new Actor", function() {
-
-		it("should throw if no argument is provided", function() {
-			assert.throws(function() {
-				new Actor;
-			});
-		});
-
-		it("should throw if no model is provided", function() {
-			assert.throws(function() {
-				new Actor({});
-			});
-		});
-
-	});
-
 	describe("#nextTimeOfInterest", function() {
 
 		beforeEach(function() {
 			actor.nextAction = actor.nextOffGCD = actor.nextAutoAttack = time;
-		});
-
-		it("throws if missing first argument", function() {
-			assert.throws(function() {
-				actor.nextTimeOfInterest();
-			});
 		});
 
 		describe("should return the time before the next time of interest", function() {
@@ -376,7 +354,14 @@ describe("Actor", function() {
 	});
 	describe("#prepareForBattle", function() {
 
-		it("should do nothing on inactive actor", function() {
+		it("should emit an error when no model is provided", function() {
+
+			assert.throws(function() {
+				new Actor({}).prepareForBattle(time);
+			},
+			/invalid model/);
+		});
+		it("should not prepare inactive actor", function() {
 			var target = new Actor({
 					model: "Monk",
 					name: "Target",
@@ -398,6 +383,9 @@ describe("Actor", function() {
 			assert.strictEqual(actor.nextAction, time);
 			assert.strictEqual(actor.nextAutoAttack, time);
 			assert.strictEqual(actor.nextOffGCD, time + actor.getStats().getGCD() / 2);
+		});
+		it("should return the actor object for chaining purpose", function() {
+			assert.strictEqual(actor.prepareForBattle(time), actor);
 		});
 
 	});
