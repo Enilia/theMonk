@@ -26,8 +26,9 @@ extend(Rotation.prototype, {
 		try {
 			this.script = vm.createScript(code);
 		} catch(e) {
-			this.emit.bind(this, "error", new RotationSyntaxError(e, arguments, this.source));
+			this.emit("error", new RotationSyntaxError(e, arguments, this.source));
 		}
+		return this;
 	},
 
 	run: function(actor, target, time) {
