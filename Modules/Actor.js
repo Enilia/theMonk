@@ -164,12 +164,14 @@ extend(Actor.prototype, {
 		this.rotation.prepare();
 
 		if(this.inactive) {
-			return;
+			return this;
 		}
 
 		this.model.prepareForBattle(time, this);
 		this.nextAction = this.nextAutoAttack = time;
 		this.nextOffGCD = time + this.getStats().getGCD() / 2;
+
+		return this;
 		
 	},
 
