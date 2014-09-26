@@ -9,7 +9,7 @@ if(AuraCount(self, "GreasedLigthning", self) < 3) {
 
 if(IsOffGCD() && AuraCount(self, "GreasedLigthning", self) === 3) {
 
-	if(IsReady("InternalRelease"))
+	if(IsReady("InternalRelease") && AuraTimeRemaining(target, "DemolishDOT", self) < 15)
 		return "InternalRelease";
 
 	if(IsReady("BloodForBlood"))
@@ -37,7 +37,7 @@ if(AuraCount(self, "PerfectBalance", self))
 
 
 if(!AuraCount(target, "TouchOfDeathDOT", self)
-	&& AuraCount(self, "BloodForBlood", self)
+	&& (AuraCount(self, "BloodForBlood", self) || AuraCount(self, "InternalRelease", self))
 )
 	return "TouchOfDeath";
 
