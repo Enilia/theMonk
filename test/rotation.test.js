@@ -52,7 +52,9 @@ describe("Rotation", function() {
 				it("should emit an error event when the rotation has syntax errors", function() {
 					assert.throws(function() {
 						new Rotation("if() &").prepare();
-					}, RotationSyntaxError);
+					}, function(error) {
+						return /if\(\) \&/.test(error.stack);
+					});
 				});
 			});
 			
@@ -100,6 +102,14 @@ describe("Rotation", function() {
 							col: 2,
 						});
 					});
+				});
+
+				describe(".stack", function() {
+
+					it("should show the faulty line", function() {
+						assert(/bar\(\); \/\/ should throw/.test(error.stack));
+					});
+
 				});
 			});
 		});
