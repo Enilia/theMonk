@@ -1,4 +1,4 @@
-var Stats = require("../Modules/Stats"),
+var Stats = require("../lib/Stats"),
 	assert = require("assert"),
 	util = require("util"),
 	extend = util._extend;

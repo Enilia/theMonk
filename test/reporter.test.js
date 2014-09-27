@@ -1,5 +1,5 @@
-var Actor = require("../Modules/Actor"),
-	Reporter = require("../Modules/Reporter"),
+var Actor = require("../lib/Actor"),
+	Reporter = require("../lib/Reporter"),
 	assert = require("assert");
 
 describe("Reporter", function() {

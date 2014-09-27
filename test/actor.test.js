@@ -1,4 +1,4 @@
-var Actor = require("../Modules/Actor"),
+var Actor = require("../lib/Actor"),
 	assert = require("assert"),
 	path = require("path"),
 	fs = require("fs");

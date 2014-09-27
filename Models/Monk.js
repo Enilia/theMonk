@@ -1,5 +1,5 @@
-var Skill = require('../Modules/Skill').createSkill,
-	Aura = require('../Modules/Aura').createAura,
+var Skill = require('../lib/Skill').createSkill,
+	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend;
 
 exports = module.exports = Monk;
