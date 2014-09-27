@@ -79,3 +79,4 @@ $RECYCLE.BIN/
 *.bat
 coverage.html
 doc.html
+_index.js
