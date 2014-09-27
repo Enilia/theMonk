@@ -1,6 +1,6 @@
-var Skill = require('../Modules/Skill').createSkill,
-	Combo = require('../Modules/Skill').createCombo,
-	Aura = require('../Modules/Aura').createAura,
+var Skill = require('../lib/Skill').createSkill,
+	Combo = require('../lib/Skill').createCombo,
+	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend;
 
 exports = module.exports = Dragoon;

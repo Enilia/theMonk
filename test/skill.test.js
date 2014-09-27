@@ -1,5 +1,5 @@
-var Skill = require("../Modules/Skill.js"),
-	Actor = require("../Modules/Actor.js"),
+var Skill = require("../lib/Skill.js"),
+	Actor = require("../lib/Actor.js"),
 	createSkill = Skill.createSkill,
 	createCombo = Skill.createCombo,
 	assert = require("assert"),

@@ -3,9 +3,9 @@ var util = require("util"),
 	extend = util._extend,
 	inherits = util.inherits,
 	EventEmitter = require("events").EventEmitter,
-	Actor = require('./Modules/Actor'),
-	Simulation = require("./Modules/Simulation"),
-	Stats = require("./Modules/Stats");
+	Actor = require('./lib/Actor'),
+	Simulation = require("./lib/Simulation"),
+	Stats = require("./lib/Stats");
 
 exports = module.exports = theMonk;
 

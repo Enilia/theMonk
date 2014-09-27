@@ -25,11 +25,11 @@
   },
   "config": {
     "blanket": {
-      "pattern": "Modules"
+      "pattern": "lib",
+      "data-cover-never": "node_modules"
     }
   },
   "dependencies": {
-    "argparser": "^0.2.2",
     "commander": "2.0.0"
   },
   "devDependencies": {
@@ -37,11 +37,10 @@
     "mocha": "^1.21.4"
   },
   "files": [
-    "bin",
     "Models",
-    "Modules",
     "Rotations",
-    "Reporters",
+    "bin",
+    "lib",
     "test",
     "index.js"
   ],

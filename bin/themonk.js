@@ -62,7 +62,7 @@ if(!(program.model = program.model || program.stats.model)) {
 }
 
 try {
-	program.reporter = require('../reporters/' + program.reporter);
+	program.reporter = require('../lib/reporters/' + program.reporter);
 } catch (err) {
 	try {
 		program.reporter = require(program.reporter);

@@ -1,4 +1,4 @@
-var Scheduled = require("../Modules/Scheduled2"),
+var Scheduled = require("../lib/Scheduled2"),
 	assert = require("assert");
 
 describe('Scheduled2', function() {
