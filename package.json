@@ -25,7 +25,7 @@
   },
   "config": {
     "blanket": {
-      "pattern": "Modules"
+      "pattern": "lib"
     }
   },
   "dependencies": {
@@ -37,11 +37,10 @@
     "mocha": "^1.21.4"
   },
   "files": [
-    "bin",
     "Models",
-    "Modules",
     "Rotations",
-    "Reporters",
+    "bin",
+    "lib",
     "test",
     "index.js"
   ],
