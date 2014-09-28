@@ -15,6 +15,7 @@ function theMonk() {
 
 	this.simulation = new Simulation();
 	this.simulation.on("start", this.emit.bind(this, "start"));
+	this.simulation.on("progress", this.emit.bind(this, "progress"));
 	this.simulation.on("end", this.emit.bind(this, "end"));
 }
 

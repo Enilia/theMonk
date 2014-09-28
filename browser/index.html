@@ -68,7 +68,7 @@ if(isOpoOpoForm)
 
 return "Bootshine";
 </textarea>
-<button id="go">go</button>
+<button id="go" value="go">go</button>
 		<script type="text/javascript" src="browser.js"></script>
 		<script>
 			var TheMonk = require("themonk"),
@@ -102,7 +102,11 @@ return "Bootshine";
 					}, ta.value)
 					.setMaxTime(600)
 					.run()
+					.on("progress", function(time, maxTime) {
+						go.textContent = parseInt(time / maxTime * 100) + "%";
+					})
 					.on("end", function(duration) {
+						go.textContent = go.value;
 						console.log("done");
 					});
 			}

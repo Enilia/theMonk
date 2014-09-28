@@ -1120,6 +1120,7 @@ extend(Rotation.prototype, {
 
 	source: null,
 	script: null,
+	context: null,
 
 	prepare: function() {
 		var code =  "(function () {\n" +
@@ -1130,13 +1131,14 @@ extend(Rotation.prototype, {
 		} catch(e) {
 			this.emit("error", new RotationSyntaxError(e, arguments, this.source));
 		}
+		this.context = Script.createContext({
+			console: console, // used for debug
+		});
 		return this;
 	},
 
 	run: function(actor, target, time) {
-		var context = {
-				console: console, // used for debug
-
+		var context = extend(this.context, {
 				self: actor,
 				target: target,
 
@@ -1146,11 +1148,11 @@ extend(Rotation.prototype, {
 				AuraTimeRemaining: this.AuraTimeRemaining.bind(this, time),
 				GCD: this.GCD.bind(this, actor),
 				CooldownRemaining: this.CooldownRemaining.bind(this, time, actor),
-			},
+			}),
 			skillName;
 
 		try {
-			skillName = this.script.runInNewContext(context);
+			skillName = this.script.runInContext(context);
 		} catch(e) {
 			this.emit("error", new RotationError(e, arguments, this.source));
 		}
@@ -1316,6 +1318,7 @@ extend(Simulation.prototype, {
 				this.scheduled.register("checkActors", this.checkActors, actor.nextTimeOfInterest(this.scheduled.time), this);
 			}, this);
 			setImmediate(this.loop.bind(this));
+			this.emit("progress", this.scheduled.time, this.scheduled.maxTime);
 		} else {
 			setImmediate(this.end.bind(this));
 		}
@@ -1600,6 +1603,10 @@ extend(Script.prototype, {
 	    this.code = this.iframe = this.win = this.wEval = null;
 	},
 
+});
+
+extend(Script, {
+	createContext: vm.createContext,
 });
 },{"util":18,"vm":13}],13:[function(require,module,exports){
 // https://github.com/substack/vm-browserify
@@ -2753,6 +2760,7 @@ function theMonk() {
 
 	this.simulation = new Simulation();
 	this.simulation.on("start", this.emit.bind(this, "start"));
+	this.simulation.on("progress", this.emit.bind(this, "progress"));
 	this.simulation.on("end", this.emit.bind(this, "end"));
 }
 
