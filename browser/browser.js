@@ -267,7 +267,7 @@ extend(Dragoon.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],2:[function(require,module,exports){
+},{"../lib/Aura":4,"../lib/Skill":10,"util":18}],2:[function(require,module,exports){
 var Skill = require('../lib/Skill').createSkill,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend;
@@ -636,7 +636,7 @@ extend(Monk.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],3:[function(require,module,exports){
+},{"../lib/Aura":4,"../lib/Skill":10,"util":18}],3:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
 	EventEmitter = require("events").EventEmitter,
@@ -887,9 +887,13 @@ extend(Actor.prototype, {
 				transformIncomingDamage: aura.transformIncomingDamage,
 			}));
 		}, this.stats);
-	}
+	},
+
+	free: function() {
+		this.rotation.free();
+	},
 });
-},{"../Models/Dragoon":1,"../Models/Monk":2,"./Rotation":7,"./Stats":11,"events":13,"util":17}],4:[function(require,module,exports){
+},{"../Models/Dragoon":1,"../Models/Monk":2,"./Rotation":7,"./Stats":11,"events":14,"util":18}],4:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -975,7 +979,7 @@ function createAura(properties, specialProperties) {
 // 		}, 
 // 	}, 
 // });
-},{"util":17}],5:[function(require,module,exports){
+},{"util":18}],5:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1033,7 +1037,7 @@ function captureStackTrace(rotationError) {
 		},
 	});
 }
-},{"util":17}],6:[function(require,module,exports){
+},{"util":18}],6:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1095,10 +1099,10 @@ function captureStackTrace(rotationSyntaxError) {
 		},
 	});
 }
-},{"util":17}],7:[function(require,module,exports){
+},{"util":18}],7:[function(require,module,exports){
 var RotationError = require("./Errors/RotationError").RotationError,
 	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
-	vm = require("vm"),
+	Script = require("./Script"),
 	EventEmitter = require("events").EventEmitter,
 	inherits = require("util").inherits,
 	extend = require("util")._extend;
@@ -1122,7 +1126,7 @@ extend(Rotation.prototype, {
 					this.source +
 					"}());";
 		try {
-			this.script = vm.createScript(code);
+			this.script = new Script(code);
 		} catch(e) {
 			this.emit("error", new RotationSyntaxError(e, arguments, this.source));
 		}
@@ -1148,24 +1152,14 @@ extend(Rotation.prototype, {
 		try {
 			skillName = this.script.runInNewContext(context);
 		} catch(e) {
-			// === WARNING ===
-			// Errors thrown in the virtual
-			// machine belongs to a very 
-			// different context. Therefore
-			// tests on prototype or
-			// inheritance will fail even
-			// when one would consider them
-			// true. 
-			// I.E:
-			// assert(e instanceof Error)
-			// will throw.
-			// Possible workarounds :
-			// assert(/^Error/.test(e.toString()))
-			// assert.equal(e.name, "Error")
 			this.emit("error", new RotationError(e, arguments, this.source));
 		}
 
 		return skillName;
+	},
+
+	free: function() {
+		this.script.free();
 	},
 
 	AuraCount: function(actor, auraName, source) {
@@ -1203,7 +1197,7 @@ extend(Rotation.prototype, {
 	}
 
 });
-},{"./Errors/RotationError":5,"./Errors/RotationSyntaxError":6,"events":13,"util":17,"vm":12}],8:[function(require,module,exports){
+},{"./Errors/RotationError":5,"./Errors/RotationSyntaxError":6,"./Script":12,"events":14,"util":18}],8:[function(require,module,exports){
 var extend = require("util")._extend;
 
 exports = module.exports = Scheduled;
@@ -1264,7 +1258,7 @@ extend(Scheduled.prototype, {
 		return time > this.maxTime;
 	},
 });
-},{"util":17}],9:[function(require,module,exports){
+},{"util":18}],9:[function(require,module,exports){
 (function (process,global){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
@@ -1328,11 +1322,19 @@ extend(Simulation.prototype, {
 	},
 
 	end: function() {
+		this.free();
 		this.emit("end", Math.min(this.scheduled.maxTime, this.scheduled.time));
 	},
 
 	cancel: function() {
+		this.free();
 		this.stopped = true;
+	},
+
+	free: function() {
+		this.actors.forEach(function(actor) {
+			actor.free();
+		});
 	},
 
 	tick: function() {
@@ -1360,7 +1362,7 @@ extend(Simulation.prototype, {
 
 })
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Actor":3,"./Scheduled2":8,"_process":15,"events":13,"util":17}],10:[function(require,module,exports){
+},{"./Actor":3,"./Scheduled2":8,"_process":16,"events":14,"util":18}],10:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -1439,7 +1441,7 @@ function createCombo(skill, properties, specialProperties) {
 // 		criticalHitChance:1
 // 	}
 // })
-},{"util":17}],11:[function(require,module,exports){
+},{"util":18}],11:[function(require,module,exports){
 var extend = require("util")._extend,
 	baseStatsMultiplier = {
 		weaponDamage: 1,
@@ -1577,7 +1579,29 @@ extend(Stats, {
 });
 
 Stats.useValkkyFormulas(); // defaults to Valkky formulas
-},{"util":17}],12:[function(require,module,exports){
+},{"util":18}],12:[function(require,module,exports){
+var vm = require("vm").Script,
+	inherits = require("util").inherits,
+	extend = require("util")._extend;
+
+exports = module.exports = Script;
+
+inherits(Script, vm);
+
+function Script(code) {
+    if (!(this instanceof Script)) return new Script(code);
+	vm.call(this, code);
+}
+
+extend(Script.prototype, {
+
+	free: function() {
+	    this.iframe && document.body.removeChild(this.iframe);
+	    this.code = this.iframe = this.win = this.wEval = null;
+	},
+
+});
+},{"util":18,"vm":13}],13:[function(require,module,exports){
 // https://github.com/substack/vm-browserify
 var indexOf = function(arr, obj) {
     return arr.indexOf(obj);
@@ -1720,7 +1744,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2023,7 +2047,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2048,7 +2072,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2113,14 +2137,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2710,7 +2734,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":16,"_process":15,"inherits":14}],"themonk":[function(require,module,exports){
+},{"./support/isBuffer":17,"_process":16,"inherits":15}],"themonk":[function(require,module,exports){
 (function (process,global){
 var util = require("util"),
 	format = util.format,
@@ -2802,7 +2826,7 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":15,"events":13,"util":17}]},{},[])
+},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":16,"events":14,"util":18}]},{},[])
 
 
 //# sourceMappingURL=browser.js.map
