@@ -5,7 +5,8 @@ var util = require("util"),
 	EventEmitter = require("events").EventEmitter,
 	Actor = require('./lib/Actor'),
 	Simulation = require("./lib/Simulation"),
-	Stats = require("./lib/Stats");
+	Stats = require("./lib/Stats"),
+	setImmediate = global.setImmediate || process.nextTick;
 
 exports = module.exports = theMonk;
 
@@ -14,6 +15,7 @@ function theMonk() {
 
 	this.simulation = new Simulation();
 	this.simulation.on("start", this.emit.bind(this, "start"));
+	this.simulation.on("progress", this.emit.bind(this, "progress"));
 	this.simulation.on("end", this.emit.bind(this, "end"));
 }
 

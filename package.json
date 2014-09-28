@@ -9,6 +9,10 @@
     "dps"
   ],
   "main": "index.js",
+  "browser": {
+    "vm": "./lib/browser/vm.js",
+    "./lib/Script.js": "./lib/browser/Script.js"
+  },
   "bin": {
     "themonk": "bin/themonk.js"
   },
@@ -21,7 +25,10 @@
     "test-unit": "mocha",
     "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
     "test-doc": "mocha -R doc > doc.html",
-    "test-watch": "mocha -wb"
+    "test-watch": "mocha -wb",
+    "browserify": "browserify -r ./index.js:themonk > browser/browser.js",
+    "browserify-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/browser.js.map > browser/browser.js",
+    "browserify-watch": "watchify -r ./index.js:themonk -o browser/browser.js --debug --verbose"
   },
   "config": {
     "blanket": {
@@ -34,7 +41,10 @@
   },
   "devDependencies": {
     "blanket": "^1.1.6",
-    "mocha": "^1.21.4"
+    "browserify": "^5.12.1",
+    "exorcist": "^0.1.6",
+    "mocha": "^1.21.4",
+    "watchify": "^1.0.6"
   },
   "files": [
     "Models",
