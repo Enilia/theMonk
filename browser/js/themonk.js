@@ -2822,7 +2822,4 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":15,"events":13,"util":17}]},{},[])
-
-
-//# sourceMappingURL=browser.js.map
+},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":15,"events":13,"util":17}]},{},[]);
