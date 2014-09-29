@@ -10,8 +10,8 @@
   ],
   "main": "index.js",
   "browser": {
-    "vm": "./lib/browser/vm.js",
-    "./lib/Rotation.js" : "lib/browser/Rotation.js"
+    "vm": "./lib/browser/adapter/vm.js",
+    "./lib/Rotation.js" : "lib/browser/adapter/Rotation.js"
   },
   "bin": {
     "themonk": "bin/themonk.js"

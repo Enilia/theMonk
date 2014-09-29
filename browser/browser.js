@@ -2719,7 +2719,7 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":16,"_process":15,"inherits":14}],18:[function(require,module,exports){
-var Rotation = require("../Rotation"),
+var Rotation = require("../../Rotation"),
 	extend = require("util")._extend;
 
 exports = module.exports = Rotation;
@@ -2729,7 +2729,7 @@ extend(Rotation.prototype, {
 		this.script.free();
 	},
 })
-},{"../Rotation":7,"util":17}],"themonk":[function(require,module,exports){
+},{"../../Rotation":7,"util":17}],"themonk":[function(require,module,exports){
 (function (process,global){
 var util = require("util"),
 	format = util.format,
