@@ -267,7 +267,7 @@ extend(Dragoon.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":18}],2:[function(require,module,exports){
+},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],2:[function(require,module,exports){
 var Skill = require('../lib/Skill').createSkill,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend;
@@ -636,7 +636,7 @@ extend(Monk.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":18}],3:[function(require,module,exports){
+},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],3:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
 	EventEmitter = require("events").EventEmitter,
@@ -893,7 +893,7 @@ extend(Actor.prototype, {
 		this.rotation.free();
 	},
 });
-},{"../Models/Dragoon":1,"../Models/Monk":2,"./Rotation":7,"./Stats":11,"events":14,"util":18}],4:[function(require,module,exports){
+},{"../Models/Dragoon":1,"../Models/Monk":2,"./Rotation":18,"./Stats":11,"events":13,"util":17}],4:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -979,7 +979,7 @@ function createAura(properties, specialProperties) {
 // 		}, 
 // 	}, 
 // });
-},{"util":18}],5:[function(require,module,exports){
+},{"util":17}],5:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1037,7 +1037,7 @@ function captureStackTrace(rotationError) {
 		},
 	});
 }
-},{"util":18}],6:[function(require,module,exports){
+},{"util":17}],6:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1099,10 +1099,10 @@ function captureStackTrace(rotationSyntaxError) {
 		},
 	});
 }
-},{"util":18}],7:[function(require,module,exports){
+},{"util":17}],7:[function(require,module,exports){
 var RotationError = require("./Errors/RotationError").RotationError,
 	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
-	Script = require("./Script"),
+	vm = require("vm"),
 	EventEmitter = require("events").EventEmitter,
 	inherits = require("util").inherits,
 	extend = require("util")._extend;
@@ -1127,11 +1127,11 @@ extend(Rotation.prototype, {
 					this.source +
 					"}());";
 		try {
-			this.script = new Script(code);
+			this.script = vm.createScript(code);
 		} catch(e) {
 			this.emit("error", new RotationSyntaxError(e, arguments, this.source));
 		}
-		this.context = Script.createContext({
+		this.context = vm.createContext({
 			console: console, // used for debug
 		});
 		return this;
@@ -1160,9 +1160,7 @@ extend(Rotation.prototype, {
 		return skillName;
 	},
 
-	free: function() {
-		this.script.free();
-	},
+	free: function() {},
 
 	AuraCount: function(actor, auraName, source) {
 		var aura;
@@ -1199,7 +1197,7 @@ extend(Rotation.prototype, {
 	}
 
 });
-},{"./Errors/RotationError":5,"./Errors/RotationSyntaxError":6,"./Script":12,"events":14,"util":18}],8:[function(require,module,exports){
+},{"./Errors/RotationError":5,"./Errors/RotationSyntaxError":6,"events":13,"util":17,"vm":12}],8:[function(require,module,exports){
 var extend = require("util")._extend;
 
 exports = module.exports = Scheduled;
@@ -1260,7 +1258,7 @@ extend(Scheduled.prototype, {
 		return time > this.maxTime;
 	},
 });
-},{"util":18}],9:[function(require,module,exports){
+},{"util":17}],9:[function(require,module,exports){
 (function (process,global){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
@@ -1365,7 +1363,7 @@ extend(Simulation.prototype, {
 
 })
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Actor":3,"./Scheduled2":8,"_process":16,"events":14,"util":18}],10:[function(require,module,exports){
+},{"./Actor":3,"./Scheduled2":8,"_process":15,"events":13,"util":17}],10:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -1444,7 +1442,7 @@ function createCombo(skill, properties, specialProperties) {
 // 		criticalHitChance:1
 // 	}
 // })
-},{"util":18}],11:[function(require,module,exports){
+},{"util":17}],11:[function(require,module,exports){
 var extend = require("util")._extend,
 	baseStatsMultiplier = {
 		weaponDamage: 1,
@@ -1582,33 +1580,7 @@ extend(Stats, {
 });
 
 Stats.useValkkyFormulas(); // defaults to Valkky formulas
-},{"util":18}],12:[function(require,module,exports){
-var vm = require("vm").Script,
-	inherits = require("util").inherits,
-	extend = require("util")._extend;
-
-exports = module.exports = Script;
-
-inherits(Script, vm);
-
-function Script(code) {
-    if (!(this instanceof Script)) return new Script(code);
-	vm.call(this, code);
-}
-
-extend(Script.prototype, {
-
-	free: function() {
-	    this.iframe && document.body.removeChild(this.iframe);
-	    this.code = this.iframe = this.win = this.wEval = null;
-	},
-
-});
-
-extend(Script, {
-	createContext: vm.createContext,
-});
-},{"util":18,"vm":13}],13:[function(require,module,exports){
+},{"util":17}],12:[function(require,module,exports){
 // https://github.com/substack/vm-browserify
 var indexOf = function(arr, obj) {
     return arr.indexOf(obj);
@@ -1730,7 +1702,12 @@ Script.prototype.runInNewContext = function (context) {
     return res;
 };
 
-forEach(Object_keys(Script.prototype), function (name) {
+Script.prototype.free = function () {
+    this.iframe && document.body.removeChild(this.iframe);
+    this.code = this.iframe = this.win = this.wEval = null;
+};
+
+forEach(["runInContext","runInThisContext","runInNewContext"], function (name) {
     exports[name] = Script[name] = function (code) {
         var s = Script(code);
         return s[name].apply(s, [].slice.call(arguments, 1));
@@ -1751,7 +1728,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2054,7 +2031,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2079,7 +2056,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2144,14 +2121,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2741,7 +2718,18 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":17,"_process":16,"inherits":15}],"themonk":[function(require,module,exports){
+},{"./support/isBuffer":16,"_process":15,"inherits":14}],18:[function(require,module,exports){
+var Rotation = require("../Rotation"),
+	extend = require("util")._extend;
+
+exports = module.exports = Rotation;
+
+extend(Rotation.prototype, {
+	free: function() {
+		this.script.free();
+	},
+})
+},{"../Rotation":7,"util":17}],"themonk":[function(require,module,exports){
 (function (process,global){
 var util = require("util"),
 	format = util.format,
@@ -2834,7 +2822,7 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":16,"events":14,"util":18}]},{},[])
+},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":15,"events":13,"util":17}]},{},[])
 
 
 //# sourceMappingURL=browser.js.map

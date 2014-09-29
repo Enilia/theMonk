@@ -11,7 +11,7 @@
   "main": "index.js",
   "browser": {
     "vm": "./lib/browser/vm.js",
-    "./lib/Script.js": "./lib/browser/Script.js"
+    "./lib/Rotation.js" : "lib/browser/Rotation.js"
   },
   "bin": {
     "themonk": "bin/themonk.js"
