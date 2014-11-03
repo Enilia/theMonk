@@ -1,13 +1,69 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="css/css.css" />
 	</head>
 	<body>
-		<textarea id="ta">
-		</textarea>
-		<button id="go" value="go">go</button>
+		<div class="actors">
+			<div class="actor">
+				<div class="actor-title">Actor</div>
+				<form action="#">
+				<div class="stats">
+					<span>
+						<label>Name</label>
+						<input type="text" class="name" />
+					</span>
+					<span>
+						<label>Model</label>
+						<select class="model">
+							<option value="Monk">Monk</option>
+							<option value="Dragoon">Dragoon</option>
+						</select>
+					</span>
+					<span>
+						<label>Weapon Damage</label>
+						<input type="number" class="weaponDamage" />
+					</span>
+					<span>
+						<label>Weapon Auto Attack</label>
+						<input type="number" class="weaponAutoAttack" />
+					</span>
+					<span>
+						<label>Weapon Auto Attack Delay</label>
+						<input type="number" class="weaponAutoAttackDelay" />
+					</span>
+					<span>
+						<label>Strength</label>
+						<input type="number" class="strength" />
+					</span>
+					<span>
+						<label>Critical</label>
+						<input type="number" class="critical" />
+					</span>
+					<span>
+						<label>Determination</label>
+						<input type="number" class="determination" />
+					</span>
+					<span>
+						<label>Skill Speed</label>
+						<input type="number" class="skillSpeed" />
+					</span>
+				</div>
+				<div class="rotation">
+					<textarea class="rotation-area"></textarea>
+				</div>
+				<div class="rotation-helper">
+					<div class="rotation-globals"></div>
+					<div class="rotation-skills"></div>
+				</div>
+				</form>
+			</div>
+		</div>
 		
-		<script type="text/javascript" src="themonk.js"></script>
-		<script type="text/javascript" src="index.js"></script>
+		<div class="report">
+		</div>
+		
+		<script type="text/javascript" src="js/themonk.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
 	</body>
 </html>

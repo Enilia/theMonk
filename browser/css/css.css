@@ -1,0 +1,83 @@
+.actor form {
+	display: flex;
+	height: 15em;
+
+	transition: height 0.7s ease-out;
+	transition: overflow 0.7s ease-out;
+}
+
+.actor.collapse form {
+	height:0;
+	overflow: hidden;
+}
+
+.stats, .rotation, .rotation-helper {
+	flex: 1 1 30%;
+}
+
+.rotation {
+	position: relative;
+}
+
+.rotation .rotation-area {
+	position: absolute;
+	width:100%;
+	height: 100%;
+}
+
+.stats span {
+	display: flex;
+}
+
+.stats span label {
+	flex: 1 1 100%;
+}
+
+.stats span input, .stats span select {
+	flex: 1 2 100%;
+}
+
+
+/*.stats, .rotation, .report {
+	outline: 1px solid black;
+}
+
+.actor {
+	overflow: auto;
+}
+
+.stats {
+	float:left;
+	width:30%;
+	overflow: auto;
+}
+
+.stats span {
+	display: block;
+	overflow: auto;
+}
+
+.stats span label,
+.stats span input,
+.stats span select {
+	display: block;
+	float:left;
+	width:49%;
+}
+
+.rotation {
+	float:left;
+	width:40%;
+	overflow: auto;
+}
+
+.rotation .rotation-area {
+	height:16em;
+	width:98%;
+	margin:auto;
+}
+
+.rotation-helper {
+	width: 30%;
+	float: left;
+}*/
