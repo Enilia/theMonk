@@ -17,6 +17,8 @@ function Ninja() {
 
 extend(Ninja.prototype, {
 
+	damageType: damageTypes.SLASH,
+	
 	prepareForBattle: function(time, source) {
 		source.applyAuraImmediate(source.model.auras.KissOfTheViper, source, time);
 	},

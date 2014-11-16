@@ -1,6 +1,8 @@
-var Skill = require('../lib/Skill').createSkill,
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
 	Aura = require('../lib/Aura').createAura,
-	extend = require("util")._extend;
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
 
 exports = module.exports = Monk;
 
@@ -14,6 +16,8 @@ function Monk() {
 
 extend(Monk.prototype, {
 
+	damageType: damageTypes.BLUNT,
+	
 	prepareForBattle: function(time, source) {
 		// source.applyAura(source.model.auras.PartyBonus, source, time);
 		source.applyAuraImmediate(source.model.auras.FistOfFire, source, time);
@@ -32,6 +36,7 @@ extend(Monk.prototype, {
 		Bootshine: Skill({
 			name: "Bootshine",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -40,6 +45,7 @@ extend(Monk.prototype, {
 		BootshineRear: Skill({
 			name: "BootshineRear",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			stats: {
 				criticalHitChance:10
 			},
@@ -51,6 +57,7 @@ extend(Monk.prototype, {
 		TrueStrike: Skill({
 			name: "TrueStrike",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 			}
@@ -59,6 +66,7 @@ extend(Monk.prototype, {
 		TrueStrikeRear: Skill({
 			name: "TrueStrikeRear",
 			potency: 190,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 			}
@@ -67,6 +75,7 @@ extend(Monk.prototype, {
 		SnapPunch: Skill({
 			name: "SnapPunch",
 			potency: 140,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -76,6 +85,7 @@ extend(Monk.prototype, {
 		SnapPunchFlank: Skill({
 			name: "SnapPunchFlank",
 			potency: 180,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -85,6 +95,7 @@ extend(Monk.prototype, {
 		TwinSnakes: Skill({
 			name: "TwinSnakes",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -94,6 +105,7 @@ extend(Monk.prototype, {
 		TwinSnakesFlank: Skill({
 			name: "TwinSnakesFlank",
 			potency: 140,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -103,6 +115,7 @@ extend(Monk.prototype, {
 		DragonKick: Skill({
 			name: "DragonKick",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -111,6 +124,7 @@ extend(Monk.prototype, {
 		DragonKickFlank: Skill({
 			name: "DragonKickFlank",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 				target.applyAura(source.model.auras.DragonKick, source, time);
@@ -120,11 +134,13 @@ extend(Monk.prototype, {
 		ImpulseDrive: Skill({
 			name: "ImpulseDrive",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 		}),
 
 		ImpulseDriveRear: Skill({
 			name: "ImpulseDriveRear",
 			potency: 180,
+			damageType: damageTypes.BLUNT,
 		}),
 
 		/*
@@ -134,6 +150,7 @@ extend(Monk.prototype, {
 		Demolish: Skill({
 			name: "Demolish",
 			potency: 30,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -144,6 +161,7 @@ extend(Monk.prototype, {
 		DemolishRear: Skill({
 			name: "DemolishRear",
 			potency: 70,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -154,6 +172,7 @@ extend(Monk.prototype, {
 		TouchOfDeath: Skill({
 			name: "TouchOfDeath",
 			potency: 20,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TouchOfDeathDOT, source, time);
 			}
@@ -162,6 +181,7 @@ extend(Monk.prototype, {
 		Fracture: Skill({
 			name: "Fracture",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -214,6 +234,7 @@ extend(Monk.prototype, {
 		SteelPeak: Skill({
 			name: "SteelPeak",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			recast: 40,
 			isOffGCD: true,
 		}),
@@ -221,6 +242,7 @@ extend(Monk.prototype, {
 		HowlingFist: Skill({
 			name: "HowlingFist",
 			potency: 170,
+			damageType: damageTypes.BLUNT,
 			recast: 60,
 			isOffGCD: true,
 		}),
@@ -362,7 +384,7 @@ extend(Monk.prototype, {
 		DragonKick: Aura({
 			name: "DragonKick",
 			duration: 15,
-			transformIncomingDamage: 1/0.9,
+			bluntResist: 0.9,
 		}),
 	}
 });

@@ -1,7 +1,9 @@
-var Skill = require('../lib/Skill').createSkill,
-	Combo = require('../lib/Skill').createCombo,
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
+	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
-	extend = require("util")._extend;
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
 
 exports = module.exports = Dragoon;
 
@@ -15,6 +17,8 @@ function Dragoon() {
 
 extend(Dragoon.prototype, {
 
+	damageType: damageTypes.PIERCING,
+	
 	prepareForBattle: function(time, source) {
 	},
 
@@ -27,6 +31,7 @@ extend(Dragoon.prototype, {
 		HeavyThrust: Skill({
 			name: "HeavyThrust",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.HeavyThrust, source, time);
 			}
@@ -35,26 +40,31 @@ extend(Dragoon.prototype, {
 		TrueThrust: Skill({
 			name: "TrueThrust",
 			potency: 150,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		VorpalThrust: Combo("TrueThrust", {
 			name: "VorpalThrust",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		FullThrust: Combo("VorpalThrust", {
 			name: "FullThrust",
 			potency: 330,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		ImpulseDrive: Skill({
 			name: "ImpulseDrive",
 			potency: 180,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		Disembowel: Combo("ImpulseDrive", {
 			name: "Disembowel",
 			potency: 220,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.Disembowel, source, time);
 			}
@@ -67,6 +77,7 @@ extend(Dragoon.prototype, {
 		ChaosThrust: Combo("Disembowel", {
 			name: "ChaosThrust",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ChaosThrustDOT, source, time);
 			}
@@ -75,6 +86,7 @@ extend(Dragoon.prototype, {
 		Phlebotomize: Skill({
 			name: "Phlebotomize",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
@@ -83,6 +95,7 @@ extend(Dragoon.prototype, {
 		Fracture: Skill({
 			name: "Fracture",
 			potency: 100,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -135,6 +148,7 @@ extend(Dragoon.prototype, {
 		LegSweep: Skill({
 			name: "LegSweep",
 			potency: 130,
+			damageType: damageTypes.PIERCING,
 			recast: 20,
 			isOffGCD: true,
 		}),
@@ -142,6 +156,7 @@ extend(Dragoon.prototype, {
 		Jump: Skill({
 			name: "Jump",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 			recast: 40,
 			isOffGCD: true,
 			getPotency: function(source, target, time) {
@@ -159,6 +174,7 @@ extend(Dragoon.prototype, {
 		SpineshatterDive: Skill({
 			name: "SpineshatterDive",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			recast: 90,
 			isOffGCD: true,
 			getPotency: function(source, target, time) {
@@ -176,6 +192,7 @@ extend(Dragoon.prototype, {
 		DragonfireDive: Skill({
 			name: "DragonfireDive",
 			potency: 250,
+			damageType: damageTypes.PIERCING,
 			recast: 180,
 			isOffGCD: true,
 		}),
@@ -262,7 +279,7 @@ extend(Dragoon.prototype, {
 		Disembowel: Aura({
 			name: "Disembowel",
 			duration: 30,
-			transformIncomingDamage: 1/0.9,
+			piercingResist: 0.9,
 		}),
 	}
 });
