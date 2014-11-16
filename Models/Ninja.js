@@ -1,7 +1,9 @@
-var Skill = require('../lib/Skill').createSkill,
-	Combo = require('../lib/Skill').createCombo,
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
+	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
-	extend = require("util")._extend;
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
 
 exports = module.exports = Ninja;
 
@@ -28,6 +30,7 @@ extend(Ninja.prototype, {
 		SpinningEdge: Skill({
 			name: "SpinningEdge",
 			potency: 150,
+			damageType: damageTypes.SLASH,
 			onUse: function(time, source, target) {
 			}
 		}),
@@ -35,11 +38,13 @@ extend(Ninja.prototype, {
 		GustSlash: Combo("SpinningEdge", {
 			name: "GustSlash",
 			potency: 200,
+			damageType: damageTypes.SLASH,
 		}),
 
 		ShadowFang: Combo("SpinningEdge", {
 			name: "ShadowFang",
 			potency: 200,
+			damageType: damageTypes.SLASH,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ShadowFangDOT, source, time);
 			}
@@ -48,11 +53,13 @@ extend(Ninja.prototype, {
 		AeolianEdge: Combo("GustSlash", {
 			name: "AeolianEdge",
 			potency: 320,
+			damageType: damageTypes.SLASH,
 		}),
 
 		DancingEdge: Combo("GustSlash", {
 			name: "DancingEdge",
 			potency: 260,
+			damageType: damageTypes.SLASH,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.DancingEdge, source, time);
 			}
@@ -65,6 +72,7 @@ extend(Ninja.prototype, {
 		Mutilate: Skill({
 			name: "Mutilate",
 			potency: 60,
+			damageType: damageTypes.SLASH,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.MutilateDOT, source, time);
 			}
@@ -141,6 +149,7 @@ extend(Ninja.prototype, {
 
 		Ninjutsu: Skill({
 			name: "Ninjutsu",
+			damageType: damageTypes.MAGIC,
 			recast: 20,
 			isOffGCD: true,
 			stats: {},
@@ -183,6 +192,7 @@ extend(Ninja.prototype, {
 		Mug: Skill({
 			name: "Mug",
 			potency: 140,
+			damageType: damageTypes.SLASH,
 			recast: 90,
 			isOffGCD: true,
 		}),
@@ -190,6 +200,7 @@ extend(Ninja.prototype, {
 		SneakAttack: Skill({
 			name: "SneakAttack",
 			potency: 500,
+			damageType: damageTypes.SLASH,
 			recast: 60,
 			isOffGCD: true,
 		}),
@@ -197,6 +208,7 @@ extend(Ninja.prototype, {
 		Jugulate: Skill({
 			name: "Jugulate",
 			potency: 80,
+			damageType: damageTypes.SLASH,
 			recast: 30,
 			isOffGCD: true,
 		}),
@@ -204,6 +216,7 @@ extend(Ninja.prototype, {
 		TrickAttack: Skill({
 			name: "TrickAttack",
 			potency: 400,
+			damageType: damageTypes.SLASH,
 			recast: 60,
 			isOffGCD: true,
 			onUse: function(time, source, target) {
@@ -233,7 +246,6 @@ extend(Ninja.prototype, {
 		Huton: Aura({
 			name: "Huton",
 			duration: 70,
-			increaseDamage: 1.2,
 			increasedAutoAttackSpeed: 0.15,
 			reducedGlobalCooldown: 0.15,
 		}),
@@ -300,7 +312,7 @@ extend(Ninja.prototype, {
 		DancingEdge: Aura({
 			name: "DancingEdge",
 			duration: 20,
-			transformIncomingDamage: 1/0.9,
+			slashResist: 0.9,
 		}),
 
 		TrickAttack: Aura({
