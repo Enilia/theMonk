@@ -74,6 +74,7 @@ describe('Aura', function() {
 					}),
 					dml = new Demolish({
 						stats: stats,
+						tstats: stats,
 						time: time,
 					});
 

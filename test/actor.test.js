@@ -321,10 +321,17 @@ describe("Actor", function() {
 	});
 
 	describe("#tick", function() {
-		var eventDamage, eventCritical, eventAura, eventTime, registered;
+		var eventDamage, eventCritical, eventAura, eventTime, registered,
+			targetConf = {
+				model: "Monk",
+				name: "Target",
+				inactive: true,
+			},
+			target;
 
 		beforeEach(function() {
-			actor.applyAuraImmediate(actor.model.auras.DemolishDOT, actor, time);
+			target = new Actor(targetConf);
+			actor.applyAuraImmediate(actor.model.auras.DemolishDOT, actor, time, actor.getStats(), target.getStats());
 			actor.on(actor.events.auraTick, function(damage, critical, aura, _time) {
 					eventDamage = damage;
 					eventCritical = critical;
