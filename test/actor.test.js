@@ -21,7 +21,7 @@ describe("Actor", function() {
 			rotation: fs.readFileSync(
 					path.resolve(
 						__dirname
-						, "rotations/monk.actor.test.rotation.js"
+						, "rotations/monk.actor.test.rotation"
 					), "utf8"
 				),
 		},

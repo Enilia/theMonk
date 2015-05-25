@@ -8,7 +8,7 @@ var Rotation = require("../lib/Rotation"),
 	fs = require("fs");
 
 function getRotation(filename) {
-	return new Rotation(fs.readFileSync(path.resolve(__dirname, "rotations", "monk."+filename+".rotation.js"), "utf8")).prepare();
+	return new Rotation(fs.readFileSync(path.resolve(__dirname, "rotations", "monk."+filename+".rotation"), "utf8")).prepare();
 }
 
 describe("Rotation", function() {
