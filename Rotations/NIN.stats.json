@@ -1,0 +1,10 @@
+{
+	"model":						"Ninja", 
+	"weaponDamage": 				58,
+	"weaponAutoAttack": 			46.40,
+	"weaponAutoAttackDelay": 		2.40,
+	"strength": 					670,
+	"critical": 					507,
+	"determination": 				358,
+	"skillSpeed": 					376
+}
