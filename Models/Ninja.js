@@ -21,6 +21,8 @@ extend(Ninja.prototype, {
 	
 	prepareForBattle: function(time, source) {
 		source.applyAuraImmediate(source.model.auras.KissOfTheViper, source, time);
+		source.applyAuraImmediate(source.model.auras.Huton, source, time);
+		source.findAura("Huton").expireTime -= 20;
 	},
 
 	skills: {
@@ -122,7 +124,7 @@ extend(Ninja.prototype, {
 			isOffGCD: true,
 			animationLock: 1.5,
 			onUse: function(time, source, target) {
-				var mudra = target.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
 				mudra.mudra = "Suiton";
 			}
 		}),
@@ -133,7 +135,7 @@ extend(Ninja.prototype, {
 			isOffGCD: true,
 			animationLock: 1.5,
 			onUse: function(time, source, target) {
-				var mudra = target.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
 				mudra.mudra = "Huton";
 			}
 		}),
@@ -144,7 +146,7 @@ extend(Ninja.prototype, {
 			isOffGCD: true,
 			animationLock: 1,
 			onUse: function(time, source, target) {
-				var mudra = target.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
 				mudra.mudra = "Raiton";
 			}
 		}),
@@ -269,6 +271,10 @@ extend(Ninja.prototype, {
 				var onExpire;
 
 				source.model.skills.Ninjutsu.stats.additionalSkillCriticalHitChance = 1;
+				source.model.skills.Ninjutsu.reset(time);
+				source.model.skills.Suiton.reset(time);
+				source.model.skills.Huton.reset(time);
+				source.model.skills.Raiton.reset(time);
 
 				source.on(source.events.auraExpire, onExpire = function(aura, isExpired, time) {
 					if(aura.name === "Kassatsu") {
