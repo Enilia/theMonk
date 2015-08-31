@@ -1,8 +1,10 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Skill = require('../lib/Skill').createSkill,
-	Combo = require('../lib/Skill').createCombo,
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
+	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
-	extend = require("util")._extend;
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
 
 exports = module.exports = Dragoon;
 
@@ -16,6 +18,8 @@ function Dragoon() {
 
 extend(Dragoon.prototype, {
 
+	damageType: damageTypes.PIERCING,
+	
 	prepareForBattle: function(time, source) {
 	},
 
@@ -28,6 +32,7 @@ extend(Dragoon.prototype, {
 		HeavyThrust: Skill({
 			name: "HeavyThrust",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.HeavyThrust, source, time);
 			}
@@ -36,26 +41,31 @@ extend(Dragoon.prototype, {
 		TrueThrust: Skill({
 			name: "TrueThrust",
 			potency: 150,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		VorpalThrust: Combo("TrueThrust", {
 			name: "VorpalThrust",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		FullThrust: Combo("VorpalThrust", {
 			name: "FullThrust",
 			potency: 330,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		ImpulseDrive: Skill({
 			name: "ImpulseDrive",
 			potency: 180,
+			damageType: damageTypes.PIERCING,
 		}),
 
 		Disembowel: Combo("ImpulseDrive", {
 			name: "Disembowel",
 			potency: 220,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.Disembowel, source, time);
 			}
@@ -68,6 +78,7 @@ extend(Dragoon.prototype, {
 		ChaosThrust: Combo("Disembowel", {
 			name: "ChaosThrust",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ChaosThrustDOT, source, time);
 			}
@@ -76,6 +87,7 @@ extend(Dragoon.prototype, {
 		Phlebotomize: Skill({
 			name: "Phlebotomize",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
@@ -84,6 +96,7 @@ extend(Dragoon.prototype, {
 		Fracture: Skill({
 			name: "Fracture",
 			potency: 100,
+			damageType: damageTypes.PIERCING,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -136,6 +149,7 @@ extend(Dragoon.prototype, {
 		LegSweep: Skill({
 			name: "LegSweep",
 			potency: 130,
+			damageType: damageTypes.PIERCING,
 			recast: 20,
 			isOffGCD: true,
 		}),
@@ -143,6 +157,7 @@ extend(Dragoon.prototype, {
 		Jump: Skill({
 			name: "Jump",
 			potency: 200,
+			damageType: damageTypes.PIERCING,
 			recast: 40,
 			isOffGCD: true,
 			getPotency: function(source, target, time) {
@@ -160,6 +175,7 @@ extend(Dragoon.prototype, {
 		SpineshatterDive: Skill({
 			name: "SpineshatterDive",
 			potency: 170,
+			damageType: damageTypes.PIERCING,
 			recast: 90,
 			isOffGCD: true,
 			getPotency: function(source, target, time) {
@@ -177,6 +193,7 @@ extend(Dragoon.prototype, {
 		DragonfireDive: Skill({
 			name: "DragonfireDive",
 			potency: 250,
+			damageType: damageTypes.PIERCING,
 			recast: 180,
 			isOffGCD: true,
 		}),
@@ -263,14 +280,16 @@ extend(Dragoon.prototype, {
 		Disembowel: Aura({
 			name: "Disembowel",
 			duration: 30,
-			transformIncomingDamage: 1/0.9,
+			piercingResist: 0.9,
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],2:[function(require,module,exports){
-var Skill = require('../lib/Skill').createSkill,
+},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],2:[function(require,module,exports){
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
 	Aura = require('../lib/Aura').createAura,
-	extend = require("util")._extend;
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
 
 exports = module.exports = Monk;
 
@@ -284,6 +303,8 @@ function Monk() {
 
 extend(Monk.prototype, {
 
+	damageType: damageTypes.BLUNT,
+	
 	prepareForBattle: function(time, source) {
 		// source.applyAura(source.model.auras.PartyBonus, source, time);
 		source.applyAuraImmediate(source.model.auras.FistOfFire, source, time);
@@ -302,6 +323,7 @@ extend(Monk.prototype, {
 		Bootshine: Skill({
 			name: "Bootshine",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -310,6 +332,7 @@ extend(Monk.prototype, {
 		BootshineRear: Skill({
 			name: "BootshineRear",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			stats: {
 				criticalHitChance:10
 			},
@@ -321,6 +344,7 @@ extend(Monk.prototype, {
 		TrueStrike: Skill({
 			name: "TrueStrike",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 			}
@@ -329,6 +353,7 @@ extend(Monk.prototype, {
 		TrueStrikeRear: Skill({
 			name: "TrueStrikeRear",
 			potency: 190,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 			}
@@ -337,6 +362,7 @@ extend(Monk.prototype, {
 		SnapPunch: Skill({
 			name: "SnapPunch",
 			potency: 140,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -346,6 +372,7 @@ extend(Monk.prototype, {
 		SnapPunchFlank: Skill({
 			name: "SnapPunchFlank",
 			potency: 180,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -355,6 +382,7 @@ extend(Monk.prototype, {
 		TwinSnakes: Skill({
 			name: "TwinSnakes",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -364,6 +392,7 @@ extend(Monk.prototype, {
 		TwinSnakesFlank: Skill({
 			name: "TwinSnakesFlank",
 			potency: 140,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -373,6 +402,7 @@ extend(Monk.prototype, {
 		DragonKick: Skill({
 			name: "DragonKick",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -381,6 +411,7 @@ extend(Monk.prototype, {
 		DragonKickFlank: Skill({
 			name: "DragonKickFlank",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 				target.applyAura(source.model.auras.DragonKick, source, time);
@@ -390,11 +421,13 @@ extend(Monk.prototype, {
 		ImpulseDrive: Skill({
 			name: "ImpulseDrive",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 		}),
 
 		ImpulseDriveRear: Skill({
 			name: "ImpulseDriveRear",
 			potency: 180,
+			damageType: damageTypes.BLUNT,
 		}),
 
 		/*
@@ -404,6 +437,7 @@ extend(Monk.prototype, {
 		Demolish: Skill({
 			name: "Demolish",
 			potency: 30,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -414,6 +448,7 @@ extend(Monk.prototype, {
 		DemolishRear: Skill({
 			name: "DemolishRear",
 			potency: 70,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -424,6 +459,7 @@ extend(Monk.prototype, {
 		TouchOfDeath: Skill({
 			name: "TouchOfDeath",
 			potency: 20,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TouchOfDeathDOT, source, time);
 			}
@@ -432,6 +468,7 @@ extend(Monk.prototype, {
 		Fracture: Skill({
 			name: "Fracture",
 			potency: 100,
+			damageType: damageTypes.BLUNT,
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -484,6 +521,7 @@ extend(Monk.prototype, {
 		SteelPeak: Skill({
 			name: "SteelPeak",
 			potency: 150,
+			damageType: damageTypes.BLUNT,
 			recast: 40,
 			isOffGCD: true,
 		}),
@@ -491,6 +529,7 @@ extend(Monk.prototype, {
 		HowlingFist: Skill({
 			name: "HowlingFist",
 			potency: 170,
+			damageType: damageTypes.BLUNT,
 			recast: 60,
 			isOffGCD: true,
 		}),
@@ -632,11 +671,345 @@ extend(Monk.prototype, {
 		DragonKick: Aura({
 			name: "DragonKick",
 			duration: 15,
-			transformIncomingDamage: 1/0.9,
+			bluntResist: 0.9,
 		}),
 	}
 });
-},{"../lib/Aura":4,"../lib/Skill":10,"util":17}],3:[function(require,module,exports){
+},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],3:[function(require,module,exports){
+var libSkill = require('../lib/Skill'),
+	Skill = libSkill.createSkill,
+	Combo = libSkill.createCombo,
+	Aura = require('../lib/Aura').createAura,
+	extend = require("util")._extend,
+	damageTypes = libSkill.damageTypes;
+
+exports = module.exports = Ninja;
+
+function Ninja() {
+	var skills = this.skills;
+
+	this.skills = {};
+
+	for(var i in skills) this.skills[i] = new skills[i];
+}
+
+extend(Ninja.prototype, {
+
+	damageType: damageTypes.SLASH,
+	
+	prepareForBattle: function(time, source) {
+		source.applyAuraImmediate(source.model.auras.KissOfTheViper, source, time);
+		source.applyAuraImmediate(source.model.auras.Huton, source, time);
+		source.findAura("Huton").expireTime -= 20;
+	},
+
+	skills: {
+
+		/*
+			--- Skills ---
+		*/
+
+		SpinningEdge: Skill({
+			name: "SpinningEdge",
+			potency: 150,
+			damageType: damageTypes.SLASH,
+			onUse: function(time, source, target) {
+			}
+		}),
+
+		GustSlash: Combo("SpinningEdge", {
+			name: "GustSlash",
+			potency: 200,
+			damageType: damageTypes.SLASH,
+		}),
+
+		ShadowFang: Combo("SpinningEdge", {
+			name: "ShadowFang",
+			potency: 200,
+			damageType: damageTypes.SLASH,
+			onUse: function(time, source, target) {
+				target.applyAura(source.model.auras.ShadowFangDOT, source, time);
+			}
+		}),
+
+		AeolianEdge: Combo("GustSlash", {
+			name: "AeolianEdge",
+			potency: 320,
+			damageType: damageTypes.SLASH,
+		}),
+
+		DancingEdge: Combo("GustSlash", {
+			name: "DancingEdge",
+			potency: 260,
+			damageType: damageTypes.SLASH,
+			onUse: function(time, source, target) {
+				target.applyAura(source.model.auras.DancingEdge, source, time);
+			}
+		}),
+
+		/*
+			--- DOTs ---
+		*/
+
+		Mutilate: Skill({
+			name: "Mutilate",
+			potency: 60,
+			damageType: damageTypes.SLASH,
+			onUse: function(time, source, target) {
+				target.applyAura(source.model.auras.MutilateDOT, source, time);
+			}
+		}),
+
+		/*
+			--- Buffs ---
+		*/
+
+		InternalRelease: Skill({
+			name: "InternalRelease",
+			recast: 60,
+			isOffGCD: true,
+			onUse: function(time, source, target) {
+				source.applyAura(source.model.auras.InternalRelease, source, time);
+			}
+		}),
+
+
+		BloodForBlood: Skill({
+			name: "BloodForBlood",
+			recast: 80,
+			isOffGCD: true,
+			onUse: function(time, source, target) {
+				source.applyAura(source.model.auras.BloodForBlood, source, time);
+			}
+		}),
+
+		Kassatsu: Skill({
+			name: "Kassatsu",
+			recast: 120,
+			isOffGCD: true,
+			onUse: function(time, source, target) {
+				source.applyAura(source.model.auras.Kassatsu, source, time);
+			}
+		}),
+
+		/*
+			--- OffGCD ---
+		*/
+
+		Suiton: Skill({
+			name: "Suiton",
+			recast: 20,
+			isOffGCD: true,
+			animationLock: 1.5,
+			onUse: function(time, source, target) {
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				mudra.mudra = "Suiton";
+			}
+		}),
+
+		Huton: Skill({
+			name: "Huton",
+			recast: 20,
+			isOffGCD: true,
+			animationLock: 1.5,
+			onUse: function(time, source, target) {
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				mudra.mudra = "Huton";
+			}
+		}),
+
+		Raiton: Skill({
+			name: "Raiton",
+			recast: 20,
+			isOffGCD: true,
+			animationLock: 1,
+			onUse: function(time, source, target) {
+				var mudra = source.applyAuraImmediate(source.model.auras.Mudra, source, time);
+				mudra.mudra = "Raiton";
+			}
+		}),
+
+		Ninjutsu: Skill({
+			name: "Ninjutsu",
+			damageType: damageTypes.MAGIC,
+			recast: 20,
+			isOffGCD: true,
+			stats: {},
+			onUse: function(time, source, target) {
+				var mudra = source.findAura("Mudra", source),
+					kassatsu = source.findAura("Kassatsu", source);
+
+				if(!mudra) return;
+				source.removeAura(mudra, time);
+				source.removeAura(kassatsu, time);
+
+				switch(mudra.mudra) {
+					case "Suiton":
+						source.applyAura(source.model.auras.Suiton, source, time);
+						break;
+					case "Huton":
+						source.applyAura(source.model.auras.Huton, source, time);
+						break;
+					case "Raiton":
+						break;
+				}
+			},
+			getPotency: function(source, target, time) {
+				var aura = source.findAura("Mudra", source);
+
+				switch(aura.mudra) {
+					case "Suiton":
+						return 180;
+						break;
+					case "Huton":
+						return 0;
+						break;
+					case "Raiton":
+						return 360;
+						break;
+				}
+			},
+		}),
+
+		Mug: Skill({
+			name: "Mug",
+			potency: 140,
+			damageType: damageTypes.SLASH,
+			recast: 90,
+			isOffGCD: true,
+		}),
+
+		SneakAttack: Skill({
+			name: "SneakAttack",
+			potency: 500,
+			damageType: damageTypes.SLASH,
+			recast: 60,
+			isOffGCD: true,
+		}),
+
+		Jugulate: Skill({
+			name: "Jugulate",
+			potency: 80,
+			damageType: damageTypes.SLASH,
+			recast: 30,
+			isOffGCD: true,
+		}),
+
+		TrickAttack: Skill({
+			name: "TrickAttack",
+			potency: 400,
+			damageType: damageTypes.SLASH,
+			recast: 60,
+			isOffGCD: true,
+			onUse: function(time, source, target) {
+				target.applyAura(source.model.auras.TrickAttack, source, time);
+			}
+		}),
+	},
+
+	auras: {
+
+		/*
+			--- Buffs ---
+		*/
+
+		KissOfTheWasp: Aura({
+			name: "KissOfTheWasp",
+			duration: Infinity,
+			increaseDamage: 1.2,
+		}),
+
+		KissOfTheViper: Aura({
+			name: "KissOfTheViper",
+			duration: Infinity,
+			increaseDamage: 1.2,
+		}),
+
+		Huton: Aura({
+			name: "Huton",
+			duration: 70,
+			increasedAutoAttackSpeed: 0.15,
+			reducedGlobalCooldown: 0.15,
+		}),
+
+		Suiton: Aura({
+			name: "Suiton",
+			duration: 10,
+		}),
+
+		Mudra: Aura({
+			name: "Mudra",
+			duration: 5,
+		}),
+
+		Kassatsu: Aura({
+			name: "Kassatsu",
+			duration: 10,
+			onApply: function(source, time) {
+				var onExpire;
+
+				source.model.skills.Ninjutsu.stats.additionalSkillCriticalHitChance = 1;
+				source.model.skills.Ninjutsu.reset(time);
+				source.model.skills.Suiton.reset(time);
+				source.model.skills.Huton.reset(time);
+				source.model.skills.Raiton.reset(time);
+
+				source.on(source.events.auraExpire, onExpire = function(aura, isExpired, time) {
+					if(aura.name === "Kassatsu") {
+						source.model.skills.Ninjutsu.stats.additionalSkillCriticalHitChance = 0;
+						source.removeListener(source.events.auraExpire, onExpire);
+					}
+				});
+			}
+		}),
+
+		InternalRelease: Aura({
+			name: "InternalRelease",
+			duration: 15,
+			additionalCriticalHitChance: 0.1,
+		}),
+
+		BloodForBlood: Aura({
+			name: "BloodForBlood",
+			duration: 20,
+			increaseDamage: 1.1,
+		}),
+
+		/*
+			--- DOTs ---
+		*/
+
+		MutilateDOT: Aura({
+			name: "MutilateDOT",
+			duration: 30,
+			potency: 30,
+		}),
+
+		ShadowFangDOT: Aura({
+			name: "ShadowFangDOT",
+			duration: 18,
+			potency: 40,
+		}),
+
+		/*
+			--- Debuffs ---
+		*/
+
+		DancingEdge: Aura({
+			name: "DancingEdge",
+			duration: 20,
+			slashResist: 0.9,
+		}),
+
+		TrickAttack: Aura({
+			name: "TrickAttack",
+			duration: 10,
+			transformIncomingDamage: 1/0.9,
+		}),
+
+	}
+});
+},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],4:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
 	EventEmitter = require("events").EventEmitter,
@@ -645,6 +1018,7 @@ var extend = require("util")._extend,
 	models = {
 		Monk: require("../Models/Monk"),
 		Dragoon: require("../Models/Dragoon"),
+		Ninja: require("../Models/Ninja"),
 	};
 
 exports = module.exports = Actor;
@@ -708,12 +1082,13 @@ extend(Actor.prototype, {
 	action: function(time, target) {
 
 		var stats = this.getStats(),
+			targetStats = target.getStats(),
 			GCD, skillName;
 
 		switch(time) {
 			case this.nextAutoAttack:
 				this.emit(this.events.autoattack,
-					stats.getAutoAttackDamage()*target.getStats().transformIncomingDamage,
+					stats.getAutoAttackDamage()*targetStats.transformIncomingDamage/targetStats[this.model.damageType],
 					stats.getCriticalRate(),
 					time
 				);
@@ -747,9 +1122,12 @@ extend(Actor.prototype, {
 						this.setCombo(skill.name, time);
 					}
 
+					this.nextAction = Math.max(this.nextAction, time + skill.animationLock);
+					this.nextOffGCD = Math.max(this.nextOffGCD, time + skill.animationLock);
+
 					stats = stats.buff(skill.stats);
 					this.emit(this.events.skill,
-				  		stats.getSkillDamage(skill.getPotency(this, target, time))*target.getStats().transformIncomingDamage,
+				  		skill.getPotency(this, target, time) && stats.getSkillDamage(skill.getPotency(this, target, time))*targetStats.transformIncomingDamage/targetStats[skill.damageType],
 				  		stats.getSkillCriticalRate(),
 				  		skill,
 				  		time
@@ -770,7 +1148,7 @@ extend(Actor.prototype, {
 
 		this.pendingAuras.slice().forEach(function(pendingAura) {
 			if(pendingAura.time === time) {
-				this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats);
+				this.applyAuraImmediate(pendingAura.aura, pendingAura.owner, pendingAura.time, pendingAura.stats, pendingAura.tstats);
 				this.pendingAuras.splice(this.pendingAuras.indexOf(pendingAura), 1);
 			}
 		}, this);
@@ -829,16 +1207,18 @@ extend(Actor.prototype, {
 		this.pendingAuras.push({
 			aura: aura,
 			stats: source.getStats(),
+			tstats: this.getStats(),
 			time: time,
 			owner: source,
 		});
 	},
 
-	applyAuraImmediate: function(aura, source, time, stats) {
+	applyAuraImmediate: function(aura, source, time, stats, tstats) {
 		var _aura = this.findAura(aura.prototype.name, source);
 
 		conf = {
 			stats: stats || source.getStats(),
+			tstats: tstats,
 			time: time,
 			owner: source,
 		};
@@ -855,6 +1235,8 @@ extend(Actor.prototype, {
 				this.emit(this.events.auraApply, _aura, time);
 			}
 		}
+
+		return _aura;
 	},
 
 	findAura: function(auraName, source) {
@@ -885,6 +1267,10 @@ extend(Actor.prototype, {
 				increasedAutoAttackSpeed: aura.increasedAutoAttackSpeed,
 				reducedGlobalCooldown: aura.reducedGlobalCooldown,
 				transformIncomingDamage: aura.transformIncomingDamage,
+				BLUNT: aura.bluntResist,
+				SLASH: aura.slashResist,
+				PIERCING: aura.piercingResist,
+				MAGIC: aura.magicResist,
 			}));
 		}, this.stats);
 	},
@@ -893,7 +1279,7 @@ extend(Actor.prototype, {
 		this.rotation.free();
 	},
 });
-},{"../Models/Dragoon":1,"../Models/Monk":2,"./Rotation":18,"./Stats":11,"events":13,"util":17}],4:[function(require,module,exports){
+},{"../Models/Dragoon":1,"../Models/Monk":2,"../Models/Ninja":3,"./Rotation":19,"./Stats":12,"events":14,"util":18}],5:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -906,6 +1292,7 @@ function Aura(conf) {
 
 extend(Aura.prototype, {
 	name: "name", 
+	mudra: "",
 	duration: 0,
 	expireTime: 0, 
 	owner: null, 
@@ -925,10 +1312,15 @@ extend(Aura.prototype, {
 	statsMultiplier: {
 	},
 
+	bluntResist: 1,
+	slashResist: 1,
+	piercingResist: 1,
+	magicResist: 1,
+
 	refresh: function(conf) {
 		conf = conf || {};
 		if(this.potency) {
-			this.tickDamage = conf.stats.getSkillDamage(this.potency);
+			this.tickDamage = conf.stats.getSkillDamage(this.potency)*conf.tstats.transformIncomingDamage;
 			this.tickCriticalRate = conf.stats.getCriticalRate();
 		}
 
@@ -979,7 +1371,7 @@ function createAura(properties, specialProperties) {
 // 		}, 
 // 	}, 
 // });
-},{"util":17}],5:[function(require,module,exports){
+},{"util":18}],6:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1037,7 +1429,7 @@ function captureStackTrace(rotationError) {
 		},
 	});
 }
-},{"util":17}],6:[function(require,module,exports){
+},{"util":18}],7:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1099,7 +1491,7 @@ function captureStackTrace(rotationSyntaxError) {
 		},
 	});
 }
-},{"util":17}],7:[function(require,module,exports){
+},{"util":18}],8:[function(require,module,exports){
 var RotationError = require("./Errors/RotationError").RotationError,
 	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
 	vm = require("vm"),
@@ -1197,7 +1589,7 @@ extend(Rotation.prototype, {
 	}
 
 });
-},{"./Errors/RotationError":5,"./Errors/RotationSyntaxError":6,"events":13,"util":17,"vm":12}],8:[function(require,module,exports){
+},{"./Errors/RotationError":6,"./Errors/RotationSyntaxError":7,"events":14,"util":18,"vm":13}],9:[function(require,module,exports){
 var extend = require("util")._extend;
 
 exports = module.exports = Scheduled;
@@ -1258,7 +1650,7 @@ extend(Scheduled.prototype, {
 		return time > this.maxTime;
 	},
 });
-},{"util":17}],9:[function(require,module,exports){
+},{"util":18}],10:[function(require,module,exports){
 (function (process,global){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
@@ -1363,13 +1755,22 @@ extend(Simulation.prototype, {
 
 })
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Actor":3,"./Scheduled2":8,"_process":15,"events":13,"util":17}],10:[function(require,module,exports){
+},{"./Actor":4,"./Scheduled2":9,"_process":16,"events":14,"util":18}],11:[function(require,module,exports){
 var extend = require("util")._extend,
-	inherits = require("util").inherits;
+	inherits = require("util").inherits,
+	damageTypes = {};
 
 exports = module.exports = Skill;
 exports.createSkill = createSkill;
 exports.createCombo = createCombo;
+exports.damageTypes = damageTypes;
+
+extend(damageTypes, {
+	BLUNT: 		"BLUNT",
+	SLASH: 		"SLASH",
+	PIERCING: 	"PIERCING",
+	MAGIC: 		"MAGIC",
+});
 
 function Skill() {
 
@@ -1380,10 +1781,12 @@ extend(Skill.prototype, {
 	name: "Skill", 
 
 	potency: 0,
+	damageType: "",
 	recast: 0,
 	isOffGCD: false,
 	nextAvailable: 0,
 	combo: "",
+	animationLock: 0,
 
 	stats: {},
 
@@ -1410,6 +1813,10 @@ extend(Skill.prototype, {
 		return Math.max(this.nextAvailable - time, 0);
 	},
 
+	reset: function(time) {
+		this.nextAvailable = time;
+	},
+
 });
 
 function createSkill(properties, specialProperties) {
@@ -1429,20 +1836,7 @@ function createCombo(skill, properties, specialProperties) {
 
 	return createSkill(properties, specialProperties);
 }
-
-// Bootshine = createSkill({
-// 	name: "Bootshine",
-// 	potency: 150,
-// });
-
-// BootshineRear = createSkill({
-// 	name: "BootshineRear",
-// 	potency: 150,
-// 	stats: {
-// 		criticalHitChance:1
-// 	}
-// })
-},{"util":17}],11:[function(require,module,exports){
+},{"util":18}],12:[function(require,module,exports){
 var extend = require("util")._extend,
 	baseStatsMultiplier = {
 		weaponDamage: 1,
@@ -1460,6 +1854,12 @@ var extend = require("util")._extend,
 		skillCriticalHitChance: 0,
 		increasedAutoAttackSpeed: 0,
 		reducedGlobalCooldown: 0,
+	},
+	baseResists = {
+		BLUNT: 		1,
+		SLASH: 		1,
+		PIERCING: 	1,
+		MAGIC: 		1,
 	};
 
 exports = module.exports = Stats;
@@ -1467,13 +1867,15 @@ exports = module.exports = Stats;
 function Stats (stats) {
 	for (var stat in stats) {
 		if(stat in baseStatsMultiplier ||
-		   stat in baseStatsIncrease)
+		   stat in baseStatsIncrease ||
+		   stat in baseResists)
 			this[stat] = stats[stat];
 	}
 }
 
 extend(Stats.prototype, baseStatsMultiplier);
 extend(Stats.prototype, baseStatsIncrease);
+extend(Stats.prototype, baseResists);
 extend(Stats.prototype, {
 	/*
 		fPotency: [0.0,inf[
@@ -1516,6 +1918,8 @@ extend(Stats.prototype, {
 				stats[stat] *= multiplier[stat];
 			if(stat in baseStatsIncrease)
 				stats[stat] += multiplier[stat];
+			if(stat in baseResists && multiplier[stat] !== 1)
+				stats[stat] = multiplier[stat];
 		}
 		return stats;
 	},
@@ -1523,7 +1927,7 @@ extend(Stats.prototype, {
 
 extend(Stats, {
 	getBaseStatsMultiplier: function () {
-		return extend(extend({}, baseStatsMultiplier), baseStatsIncrease);
+		return extend(extend(extend({}, baseStatsMultiplier), baseStatsIncrease), baseResists);
 	},
 
 	useValkkyFormulas: function() {
@@ -1580,7 +1984,7 @@ extend(Stats, {
 });
 
 Stats.useValkkyFormulas(); // defaults to Valkky formulas
-},{"util":17}],12:[function(require,module,exports){
+},{"util":18}],13:[function(require,module,exports){
 // https://github.com/substack/vm-browserify
 var indexOf = function(arr, obj) {
     return arr.indexOf(obj);
@@ -1728,7 +2132,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2031,7 +2435,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2056,7 +2460,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2121,14 +2525,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2718,7 +3122,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":16,"_process":15,"inherits":14}],18:[function(require,module,exports){
+},{"./support/isBuffer":17,"_process":16,"inherits":15}],19:[function(require,module,exports){
 var Rotation = require("../../Rotation"),
 	extend = require("util")._extend;
 
@@ -2729,7 +3133,7 @@ extend(Rotation.prototype, {
 		this.script.free();
 	},
 })
-},{"../../Rotation":7,"util":17}],"themonk":[function(require,module,exports){
+},{"../../Rotation":8,"util":18}],"themonk":[function(require,module,exports){
 (function (process,global){
 var util = require("util"),
 	format = util.format,
@@ -2822,4 +3226,4 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":3,"./lib/Simulation":9,"./lib/Stats":11,"_process":15,"events":13,"util":17}]},{},[]);
+},{"./lib/Actor":4,"./lib/Simulation":10,"./lib/Stats":12,"_process":16,"events":14,"util":18}]},{},[]);

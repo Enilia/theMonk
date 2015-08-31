@@ -51,7 +51,17 @@ describe("Model/Ninja", function() {
 			actor.action(time, target);
 
 			assert.strictEqual(actor.nextTimeOfInterest(time), 1.5);
-		})
+		});
+
+		xit("should cycle through Huton/Suiton/Raiton", function() {
+			var aura;
+
+			actor.action(time, target);
+
+			assert.strictEqual(actor.findAura("Mudra", actor).mudra, "Huton");
+
+			actor.action(time, target);
+		});
 	});
 
 });

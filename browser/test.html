@@ -4,69 +4,67 @@
 	</head>
 	<body>
 <textarea id="ta">
-var isOpoOpoForm = AuraCount(self, "OpoOpoForm", self) || AuraCount(self, "PerfectBalance", self);
-var isRaptorForm = AuraCount(self, "RaptorForm", self) || AuraCount(self, "PerfectBalance", self);
-var isCoeurlForm = AuraCount(self, "CoeurlForm", self) || AuraCount(self, "PerfectBalance", self);
+var hutonTimeRemaining = AuraTimeRemaining(self, "Huton", self),
+	hasSuiton = AuraCount(self, "Suiton", self);
 
-if(AuraCount(self, "GreasedLigthning", self) < 3) {
-	if(!AuraCount(self, "PerfectBalance", self) && IsReady("PerfectBalance"))
-		return "PerfectBalance";
+if(AuraCount(self, "Mudra", self)) {
+	return "Ninjutsu";
 }
 
-if(IsOffGCD() && AuraCount(self, "GreasedLigthning", self) === 3) {
-
-	if(IsReady("InternalRelease") && AuraTimeRemaining(target, "DemolishDOT", self) < 15)
-		return "InternalRelease";
+if(IsOffGCD()) {
 
 	if(IsReady("BloodForBlood"))
 		return "BloodForBlood";
 
-	if(IsReady("SteelPeak"))
-		return "SteelPeak";
+	if(IsReady("InternalRelease"))
+		return "InternalRelease";
 
-	if(IsReady("HowlingFist"))
-		return "HowlingFist";
+	if(IsReady("Kassatsu") && AuraTimeRemaining(target, "TrickAttack", self))
+		return "Kassatsu";
+
+// }
+
+if(CooldownRemaining("Ninjutsu") < 1 && AuraTimeRemaining(target, "DancingEdge", self)) {
+	if(hutonTimeRemaining < 20)
+		return "Huton";
+	else if(IsReady("TrickAttack"))
+		return "Suiton";
+	else
+		return "Raiton";
+}
+
+// if(IsOffGCD()) {
+
+	if(hasSuiton && IsReady("TrickAttack")) 
+		return "TrickAttack";
+
+	if(IsReady("Mug"))
+		return "Mug";
+
+	if(IsReady("Jugulate"))
+		return "Jugulate";
 
 }
 
-if(AuraCount(self, "PerfectBalance", self))
-	if(AuraCount(self, "GreasedLigthning", self) < 3)
-		return "SnapPunchFlank";
-	else
-		if(AuraTimeRemaining(self, "TwinSnakes", self) < 4)
-			return "TwinSnakesFlank";
-		else 
-			if(AuraTimeRemaining(target, "DemolishDOT", self) < 4)
-				return "DemolishRear";
-			else 
-				return "SnapPunchFlank";
+if(IsReady("ShadowFang") && AuraTimeRemaining(target, "ShadowFangDOT", self) < 9
+					     && AuraTimeRemaining(target, "DancingEdge", self))
+	return "ShadowFang";
+
+if(IsReady("GustSlash"))
+	return "GustSlash";
+
+if(IsReady("DancingEdge") && AuraTimeRemaining(target, "DancingEdge", self) < 9)
+	return "DancingEdge";
+
+if(IsReady("AeolianEdge"))
+	return "AeolianEdge";
+
+if(IsReady("Mutilate") && AuraTimeRemaining(target, "MutilateDOT", self) < 9
+					   && AuraTimeRemaining(target, "ShadowFangDOT", self))
+	return "Mutilate";
 
 
-if(!AuraCount(target, "TouchOfDeathDOT", self)
-	&& (AuraCount(self, "BloodForBlood", self) || AuraCount(self, "InternalRelease", self))
-)
-	return "TouchOfDeath";
-
-if(isRaptorForm)
-	if(AuraTimeRemaining(self, "TwinSnakes", self) < 4)
-		return "TwinSnakesFlank";
-	else
-		return "TrueStrikeRear";
-
-if(isCoeurlForm) {
-	if(AuraTimeRemaining(target, "DemolishDOT", self) < 4)
-		return "DemolishRear";
-	else
-		return "SnapPunchFlank";
-}
-
-if(isOpoOpoForm)
-	if(AuraTimeRemaining(target, "DragonKick", self) < 4)
-		return "DragonKickFlank";
-	else
-		return "BootshineRear";
-
-return "Bootshine";
+return "SpinningEdge";
 </textarea>
 <button id="go" value="go">go</button>
 		<script type="text/javascript" src="js/themonk.js"></script>
@@ -82,7 +80,7 @@ return "Bootshine";
 							case "RotationError":
 							case "RotationSyntaxError":
 								console.error(e.stack);
-								// console.error(e.error.stack);
+								console.error(e.error.stack);
 								break;
 							default:
 								console.error(e.stack);
@@ -91,16 +89,16 @@ return "Bootshine";
 					})
 					.on("warn", function(warn) {
 						console.warn(warn);
-					}).addActor("Monk", "Monk", { 
-						"model":						"Monk", 
-						"weaponDamage": 				51,
-						"weaponAutoAttack": 			40.80,
-						"weaponAutoAttackDelay": 		2.40,
-						"strength": 					553,
-						"critical": 					426,
-						"determination": 				339,
-						"skillSpeed": 					394
-					}, ta.value)
+					}).addActor("Ninja", "Ninja", {
+	"model":						"Ninja", 
+	"weaponDamage": 				58,
+	"weaponAutoAttack": 			46.40,
+	"weaponAutoAttackDelay": 		2.40,
+	"strength": 					670,
+	"critical": 					507,
+	"determination": 				358,
+	"skillSpeed": 					376
+}, ta.value)
 					.setMaxTime(600)
 					.run()
 					.on("progress", function(time, maxTime) {

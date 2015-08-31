@@ -88,7 +88,7 @@ var themonk = new TheMonk().on("error", function(e) {
 						case "RotationError":
 						case "RotationSyntaxError":
 							console.error(e.stack);
-							// console.error(e.error.stack);
+							console.error(e.error.stack);
 							break;
 						default:
 							console.error(e.stack);

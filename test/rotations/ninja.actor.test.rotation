@@ -1,2 +1,15 @@
-if(IsReady("Suiton"))
-	return "Suiton";
+var hutonTimeRemaining = AuraTimeRemaining(self, "Huton", self);
+
+if(AuraCount(self, "Mudra", self))
+	return "Ninjutsu";
+
+if(CooldownRemaining("Ninjutsu") < 1) {
+	if(hutonTimeRemaining < 20)
+			return "Huton";
+	else if(hutonTimeRemaining < 40)
+			return "Raiton";
+	else if(hutonTimeRemaining < 60)
+			return "Suiton";
+}
+
+return "SpinningEdge";
