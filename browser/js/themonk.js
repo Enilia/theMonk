@@ -1044,6 +1044,10 @@ function Actor(conf) {
 
 inherits(Actor, EventEmitter);
 
+extend(Actor, {
+	models: models,
+});
+
 extend(Actor.prototype, {
 
 	name: "Actor",
@@ -3158,6 +3162,10 @@ function theMonk() {
 
 inherits(theMonk, EventEmitter);
 
+extend(theMonk, {
+	models: Actor.models,
+});
+
 extend(theMonk.prototype, {
 
 	simulation: null,
@@ -3226,4 +3234,7 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":4,"./lib/Simulation":10,"./lib/Stats":12,"_process":16,"events":14,"util":18}]},{},[]);
+},{"./lib/Actor":4,"./lib/Simulation":10,"./lib/Stats":12,"_process":16,"events":14,"util":18}]},{},[])
+
+
+//# sourceMappingURL=themonk.js.map

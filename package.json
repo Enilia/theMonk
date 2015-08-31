@@ -28,7 +28,7 @@
     "test-watch": "mocha -wb",
     "browserify": "browserify -r ./index.js:themonk > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs > browser/js/index.js",
     "browserify-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonk.js.map > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs --debug | exorcist ./browser/js/index.js.map > browser/js/index.js",
-    "browserify-watch": "watchify -r ./index.js:themonk -o browser/themonk.js --debug --verbose"
+    "browserify-watch": "watchify -r ./index.js:themonk -o browser/js/themonk.js --debug --verbose"
   },
   "config": {
     "blanket": {

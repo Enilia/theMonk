@@ -21,6 +21,10 @@ function theMonk() {
 
 inherits(theMonk, EventEmitter);
 
+extend(theMonk, {
+	models: Actor.models,
+});
+
 extend(theMonk.prototype, {
 
 	simulation: null,
