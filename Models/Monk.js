@@ -16,6 +16,8 @@ function Monk() {
 
 extend(Monk.prototype, {
 
+	name: "Monk",
+
 	damageType: damageTypes.BLUNT,
 	
 	prepareForBattle: function(time, source) {

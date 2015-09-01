@@ -17,6 +17,8 @@ function Ninja() {
 
 extend(Ninja.prototype, {
 
+	name: "Ninja",
+
 	damageType: damageTypes.SLASH,
 	
 	prepareForBattle: function(time, source) {

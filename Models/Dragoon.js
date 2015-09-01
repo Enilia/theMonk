@@ -17,6 +17,8 @@ function Dragoon() {
 
 extend(Dragoon.prototype, {
 
+	name: "Dragoon",
+
 	damageType: damageTypes.PIERCING,
 	
 	prepareForBattle: function(time, source) {
