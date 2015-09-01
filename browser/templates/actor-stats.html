@@ -1,0 +1,40 @@
+
+<div class="stats">
+	<span>
+		<label>Name</label>
+		<input required type="text" class="name" ng-model="actor.name" />
+	</span>
+	<span>
+		<label>Model</label>
+		<select required class="model" ng-model="actor.model" ng-options="model.name for model in actor.models">
+		</select>
+	</span>
+	<span>
+		<label>Weapon Damage</label>
+		<input required type="number" class="weaponDamage" ng-model="actor.stats.weaponDamage" />
+	</span>
+	<span>
+		<label>Weapon Auto Attack</label>
+		<input required type="number" class="weaponAutoAttack" ng-model="actor.stats.weaponAutoAttack" />
+	</span>
+	<span>
+		<label>Weapon Auto Attack Delay</label>
+		<input required type="number" class="weaponAutoAttackDelay" ng-model="actor.stats.weaponAutoAttackDelay" />
+	</span>
+	<span>
+		<label>Strength</label>
+		<input required type="number" class="strength" ng-model="actor.stats.strength" />
+	</span>
+	<span>
+		<label>Critical</label>
+		<input required type="number" class="critical" ng-model="actor.stats.critical" />
+	</span>
+	<span>
+		<label>Determination</label>
+		<input required type="number" class="determination" ng-model="actor.stats.determination" />
+	</span>
+	<span>
+		<label>Skill Speed</label>
+		<input required type="number" class="skillSpeed" ng-model="actor.stats.skillSpeed" />
+	</span>
+</div>

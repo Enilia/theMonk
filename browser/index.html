@@ -2,63 +2,22 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/css.css" />
+		<script type="text/javascript" src="js/angular.min.js"></script>
 	</head>
-	<body>
-		<div class="actors">
-			<div class="actor">
-				<div class="actor-title">Actor</div>
-				<form action="#">
-				<div class="stats">
-					<span>
-						<label>Name</label>
-						<input type="text" class="name" />
-					</span>
-					<span>
-						<label>Model</label>
-						<select class="model">
-							<option value="Monk">Monk</option>
-							<option value="Dragoon">Dragoon</option>
-							<option value="Ninja">Ninja</option>
-						</select>
-					</span>
-					<span>
-						<label>Weapon Damage</label>
-						<input type="number" class="weaponDamage" />
-					</span>
-					<span>
-						<label>Weapon Auto Attack</label>
-						<input type="number" class="weaponAutoAttack" />
-					</span>
-					<span>
-						<label>Weapon Auto Attack Delay</label>
-						<input type="number" class="weaponAutoAttackDelay" />
-					</span>
-					<span>
-						<label>Strength</label>
-						<input type="number" class="strength" />
-					</span>
-					<span>
-						<label>Critical</label>
-						<input type="number" class="critical" />
-					</span>
-					<span>
-						<label>Determination</label>
-						<input type="number" class="determination" />
-					</span>
-					<span>
-						<label>Skill Speed</label>
-						<input type="number" class="skillSpeed" />
-					</span>
-				</div>
+	<body ng-app="themonk">
+		<div class="actor" ng-controller="ActorController as actor">
+			<form action="#" name="formActor">
+				<tm-actor-stats></tm-actor-stats>
 				<div class="rotation">
-					<textarea class="rotation-area"></textarea>
+					<textarea class="rotation-area" ng-model="actor.rotation"></textarea>
 				</div>
 				<div class="rotation-helper">
 					<div class="rotation-globals"></div>
-					<div class="rotation-skills"></div>
+					<div class="rotation-skills">
+						<tm-skill ng-repeat="skill in actor.model.skills"></tm-skill>
+					</div>
 				</div>
-				</form>
-			</div>
+			</form>
 		</div>
 		
 		<div class="report">
