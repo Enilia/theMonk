@@ -18,6 +18,8 @@ function Dragoon() {
 
 extend(Dragoon.prototype, {
 
+	name: "Dragoon",
+
 	damageType: damageTypes.PIERCING,
 	
 	prepareForBattle: function(time, source) {
@@ -302,6 +304,8 @@ function Monk() {
 }
 
 extend(Monk.prototype, {
+
+	name: "Monk",
 
 	damageType: damageTypes.BLUNT,
 	
@@ -694,6 +698,8 @@ function Ninja() {
 }
 
 extend(Ninja.prototype, {
+
+	name: "Ninja",
 
 	damageType: damageTypes.SLASH,
 	
