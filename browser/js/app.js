@@ -1,2 +1,4 @@
 
-var app = angular.module('themonk', []);
+var app = angular.module('themonk', ['themonkControllers',
+									 'themonkDirectives',
+									 'themonkServices']);

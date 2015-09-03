@@ -13,12 +13,12 @@
 			<form action="#" name="formActor">
 				<tm-actor-stats></tm-actor-stats>
 				<div class="rotation">
-					<textarea class="rotation-area" ng-model="actor.rotation"></textarea>
+					<textarea class="rotation-area" ng-model="rotation"></textarea>
 				</div>
 				<div class="rotation-helper">
 					<div class="rotation-globals"></div>
 					<div class="rotation-skills">
-						<tm-skill ng-repeat="skill in actor.model.skills"></tm-skill>
+						<tm-skill ng-repeat="skill in model.skills"></tm-skill>
 					</div>
 				</div>
 			</form>

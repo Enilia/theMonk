@@ -1,9 +1,9 @@
 
-angular.module('themonk')
+angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['themonkService', function(TheMonk) {
+	.controller('ActorController', ['$scope', 'themonkService', function($scope, TheMonk) {
 
-		this.models = (function() {
+		$scope.models = (function() {
 			var models = [];
 			for(var model in TheMonk.models)
 				models.push(new TheMonk.models[model]);
@@ -11,13 +11,13 @@ angular.module('themonk')
 			return models;
 		})();
 
-		this.name = "";
+		$scope.name = "";
 
-		this.rotation = "";
+		$scope.rotation = "";
 
-		this.model = this.models[0];
+		$scope.model = $scope.models[0];
 
-		this.stats = {
+		$scope.stats = {
 			"weaponDamage": 				0,
 			"weaponAutoAttack": 			0,
 			"weaponAutoAttackDelay": 		0,

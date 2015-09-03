@@ -1,5 +1,5 @@
 
-angular.module('themonk')
+angular.module('themonkDirectives', [])
 
 	.directive('tmActorStats', function() {
 		return {
