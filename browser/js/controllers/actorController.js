@@ -1,7 +1,7 @@
 
 angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['$scope', 'themonkService', function($scope, TheMonk) {
+	.controller('ActorController', ['$scope', 'themonk', function($scope, TheMonk) {
 
 		$scope.models = (function() {
 			var models = [];
@@ -25,6 +25,10 @@ angular.module('themonkControllers', [])
 			"critical": 					0,
 			"determination": 				0,
 			"skillSpeed": 					0,
+		}
+
+		$scope.addSkill = function(skill) {
+			$scope.rotation = $scope.rotation + skill.name;
 		}
 
 	}]);
