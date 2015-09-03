@@ -1,0 +1,232 @@
+{
+	"Monk": {
+		"Bootshine": {
+			"name": "Bootshine",
+			"image": "images/skills/Monk/bootshine.png"
+		},
+		"BootshineRear": {
+			"name": "BootshineRear",
+			"image": "images/skills/Monk/bootshine.png"
+		},
+		"TrueStrike": {
+			"name": "TrueStrike",
+			"image": "images/skills/Monk/true_strike.png"
+		},
+		"TrueStrikeRear": {
+			"name": "TrueStrikeRear",
+			"image": "images/skills/Monk/true_strike.png"
+		},
+		"SnapPunch": {
+			"name": "SnapPunch",
+			"image": "images/skills/Monk/snap_punch.png"
+		},
+		"SnapPunchFlank": {
+			"name": "SnapPunchFlank",
+			"image": "images/skills/Monk/snap_punch.png"
+		},
+		"TwinSnakes": {
+			"name": "TwinSnakes",
+			"image": "images/skills/Monk/twin_snakes.png"
+		},
+		"TwinSnakesFlank": {
+			"name": "TwinSnakesFlank",
+			"image": "images/skills/Monk/twin_snakes.png"
+		},
+		"DragonKick": {
+			"name": "DragonKick",
+			"image": "images/skills/Monk/dragon_kick.png"
+		},
+		"DragonKickFlank": {
+			"name": "DragonKickFlank",
+			"image": "images/skills/Monk/dragon_kick.png"
+		},
+		"ImpulseDrive": {
+			"name": "ImpulseDrive",
+			"image": "images/skills/Dragoon/impulse_drive.png"
+		},
+		"ImpulseDriveRear": {
+			"name": "ImpulseDriveRear",
+			"image": "images/skills/Dragoon/impulse_drive.png"
+		},
+		"Demolish": {
+			"name": "Demolish",
+			"image": "images/skills/Monk/demolish.png"
+		},
+		"DemolishRear": {
+			"name": "DemolishRear",
+			"image": "images/skills/Monk/demolish.png"
+		},
+		"TouchOfDeath": {
+			"name": "TouchOfDeath",
+			"image": "images/skills/Monk/touch_of_death.png"
+		},
+		"Fracture": {
+			"name": "Fracture",
+			"image": "images/skills/Warrior/fracture.png"
+		},
+		"InternalRelease": {
+			"name": "InternalRelease",
+			"image": "images/skills/Monk/internal_release.png"
+		},
+		"FistOfFire": {
+			"name": "FistOfFire",
+			"image": "images/skills/Monk/fists_of_fire.png"
+		},
+		"PerfectBalance": {
+			"name": "PerfectBalance",
+			"image": "images/skills/Monk/perfect_balance.png"
+		},
+		"BloodForBlood": {
+			"name": "BloodForBlood",
+			"image": "images/skills/Dragoon/blood_for_blood.png"
+		},
+		"SteelPeak": {
+			"name": "SteelPeak",
+			"image": "images/skills/Monk/steel_peak.png"
+		},
+		"HowlingFist": {
+			"name": "HowlingFist",
+			"image": "images/skills/Monk/howling_fist.png"
+		}
+	},
+	"Ninja": {
+		"SpinningEdge": {
+			"name": "SpinningEdge",
+			"image": "images/skills/Ninja/Spinning_edge_icon1.png"
+		},
+		"GustSlash": {
+			"name": "GustSlash",
+			"image": "images/skills/Ninja/Gust_slash_icon1.png"
+		},
+		"ShadowFang": {
+			"name": "ShadowFang",
+			"image": "images/skills/Ninja/Shadow_fang_icon1.png"
+		},
+		"AeolianEdge": {
+			"name": "AeolianEdge",
+			"image": "images/skills/Ninja/Aeolian_edge_icon1.png"
+		},
+		"DancingEdge": {
+			"name": "DancingEdge",
+			"image": "images/skills/Ninja/Dancing_edge_icon1.png"
+		},
+		"Mutilate": {
+			"name": "Mutilate",
+			"image": "images/skills/Ninja/Mutilate_icon1.png"
+		},
+		"InternalRelease": {
+			"name": "InternalRelease",
+			"image": "images/skills/Monk/internal_release.png"
+		},
+		"BloodForBlood": {
+			"name": "BloodForBlood",
+			"image": "images/skills/Dragoon/blood_for_blood.png"
+		},
+		"Kassatsu": {
+			"name": "Kassatsu",
+			"image": "images/skills/Ninja/Kassatsu_icon1.png"
+		},
+		"Suiton": {
+			"name": "Suiton",
+			"image": "images/skills/Ninja/Suiton_icon1.png"
+		},
+		"Huton": {
+			"name": "Huton",
+			"image": "images/skills/Ninja/Hyoton_icon1.png"
+		},
+		"Raiton": {
+			"name": "Raiton",
+			"image": "images/skills/Ninja/Raiton_icon1.png"
+		},
+		"Ninjutsu": {
+			"name": "Ninjutsu",
+			"image": "images/skills/Ninja/Ninjutsu_icon1.png"
+		},
+		"Mug": {
+			"name": "Mug",
+			"image": "images/skills/Ninja/Mug_icon1.png"
+		},
+		"SneakAttack": {
+			"name": "SneakAttack",
+			"image": "images/skills/Ninja/Sneak_attack_icon1.png"
+		},
+		"Jugulate": {
+			"name": "Jugulate",
+			"image": "images/skills/Ninja/Jugulate_icon1.png"
+		},
+		"TrickAttack": {
+			"name": "TrickAttack",
+			"image": "images/skills/Ninja/Trick_attack_icon1.png"
+		}
+	},
+	"Dragoon": {
+		"HeavyThrust": {
+			"name": "HeavyThrust",
+			"image": "images/skills/Dragoon/heavy_thrust.png"
+		},
+		"TrueThrust": {
+			"name": "TrueThrust",
+			"image": "images/skills/Dragoon/true_thrust.png"
+		},
+		"VorpalThrust": {
+			"name": "VorpalThrust",
+			"image": "images/skills/Dragoon/vorpal_thrust.png"
+		},
+		"FullThrust": {
+			"name": "FullThrust",
+			"image": "images/skills/Dragoon/full_thrust.png"
+		},
+		"ImpulseDrive": {
+			"name": "ImpulseDrive",
+			"image": "images/skills/Dragoon/impulse_drive.png"
+		},
+		"Disembowel": {
+			"name": "Disembowel",
+			"image": "images/skills/Dragoon/disembowel.png"
+		},
+		"ChaosThrust": {
+			"name": "ChaosThrust",
+			"image": "images/skills/Dragoon/chaos_thrust.png"
+		},
+		"Phlebotomize": {
+			"name": "Phlebotomize",
+			"image": "images/skills/Dragoon/phlebotomize.png"
+		},
+		"Fracture": {
+			"name": "Fracture",
+			"image": "images/skills/Warrior/fracture.png"
+		},
+		"InternalRelease": {
+			"name": "InternalRelease",
+			"image": "images/skills/Monk/internal_release.png"
+		},
+		"BloodForBlood": {
+			"name": "BloodForBlood",
+			"image": "images/skills/Dragoon/blood_for_blood.png"
+		},
+		"LifeSurge": {
+			"name": "LifeSurge",
+			"image": "images/skills/Dragoon/life_surge.png"
+		},
+		"PowerSurge": {
+			"name": "PowerSurge",
+			"image": "images/skills/Dragoon/power_surge.png"
+		},
+		"LegSweep": {
+			"name": "LegSweep",
+			"image": "images/skills/Dragoon/leg_sweep.png"
+		},
+		"Jump": {
+			"name": "Jump",
+			"image": "images/skills/Dragoon/jump.png"
+		},
+		"SpineshatterDive": {
+			"name": "SpineshatterDive",
+			"image": "images/skills/Dragoon/spineshatter_dive.png"
+		},
+		"DragonfireDive": {
+			"name": "DragonfireDive",
+			"image": "images/skills/Dragoon/dragonfire_dive.png"
+		}
+	}
+}
