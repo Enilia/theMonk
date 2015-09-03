@@ -8,4 +8,4 @@ angular.module('themonkAPIService', [])
 },{"themonk":"themonk"}]},{},[1])
 
 
-//# sourceMappingURL=themonkService.js.map
+//# sourceMappingURL=themonkAPI.js.map

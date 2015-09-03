@@ -1,5 +1,5 @@
 
-angular.module('themonkDirectives', [])
+angular.module('themonkDirectives', ['themonkServices'])
 
 	.directive('tmActorStats', function() {
 		return {
@@ -8,9 +8,19 @@ angular.module('themonkDirectives', [])
 		};
 	})
 
-	.directive('tmSkill', function() {
-		return {
-			restrict:'E',
-			templateUrl:'/templates/skill.html',
-		};
-	});
+	.directive('tmSkill', ['skillInfo', function(skillInfo) {
+			return {
+				restrict:'E',
+				templateUrl:'/templates/skill.html',
+				scope: {
+					skill: "=",
+					model: "=",
+					click: "=",
+				},
+				controller: function($scope) {
+					skillInfo(function(skillInfos) {
+						$scope.skillInfos = skillInfos[$scope.model.name][$scope.skill.name];
+					});
+				},
+			};
+		}]);

@@ -26,8 +26,8 @@
     "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
     "test-doc": "mocha -R doc > doc.html",
     "test-watch": "mocha -wb",
-    "browserify": "browserify -r ./index.js:themonk > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs > browser/js/services/themonkService.js",
-    "browserify-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonk.js.map > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs --debug | exorcist ./browser/js/services/themonkService.js.map > browser/js/services/themonkService.js",
+    "browserify": "browserify -r ./index.js:themonk > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs > browser/js/services/themonkAPI.js",
+    "browserify-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonk.js.map > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs --debug | exorcist ./browser/js/services/themonkAPI.js.map > browser/js/services/themonkAPI.js",
     "browserify-watch": "watchify -r ./index.js:themonk -o browser/js/themonk.js --debug --verbose"
   },
   "config": {

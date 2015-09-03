@@ -37,6 +37,9 @@
 	flex: 1 2 100%;
 }
 
+.skill {
+	text-decoration:none;
+}
 
 /*.stats, .rotation, .report {
 	outline: 1px solid black;

@@ -1,4 +1,5 @@
 
 var app = angular.module('themonk', ['themonkControllers',
 									 'themonkDirectives',
-									 'themonkAPIService']);
+									 'themonkAPIService',
+									 'themonkServices']);
