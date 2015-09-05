@@ -1,0 +1,36 @@
+{
+	"vars": {
+		"self": {
+			"desc": ""
+		},
+		"target": {
+			"desc": ""
+		}
+	},
+	"fn": {
+		"AuraCount": {
+			"args": ["actor", "auraName", "source"],
+			"desc": ""
+		},
+		"IsReady": {
+			"args": ["skillName"],
+			"desc": ""
+		},
+		"IsOffGCD": {
+			"args": [],
+			"desc": ""
+		},
+		"AuraTimeRemaining": {
+			"args": ["actor", "auraName", "source"],
+			"desc": ""
+		},
+		"GCD": {
+			"args": [],
+			"desc": ""
+		},
+		"CooldownRemaining": {
+			"args": ["skillName"],
+			"desc": ""
+		}
+	}
+}
