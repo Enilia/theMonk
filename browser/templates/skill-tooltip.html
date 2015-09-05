@@ -1,0 +1,18 @@
+<div>
+	<img ng-src="{{skillInfos.image}}" alt="skill.name" class="skill-icon" />
+	<div>{{skillInfos.name}}</div>
+	<table>
+		<tr>
+			<td>Off GCD:</td>
+			<td>{{skill.isOffGCD}}</td>
+		</tr>
+		<tr ng-show="skill.potency">
+			<td>Potency:</td>
+			<td>{{skill.potency}}</td>
+		</tr>
+		<tr ng-show="skill.recast">
+			<td>Cooldown:</td>
+			<td>{{skill.recast}}</td>
+		</tr>
+	</table>
+</div>
