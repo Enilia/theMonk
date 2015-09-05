@@ -1,18 +1,64 @@
 <div>
 	<img ng-src="{{skillInfos.image}}" alt="skill.name" class="skill-icon" />
-	<div>{{skillInfos.name}}</div>
 	<table>
-		<tr>
-			<td>Off GCD:</td>
-			<td>{{skill.isOffGCD}}</td>
-		</tr>
+		<thead>
+			<tr>
+				<td colspan="2">{{skillInfos.name}}</td>
+			</tr>
+			<tr>
+				<td colspan="2" ng-show="skill.isOffGCD">Off GCD</td>
+			</tr>
+		</thead>
 		<tr ng-show="skill.potency">
 			<td>Potency:</td>
 			<td>{{skill.potency}}</td>
 		</tr>
 		<tr ng-show="skill.recast">
 			<td>Cooldown:</td>
-			<td>{{skill.recast}}</td>
+			<td>{{skill.recast}}s</td>
+		</tr>
+	</table>
+	<table ng-repeat="aura in skill.auras">
+		<thead>
+			<tr>
+				<td colspan="2">{{aura.name}}</td>
+			</tr>
+		</thead>
+		<tr>
+			<td>Duration:</td>
+			<td>{{aura.duration}}s</td>
+		</tr>
+		<tr ng-show="aura.potency">
+			<td>Potency:</td>
+			<td>{{aura.potency}}</td>
+		</tr>
+		<tr ng-show="aura.duration &amp;&amp; aura.potency">
+			<td>Total Potency:</td>
+			<td>{{aura.potency * aura.duration / 3 + skill.potency}}</td>
+		</tr>
+		<tr ng-show="aura.increaseDamage">
+			<td>Increased Damage:</td>
+			<td>{{ aura.increaseDamage * 10 * 10 - 100 }} %</td>
+		</tr>
+		<tr ng-show="aura.additionalCriticalHitChance">
+			<td>Critical Bonus :</td>
+			<td>{{ aura.additionalCriticalHitChance * 100 }} %</td>
+		</tr>
+		<tr ng-show="aura.bluntResist">
+			<td>Blunt Resist :</td>
+			<td>{{ aura.bluntResist * 100 }}%</td>
+		</tr>
+		<tr ng-show="aura.piercingResist">
+			<td>Piercing Resist :</td>
+			<td>{{ aura.piercingResist * 100 }}%</td>
+		</tr>
+		<tr ng-show="aura.slashResist">
+			<td>Slash Resist :</td>
+			<td>{{ aura.slashResist * 100 }}%</td>
+		</tr>
+		<tr ng-show="aura.transformIncomingDamage">
+			<td>Incoming Damage :</td>
+			<td>{{ aura.transformIncomingDamage | number : 2 }} %</td>
 		</tr>
 	</table>
 </div>

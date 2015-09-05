@@ -1,20 +1,20 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var libSkill = require('../lib/Skill'),
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Dragoon;
 
 function Dragoon() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Dragoon, Model);
 
 extend(Dragoon.prototype, {
 
@@ -35,6 +35,7 @@ extend(Dragoon.prototype, {
 			name: "HeavyThrust",
 			potency: 170,
 			damageType: damageTypes.PIERCING,
+			auras: ["HeavyThrust"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.HeavyThrust, source, time);
 			}
@@ -68,6 +69,7 @@ extend(Dragoon.prototype, {
 			name: "Disembowel",
 			potency: 220,
 			damageType: damageTypes.PIERCING,
+			auras: ["Disembowel"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.Disembowel, source, time);
 			}
@@ -81,6 +83,7 @@ extend(Dragoon.prototype, {
 			name: "ChaosThrust",
 			potency: 200,
 			damageType: damageTypes.PIERCING,
+			auras: ["ChaosThrustDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ChaosThrustDOT, source, time);
 			}
@@ -90,6 +93,7 @@ extend(Dragoon.prototype, {
 			name: "Phlebotomize",
 			potency: 170,
 			damageType: damageTypes.PIERCING,
+			auras: ["PhlebotomizeDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
@@ -99,6 +103,7 @@ extend(Dragoon.prototype, {
 			name: "Fracture",
 			potency: 100,
 			damageType: damageTypes.PIERCING,
+			auras: ["FractureDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -112,6 +117,7 @@ extend(Dragoon.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -121,6 +127,7 @@ extend(Dragoon.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
@@ -130,6 +137,7 @@ extend(Dragoon.prototype, {
 			name: "LifeSurge",
 			recast: 90,
 			isOffGCD: true,
+			auras: ["LifeSurge"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.LifeSurge, source, time);
 			}
@@ -139,6 +147,7 @@ extend(Dragoon.prototype, {
 			name: "PowerSurge",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["PowerSurge"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.PowerSurge, source, time);
 			}
@@ -286,22 +295,22 @@ extend(Dragoon.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],2:[function(require,module,exports){
-var libSkill = require('../lib/Skill'),
+},{"../lib/Aura":5,"../lib/Model":8,"../lib/Skill":12,"util":19}],2:[function(require,module,exports){
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Monk;
 
 function Monk() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Monk, Model);
 
 extend(Monk.prototype, {
 
@@ -387,6 +396,7 @@ extend(Monk.prototype, {
 			name: "TwinSnakes",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["TwinSnakes"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -407,6 +417,7 @@ extend(Monk.prototype, {
 			name: "DragonKick",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["DragonKick"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -416,6 +427,7 @@ extend(Monk.prototype, {
 			name: "DragonKickFlank",
 			potency: 150,
 			damageType: damageTypes.BLUNT,
+			auras: ["DragonKick"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 				target.applyAura(source.model.auras.DragonKick, source, time);
@@ -442,6 +454,7 @@ extend(Monk.prototype, {
 			name: "Demolish",
 			potency: 30,
 			damageType: damageTypes.BLUNT,
+			auras: ["DemolishDOT"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -453,6 +466,7 @@ extend(Monk.prototype, {
 			name: "DemolishRear",
 			potency: 70,
 			damageType: damageTypes.BLUNT,
+			auras: ["DemolishDOT"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -464,6 +478,7 @@ extend(Monk.prototype, {
 			name: "TouchOfDeath",
 			potency: 20,
 			damageType: damageTypes.BLUNT,
+			auras: ["TouchOfDeathDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TouchOfDeathDOT, source, time);
 			}
@@ -473,6 +488,7 @@ extend(Monk.prototype, {
 			name: "Fracture",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["FractureDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -486,6 +502,7 @@ extend(Monk.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -513,6 +530,7 @@ extend(Monk.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
@@ -679,23 +697,23 @@ extend(Monk.prototype, {
 		}),
 	}
 });
-},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],3:[function(require,module,exports){
-var libSkill = require('../lib/Skill'),
+},{"../lib/Aura":5,"../lib/Model":8,"../lib/Skill":12,"util":19}],3:[function(require,module,exports){
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Ninja;
 
 function Ninja() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Ninja, Model);
 
 extend(Ninja.prototype, {
 
@@ -733,6 +751,7 @@ extend(Ninja.prototype, {
 			name: "ShadowFang",
 			potency: 200,
 			damageType: damageTypes.SLASH,
+			auras: ["ShadowFangDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ShadowFangDOT, source, time);
 			}
@@ -748,6 +767,7 @@ extend(Ninja.prototype, {
 			name: "DancingEdge",
 			potency: 260,
 			damageType: damageTypes.SLASH,
+			auras: ["DancingEdge"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.DancingEdge, source, time);
 			}
@@ -761,6 +781,7 @@ extend(Ninja.prototype, {
 			name: "Mutilate",
 			potency: 60,
 			damageType: damageTypes.SLASH,
+			auras: ["MutilateDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.MutilateDOT, source, time);
 			}
@@ -774,6 +795,7 @@ extend(Ninja.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -784,6 +806,7 @@ extend(Ninja.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
@@ -907,6 +930,7 @@ extend(Ninja.prototype, {
 			damageType: damageTypes.SLASH,
 			recast: 60,
 			isOffGCD: true,
+			auras: ["TrickAttack"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TrickAttack, source, time);
 			}
@@ -1015,7 +1039,7 @@ extend(Ninja.prototype, {
 
 	}
 });
-},{"../lib/Aura":5,"../lib/Skill":11,"util":18}],4:[function(require,module,exports){
+},{"../lib/Aura":5,"../lib/Model":8,"../lib/Skill":12,"util":19}],4:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
 	EventEmitter = require("events").EventEmitter,
@@ -1289,7 +1313,7 @@ extend(Actor.prototype, {
 		this.rotation.free();
 	},
 });
-},{"../Models/Dragoon":1,"../Models/Monk":2,"../Models/Ninja":3,"./Rotation":19,"./Stats":12,"events":14,"util":18}],5:[function(require,module,exports){
+},{"../Models/Dragoon":1,"../Models/Monk":2,"../Models/Ninja":3,"./Rotation":20,"./Stats":13,"events":15,"util":19}],5:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits;
 
@@ -1381,7 +1405,7 @@ function createAura(properties, specialProperties) {
 // 		}, 
 // 	}, 
 // });
-},{"util":18}],6:[function(require,module,exports){
+},{"util":19}],6:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1439,7 +1463,7 @@ function captureStackTrace(rotationError) {
 		},
 	});
 }
-},{"util":18}],7:[function(require,module,exports){
+},{"util":19}],7:[function(require,module,exports){
 var inherits = require("util").inherits,
 	extend = require("util")._extend,
 	format = require("util").format;
@@ -1501,7 +1525,41 @@ function captureStackTrace(rotationSyntaxError) {
 		},
 	});
 }
-},{"util":18}],8:[function(require,module,exports){
+},{"util":19}],8:[function(require,module,exports){
+
+exports = module.exports = Model;
+
+function Model() {
+	var skills = this.skills,
+		skillName,
+		skill;
+
+	this.skills = {};
+
+	for(skillName in skills) {
+		skill = new skills[skillName];
+
+		if(skill.auras) {
+			skill.auras = skill.auras.slice()
+									 .map(function(auraName) {
+			 	var aura = this.auras[auraName],
+			 		auraInfos = {},
+			 		info;
+
+		 		for(info in aura.prototype) {
+		 			if(aura.prototype.hasOwnProperty(info)) {
+		 				auraInfos[info] = aura.prototype[info];
+		 			}
+		 		}
+		 		
+				return auraInfos;
+			}, this);
+		}
+
+		this.skills[skillName] = skill;
+	}
+}
+},{}],9:[function(require,module,exports){
 var RotationError = require("./Errors/RotationError").RotationError,
 	RotationSyntaxError = require("./Errors/RotationSyntaxError").RotationSyntaxError,
 	vm = require("vm"),
@@ -1599,7 +1657,7 @@ extend(Rotation.prototype, {
 	}
 
 });
-},{"./Errors/RotationError":6,"./Errors/RotationSyntaxError":7,"events":14,"util":18,"vm":13}],9:[function(require,module,exports){
+},{"./Errors/RotationError":6,"./Errors/RotationSyntaxError":7,"events":15,"util":19,"vm":14}],10:[function(require,module,exports){
 var extend = require("util")._extend;
 
 exports = module.exports = Scheduled;
@@ -1660,7 +1718,7 @@ extend(Scheduled.prototype, {
 		return time > this.maxTime;
 	},
 });
-},{"util":18}],10:[function(require,module,exports){
+},{"util":19}],11:[function(require,module,exports){
 (function (process,global){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
@@ -1765,7 +1823,7 @@ extend(Simulation.prototype, {
 
 })
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Actor":4,"./Scheduled2":9,"_process":16,"events":14,"util":18}],11:[function(require,module,exports){
+},{"./Actor":4,"./Scheduled2":10,"_process":17,"events":15,"util":19}],12:[function(require,module,exports){
 var extend = require("util")._extend,
 	inherits = require("util").inherits,
 	damageTypes = {};
@@ -1846,7 +1904,7 @@ function createCombo(skill, properties, specialProperties) {
 
 	return createSkill(properties, specialProperties);
 }
-},{"util":18}],12:[function(require,module,exports){
+},{"util":19}],13:[function(require,module,exports){
 var extend = require("util")._extend,
 	baseStatsMultiplier = {
 		weaponDamage: 1,
@@ -1994,7 +2052,7 @@ extend(Stats, {
 });
 
 Stats.useValkkyFormulas(); // defaults to Valkky formulas
-},{"util":18}],13:[function(require,module,exports){
+},{"util":19}],14:[function(require,module,exports){
 // https://github.com/substack/vm-browserify
 var indexOf = function(arr, obj) {
     return arr.indexOf(obj);
@@ -2142,7 +2200,7 @@ exports.createContext = Script.createContext = function (context) {
     return copy;
 };
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2445,7 +2503,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2470,7 +2528,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2535,14 +2593,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3132,7 +3190,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":17,"_process":16,"inherits":15}],19:[function(require,module,exports){
+},{"./support/isBuffer":18,"_process":17,"inherits":16}],20:[function(require,module,exports){
 var Rotation = require("../../Rotation"),
 	extend = require("util")._extend;
 
@@ -3143,7 +3201,7 @@ extend(Rotation.prototype, {
 		this.script.free();
 	},
 })
-},{"../../Rotation":8,"util":18}],"themonk":[function(require,module,exports){
+},{"../../Rotation":9,"util":19}],"themonk":[function(require,module,exports){
 (function (process,global){
 var util = require("util"),
 	format = util.format,
@@ -3240,7 +3298,7 @@ extend(theMonk.prototype, {
 
 });
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/Actor":4,"./lib/Simulation":10,"./lib/Stats":12,"_process":16,"events":14,"util":18}]},{},[])
+},{"./lib/Actor":4,"./lib/Simulation":11,"./lib/Stats":13,"_process":17,"events":15,"util":19}]},{},[])
 
 
 //# sourceMappingURL=themonk.js.map
