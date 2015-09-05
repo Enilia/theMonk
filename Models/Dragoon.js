@@ -1,19 +1,19 @@
-var libSkill = require('../lib/Skill'),
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Dragoon;
 
 function Dragoon() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Dragoon, Model);
 
 extend(Dragoon.prototype, {
 
@@ -34,6 +34,7 @@ extend(Dragoon.prototype, {
 			name: "HeavyThrust",
 			potency: 170,
 			damageType: damageTypes.PIERCING,
+			auras: ["HeavyThrust"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.HeavyThrust, source, time);
 			}
@@ -67,6 +68,7 @@ extend(Dragoon.prototype, {
 			name: "Disembowel",
 			potency: 220,
 			damageType: damageTypes.PIERCING,
+			auras: ["Disembowel"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.Disembowel, source, time);
 			}
@@ -80,6 +82,7 @@ extend(Dragoon.prototype, {
 			name: "ChaosThrust",
 			potency: 200,
 			damageType: damageTypes.PIERCING,
+			auras: ["ChaosThrustDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ChaosThrustDOT, source, time);
 			}
@@ -89,6 +92,7 @@ extend(Dragoon.prototype, {
 			name: "Phlebotomize",
 			potency: 170,
 			damageType: damageTypes.PIERCING,
+			auras: ["PhlebotomizeDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.PhlebotomizeDOT, source, time);
 			}
@@ -98,6 +102,7 @@ extend(Dragoon.prototype, {
 			name: "Fracture",
 			potency: 100,
 			damageType: damageTypes.PIERCING,
+			auras: ["FractureDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -111,6 +116,7 @@ extend(Dragoon.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -120,6 +126,7 @@ extend(Dragoon.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
@@ -129,6 +136,7 @@ extend(Dragoon.prototype, {
 			name: "LifeSurge",
 			recast: 90,
 			isOffGCD: true,
+			auras: ["LifeSurge"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.LifeSurge, source, time);
 			}
@@ -138,6 +146,7 @@ extend(Dragoon.prototype, {
 			name: "PowerSurge",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["PowerSurge"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.PowerSurge, source, time);
 			}

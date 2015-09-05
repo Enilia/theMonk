@@ -1,19 +1,19 @@
-var libSkill = require('../lib/Skill'),
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Combo = libSkill.createCombo,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Ninja;
 
 function Ninja() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Ninja, Model);
 
 extend(Ninja.prototype, {
 
@@ -51,6 +51,7 @@ extend(Ninja.prototype, {
 			name: "ShadowFang",
 			potency: 200,
 			damageType: damageTypes.SLASH,
+			auras: ["ShadowFangDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.ShadowFangDOT, source, time);
 			}
@@ -66,6 +67,7 @@ extend(Ninja.prototype, {
 			name: "DancingEdge",
 			potency: 260,
 			damageType: damageTypes.SLASH,
+			auras: ["DancingEdge"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.DancingEdge, source, time);
 			}
@@ -79,6 +81,7 @@ extend(Ninja.prototype, {
 			name: "Mutilate",
 			potency: 60,
 			damageType: damageTypes.SLASH,
+			auras: ["MutilateDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.MutilateDOT, source, time);
 			}
@@ -92,6 +95,7 @@ extend(Ninja.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -102,6 +106,7 @@ extend(Ninja.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
@@ -225,6 +230,7 @@ extend(Ninja.prototype, {
 			damageType: damageTypes.SLASH,
 			recast: 60,
 			isOffGCD: true,
+			auras: ["TrickAttack"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TrickAttack, source, time);
 			}

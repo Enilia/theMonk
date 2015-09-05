@@ -1,18 +1,18 @@
-var libSkill = require('../lib/Skill'),
+var Model = require('../lib/Model'),
+	libSkill = require('../lib/Skill'),
 	Skill = libSkill.createSkill,
 	Aura = require('../lib/Aura').createAura,
 	extend = require("util")._extend,
-	damageTypes = libSkill.damageTypes;
+	damageTypes = libSkill.damageTypes,
+	inherits = require("util").inherits;
 
 exports = module.exports = Monk;
 
 function Monk() {
-	var skills = this.skills;
-
-	this.skills = {};
-
-	for(var i in skills) this.skills[i] = new skills[i];
+	Model.call(this);
 }
+
+inherits(Monk, Model);
 
 extend(Monk.prototype, {
 
@@ -98,6 +98,7 @@ extend(Monk.prototype, {
 			name: "TwinSnakes",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["TwinSnakes"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.CoeurlForm, source, time);
 				source.applyAura(source.model.auras.TwinSnakes, source, time);
@@ -118,6 +119,7 @@ extend(Monk.prototype, {
 			name: "DragonKick",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["DragonKick"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 			}
@@ -127,6 +129,7 @@ extend(Monk.prototype, {
 			name: "DragonKickFlank",
 			potency: 150,
 			damageType: damageTypes.BLUNT,
+			auras: ["DragonKick"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.RaptorForm, source, time);
 				target.applyAura(source.model.auras.DragonKick, source, time);
@@ -153,6 +156,7 @@ extend(Monk.prototype, {
 			name: "Demolish",
 			potency: 30,
 			damageType: damageTypes.BLUNT,
+			auras: ["DemolishDOT"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -164,6 +168,7 @@ extend(Monk.prototype, {
 			name: "DemolishRear",
 			potency: 70,
 			damageType: damageTypes.BLUNT,
+			auras: ["DemolishDOT"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.OpoOpoForm, source, time);
 				source.applyAura(source.model.auras.GreasedLigthning, source, time);
@@ -175,6 +180,7 @@ extend(Monk.prototype, {
 			name: "TouchOfDeath",
 			potency: 20,
 			damageType: damageTypes.BLUNT,
+			auras: ["TouchOfDeathDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.TouchOfDeathDOT, source, time);
 			}
@@ -184,6 +190,7 @@ extend(Monk.prototype, {
 			name: "Fracture",
 			potency: 100,
 			damageType: damageTypes.BLUNT,
+			auras: ["FractureDOT"],
 			onUse: function(time, source, target) {
 				target.applyAura(source.model.auras.FractureDOT, source, time);
 			}
@@ -197,6 +204,7 @@ extend(Monk.prototype, {
 			name: "InternalRelease",
 			recast: 60,
 			isOffGCD: true,
+			auras: ["InternalRelease"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.InternalRelease, source, time);
 			}
@@ -224,6 +232,7 @@ extend(Monk.prototype, {
 			name: "BloodForBlood",
 			recast: 80,
 			isOffGCD: true,
+			auras: ["BloodForBlood"],
 			onUse: function(time, source, target) {
 				source.applyAura(source.model.auras.BloodForBlood, source, time);
 			}
