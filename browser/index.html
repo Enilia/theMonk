@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="js/bower_components/jquery/dist/jquery.js"></script>
 		<script type="text/javascript" src="js/bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript" src="js/bower_components/angular-resource/angular-resource.min.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 		<script type="text/javascript" src="js/controllers/actorController.js"></script>
 		<script type="text/javascript" src="js/directives/actorDirectives.js"></script>
@@ -23,7 +24,7 @@
 				<div class="rotation-helper">
 					<div class="rotation-globals"></div>
 					<div class="rotation-skills">
-						<tm-skill ng-repeat="skill in model.skills" skill="skill" model="model" click="addSkill"></tm-skill>
+						<tm-skill ng-repeat="skillInfo in skillInfos[model.name]" skill="model.skills[skillInfo.name]" skill-info="skillInfo" model="model" click="addSkill"></tm-skill>
 					</div>
 				</div>
 			</form>

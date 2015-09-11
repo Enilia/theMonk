@@ -1,7 +1,7 @@
 
 angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['$scope', 'themonk', function($scope, TheMonk) {
+	.controller('ActorController', ['$scope', 'themonk', '$resource', function($scope, TheMonk, $resource) {
 
 		$scope.models = (function() {
 			var models = [];
@@ -17,6 +17,8 @@ angular.module('themonkControllers', [])
 
 		$scope.model = $scope.models[0];
 
+		$scope.skillInfos = $resource('js/json/skillsInfos.json').get();
+
 		$scope.stats = {
 			"weaponDamage": 				0,
 			"weaponAutoAttack": 			0,
@@ -29,6 +31,6 @@ angular.module('themonkControllers', [])
 
 		$scope.addSkill = function(skill) {
 			$scope.rotation = $scope.rotation + skill.name;
-		}
+		};
 
 	}]);
