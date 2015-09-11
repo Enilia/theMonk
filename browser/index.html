@@ -22,7 +22,16 @@
 					<textarea class="rotation-area" ng-model="rotation"></textarea>
 				</div>
 				<div class="rotation-helper">
-					<div class="rotation-globals"></div>
+					<div class="rotation-globals">
+						<fieldset>
+							<legend>vars</legend>
+							<button ng-repeat="(name, infos) in rotationHelper.vars" tooltip-template="'templates/rotation-helper-tooltip.html'" tooltip-placement="left" ng-click="addVar(name, $event)">{{name}}</button>
+						</fieldset>
+						<fieldset>
+							<legend>functions</legend>
+							<button ng-repeat="(name, infos) in rotationHelper.fn" tooltip-template="'templates/rotation-helper-tooltip.html'" tooltip-placement="left" ng-click="addFn(name, infos.args, $event)">{{name}}</button>
+						</fieldset>
+					</div>
 					<div class="rotation-skills">
 						<tm-skill ng-repeat="skillInfo in skillInfos[model.name]" skill="model.skills[skillInfo.name]" skill-info="skillInfo" model="model" click="addSkill"></tm-skill>
 					</div>

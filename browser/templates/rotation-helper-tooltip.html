@@ -1,0 +1,8 @@
+<div>
+	<div>{{name}}</div>
+	<div>{{infos.desc}}</div>
+	<div ng-show="infos.args.length">
+		Arguments
+		<div ng-repeat="arg in infos.args">{{arg}}</div>
+	</div>
+</div>
