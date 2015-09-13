@@ -1,36 +1,36 @@
 {
 	"vars": {
 		"self": {
-			"desc": ""
+			"desc": "Represents yourself"
 		},
 		"target": {
-			"desc": ""
+			"desc": "Represents your target"
 		}
 	},
 	"fn": {
 		"AuraCount": {
 			"args": ["actor", "auraName", "source"],
-			"desc": ""
+			"desc": "Return the stack number of [auraName] on [actor] from a given [source]"
 		},
 		"IsReady": {
 			"args": ["skillName"],
-			"desc": ""
+			"desc": "Returns true if the skill [skillName] can be used. For combo skills, returns true if the skill is active in a combo chain"
 		},
 		"IsOffGCD": {
 			"args": [],
-			"desc": ""
+			"desc": "Returns true when the rotation is in an off GCD state"
 		},
 		"AuraTimeRemaining": {
 			"args": ["actor", "auraName", "source"],
-			"desc": ""
+			"desc": "Returns the time in seconds remaining for [auraName] on [actor] from a given [source], or 0 if the aura can't be found"
 		},
 		"GCD": {
 			"args": [],
-			"desc": ""
+			"desc": "Returns the current GCD time"
 		},
 		"CooldownRemaining": {
 			"args": ["skillName"],
-			"desc": ""
+			"desc": "Returns the time in seconds remaining before [skillName] is available"
 		}
 	}
 }
