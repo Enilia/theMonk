@@ -1,6 +1,13 @@
+
+/* actor */
+
 .actor form {
 	display: flex;
-	height: 15em;
+	flex-flow: column nowrap;
+}
+
+.actor .formactor {
+	display: flex;
 
 	transition: height 0.7s ease-out;
 	transition: overflow 0.7s ease-out;
@@ -12,18 +19,11 @@
 }
 
 .stats, .rotation, .rotation-helper {
-	flex: 1 1 30%;
+	flex: 1 1 33%;
+	padding: 1em;
 }
 
-.rotation {
-	position: relative;
-}
-
-.rotation .rotation-area {
-	position: absolute;
-	width:100%;
-	height: 100%;
-}
+/* stats */
 
 .stats span {
 	display: flex;
@@ -37,9 +37,41 @@
 	flex: 1 2 100%;
 }
 
+/* rotation */
+
+.rotation {
+	display: flex;
+}
+
+.rotation .rotation-area {
+	flex: 1;
+}
+
+/* rotation helper */
+
+.rotation-globals button {
+	margin: 0.2em;
+}
+
+.rotation-skills fieldset div {
+	display: flex;
+	flex-flow: row wrap;
+}
+
 .skill {
+	display: flex;
+	flex: 1;
+	width: 48px;
+	height:48px;
+	margin: 0.2em;
 	text-decoration:none;
 }
+
+.skill img {
+	margin:auto;
+}
+
+/* tooltip */
 
 .tooltip table {
 	width:100%;
@@ -52,6 +84,23 @@
 	text-align: center;
 	border: 1px solid #777;
 }
+
+/* submit */
+
+.submit {
+	display: flex;
+	order: 1;
+}
+
+.submit input {
+	flex:1;
+}
+
+
+
+
+
+
 
 /*.stats, .rotation, .report {
 	outline: 1px solid black;
