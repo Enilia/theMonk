@@ -16,7 +16,7 @@
 	<body ng-app="themonk">
 		<h1>The Monk</h1>
 		<div class="actor" ng-controller="ActorController">
-			<form name="formActor">
+			<form ng-submit="formActor.$valid &amp;&amp; submit()" name="formActor">
 				<div class="submit">
 					<input type="submit" value="Sim" />
 				</div>
