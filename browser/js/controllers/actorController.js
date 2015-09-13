@@ -1,7 +1,9 @@
 
 angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['$scope', 'themonk', '$resource', function($scope, TheMonk, $resource) {
+	.controller('ActorController', ['$scope', '$resource', function($scope, $resource) {
+
+		var TheMonk = require('themonk');
 
 		$scope.models = (function() {
 			var models = [];
@@ -11,9 +13,9 @@ angular.module('themonkControllers', [])
 			return models;
 		})();
 
-		$scope.name = "";
+		$scope.name = "Monk";
 
-		$scope.rotation = "";
+		$scope.rotation = "return \"BootshineRear\"";
 
 		$scope.model = $scope.models[0];
 
@@ -22,13 +24,13 @@ angular.module('themonkControllers', [])
 		$scope.rotationHelper = $resource('js/json/rotation.json').get();
 
 		$scope.stats = {
-			"weaponDamage": 				0,
-			"weaponAutoAttack": 			0,
-			"weaponAutoAttackDelay": 		0,
-			"strength": 					0,
-			"critical": 					0,
-			"determination": 				0,
-			"skillSpeed": 					0,
+			"weaponDamage": 				1,
+			"weaponAutoAttack": 			1,
+			"weaponAutoAttackDelay": 		1,
+			"strength": 					1,
+			"critical": 					1,
+			"determination": 				1,
+			"skillSpeed": 					1,
 		};
 
 		$scope.addSkill = function(skill) {
@@ -65,7 +67,7 @@ angular.module('themonkControllers', [])
 				.setMaxTime(600)
 				.run()
 				.on("progress", function(time, maxTime) {
-					console.log("%d %d", time, maxTime);
+					console.log("%d%%", parseInt(time / maxTime * 100));
 				})
 				.on("end", function(duration) {
 					console.log("done");

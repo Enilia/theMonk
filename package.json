@@ -21,15 +21,24 @@
   },
   "scripts": {
     "build": "bower install",
+
     "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
     "test-unit": "mocha",
     "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
     "test-doc": "mocha -R doc > doc.html",
     "test-watch": "mocha -wb",
-    "browserify": "browserify -r ./index.js:themonk > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs > browser/js/services/themonkAPI.js",
-    "browserify-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonk.js.map > browser/js/themonk.js && browserify -e ./lib/browser/index.js -x themonk -t brfs --debug | exorcist ./browser/js/services/themonkAPI.js.map > browser/js/services/themonkAPI.js",
-    "browserify-watch": "watchify -r ./index.js:themonk -o browser/js/themonk.js --debug --verbose"
+
+    "browserify-all": "npm run browserify-api && npm run browserify-reporter",
+    "browserify-all-debug": "npm run browserify-api-debug && npm run browserify-reporter-debug",
+
+    "browserify-api": "browserify -r ./index.js:themonk > browser/js/themonkAPI/themonk.js",
+    "browserify-reporter": "browserify -e ./lib/Reporter.js -t brfs > browser/js/themonkAPI/reporter.js",
+
+    "browserify-api-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonkAPI/themonk.js.map > browser/js/themonkAPI/themonk.js",
+    "browserify-reporter-debug": "browserify -e ./lib/Reporter.js --debug | exorcist ./browser/js/themonkAPI/reporter.js.map > browser/js/themonkAPI/reporter.js",
+
+    "browserify-api-watch": "watchify -r ./index.js:themonk -o browser/js/themonkAPI/themonk.js --debug --verbose"
   },
   "config": {
     "blanket": {
