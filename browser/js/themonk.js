@@ -3198,7 +3198,7 @@ exports = module.exports = Rotation;
 
 extend(Rotation.prototype, {
 	free: function() {
-		this.script.free();
+		this.script && this.script.free();
 	},
 })
 },{"../../Rotation":9,"util":19}],"themonk":[function(require,module,exports){
