@@ -19,4 +19,11 @@ angular.module('themonkDirectives', ['themonkServices'])
 				skillInfo: "=",
 			},
 		};
+	})
+
+	.directive('tmReport', function() {
+		return {
+			restrict:'E',
+			templateUrl:'/templates/reporter.html',
+		};
 	});

@@ -1,83 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var extend = require("util")._extend;
-
-exports = module.exports = Reporter;
-
-function Reporter(theMonk, options) {
-	theMonk.on("start", this.start.bind(this));
-	theMonk.on("progress", this.progress.bind(this));
-	theMonk.on("end", this.end.bind(this, options));
-}
-
-extend(Reporter.prototype, {
-
-	startTime: null,
-	duration: null,
-	simDuration: null,
-
-	// hook: function(theMonk) {
-	// 	theMonk.simulation.actors.forEach(this.hookActor, this);
-	// 	// else if(actors instanceof Array)
-	// 	// 	actors.forEach(this.hookActor, this);
-	// 	// else
-	// 	// 	this.hookActor(actors);
-	// },
-
-	hookActor: function(actor) {
-		actor.on(actor.events.autoattack, this.registerAutoattack.bind(this, actor.name));
-		actor.on(actor.events.skill, this.registerSkill.bind(this, actor.name));
-		actor.on(actor.events.auraApply, this.registerAuraApply.bind(this, actor.name));
-		actor.on(actor.events.auraTick, this.registerAuraTick.bind(this, actor.name));
-		actor.on(actor.events.auraRefresh, this.registerAuraRefresh.bind(this, actor.name));
-		actor.on(actor.events.auraExpire, this.registerAuraExpire.bind(this, actor.name));
-	},
-
-	start: function(actors) {
-		actors.forEach(this.hookActor, this);
-		this.startTime = Date.now();
-	},
-
-	progress: function(time, maxTime) {
-
-	},
-
-	end: function(options, simDuration) {
-		this.duration = Date.now() - this.startTime;
-		this.simDuration = simDuration;
-		this.report(options);
-	},
-
-	reportOptions: {},
-
-	report: function() {
-
-	},
-
-	registerAutoattack: function(actorName, damage, critical, time) {
-
-	},
-
-	registerSkill: function(actorName, damage, critical, skillName, time) {
-
-	},
-
-	registerAuraApply: function(actorName, auraName, time) {
-
-	},
-
-	registerAuraTick: function(actorName, damage, critical, auraName, time) {
-
-	},
-
-	registerAuraRefresh: function(actorName, auraName, time) {
-
-	},
-
-	registerAuraExpire: function(actorName, auraName, isExpired, time) {
-
-	},
-});
-},{"util":5}],2:[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -102,7 +23,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -167,14 +88,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -764,7 +685,95 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":4,"_process":3,"inherits":2}]},{},[1])
+},{"./support/isBuffer":3,"_process":2,"inherits":1}],"reporter":[function(require,module,exports){
+var extend = require("util")._extend,
+	inherits = require("util").inherits;
+
+exports = module.exports = Reporter;
+
+function Reporter(theMonk, options) {
+	theMonk.on("start", this.start.bind(this));
+	theMonk.on("progress", this.progress.bind(this));
+	theMonk.on("end", this.end.bind(this, options));
+}
+
+extend(Reporter.prototype, {
+
+	startTime: null,
+	duration: null,
+	simDuration: null,
+
+	// hook: function(theMonk) {
+	// 	theMonk.simulation.actors.forEach(this.hookActor, this);
+	// 	// else if(actors instanceof Array)
+	// 	// 	actors.forEach(this.hookActor, this);
+	// 	// else
+	// 	// 	this.hookActor(actors);
+	// },
+
+	hookActor: function(actor) {
+		actor.on(actor.events.autoattack, this.registerAutoattack.bind(this, actor.name));
+		actor.on(actor.events.skill, this.registerSkill.bind(this, actor.name));
+		actor.on(actor.events.auraApply, this.registerAuraApply.bind(this, actor.name));
+		actor.on(actor.events.auraTick, this.registerAuraTick.bind(this, actor.name));
+		actor.on(actor.events.auraRefresh, this.registerAuraRefresh.bind(this, actor.name));
+		actor.on(actor.events.auraExpire, this.registerAuraExpire.bind(this, actor.name));
+	},
+
+	start: function(actors) {
+		actors.forEach(this.hookActor, this);
+		this.startTime = Date.now();
+	},
+
+	progress: function(time, maxTime) {
+
+	},
+
+	end: function(options, simDuration) {
+		this.duration = Date.now() - this.startTime;
+		this.simDuration = simDuration;
+		this.report(options);
+	},
+
+	reportOptions: {},
+
+	report: function() {
+
+	},
+
+	registerAutoattack: function(actorName, damage, critical, time) {
+
+	},
+
+	registerSkill: function(actorName, damage, critical, skillName, time) {
+
+	},
+
+	registerAuraApply: function(actorName, auraName, time) {
+
+	},
+
+	registerAuraTick: function(actorName, damage, critical, auraName, time) {
+
+	},
+
+	registerAuraRefresh: function(actorName, auraName, time) {
+
+	},
+
+	registerAuraExpire: function(actorName, auraName, isExpired, time) {
+
+	},
+});
+
+extend(Reporter, {
+	createReporter: function(construtor, proto) {
+		inherits(construtor, Reporter);
+		extend(construtor.prototype, proto);
+		return construtor;
+	},
+});
+},{"util":4}]},{},[])
 
 
 //# sourceMappingURL=reporter.js.map

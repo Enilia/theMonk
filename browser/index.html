@@ -12,13 +12,14 @@
 		<script type="text/javascript" src="js/directives/actorDirectives.js"></script>
 		<script type="text/javascript" src="js/services/themonkServices.js"></script>
 		<script type="text/javascript" src="js/themonkAPI/themonk.js"></script>
+		<script type="text/javascript" src="js/themonkAPI/reporter.js"></script>
 	</head>
 	<body ng-app="themonk">
 		<h1>The Monk</h1>
 		<div class="actor" ng-controller="ActorController">
 			<form ng-submit="formActor.$valid &amp;&amp; submit()" name="formActor">
 				<div class="submit">
-					<input type="submit" value="Sim" />
+					<input type="submit" value="Sim ({{progress}}%)" />
 				</div>
 				<div class="formactor">
 					<tm-actor-stats></tm-actor-stats>
@@ -49,6 +50,7 @@
 			</form>
 		
 			<div class="report">
+				<tm-report reporter="reporter"></tm-report>
 			</div>
 		</div>
 	</body>

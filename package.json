@@ -33,10 +33,10 @@
     "browserify-all-debug": "npm run browserify-api-debug && npm run browserify-reporter-debug",
 
     "browserify-api": "browserify -r ./index.js:themonk > browser/js/themonkAPI/themonk.js",
-    "browserify-reporter": "browserify -e ./lib/Reporter.js -t brfs > browser/js/themonkAPI/reporter.js",
+    "browserify-reporter": "browserify -r ./lib/Reporter.js:reporter -t brfs > browser/js/themonkAPI/reporter.js",
 
     "browserify-api-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonkAPI/themonk.js.map > browser/js/themonkAPI/themonk.js",
-    "browserify-reporter-debug": "browserify -e ./lib/Reporter.js --debug | exorcist ./browser/js/themonkAPI/reporter.js.map > browser/js/themonkAPI/reporter.js",
+    "browserify-reporter-debug": "browserify -r ./lib/Reporter.js:reporter --debug | exorcist ./browser/js/themonkAPI/reporter.js.map > browser/js/themonkAPI/reporter.js",
 
     "browserify-api-watch": "watchify -r ./index.js:themonk -o browser/js/themonkAPI/themonk.js --debug --verbose"
   },

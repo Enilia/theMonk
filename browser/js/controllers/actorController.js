@@ -1,7 +1,7 @@
 
 angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['$scope', '$resource', function($scope, $resource) {
+	.controller('ActorController', ['$scope', '$resource', 'webReporter', function($scope, $resource, webReporter) {
 
 		var TheMonk = require('themonk');
 
@@ -33,6 +33,8 @@ angular.module('themonkControllers', [])
 			"skillSpeed": 					1,
 		};
 
+		$scope.progress = 0;
+
 		$scope.addSkill = function(skill) {
 			$scope.rotation = $scope.rotation + '"' + skill.name + '"';
 		};
@@ -48,30 +50,35 @@ angular.module('themonkControllers', [])
 		};
 
 		$scope.submit = function() {
-			new TheMonk().on("error", function(e) {
-					switch(e.name) {
-						case "RotationError":
-						case "RotationSyntaxError":
-							console.error(e.stack);
-							console.error(e.error.stack);
-							break;
-						default:
-							console.error(e.stack);
-					}
-					throw e;
-				})
-				.on("warn", function(warn) {
-					console.warn(warn);
-				})
-				.addActor($scope.model.name, $scope.name, $scope.stats, $scope.rotation)
-				.setMaxTime(600)
-				.run()
-				.on("progress", function(time, maxTime) {
-					console.log("%d%%", parseInt(time / maxTime * 100));
-				})
-				.on("end", function(duration) {
-					console.log("done");
-				});
+			$scope.done = false;
+			$scope.reporter = webReporter(
+					new TheMonk().on("error", function(e) {
+						switch(e.name) {
+							case "RotationError":
+							case "RotationSyntaxError":
+								console.error(e.stack);
+								console.error(e.error.stack);
+								break;
+							default:
+								console.error(e.stack);
+						}
+						throw e;
+					})
+					.on("warn", function(warn) {
+						console.warn(warn);
+					})
+					.addActor($scope.model.name, $scope.name, $scope.stats, $scope.rotation)
+					.setMaxTime(600)
+					.run()
+					.on("progress", function(time, maxTime) {
+						$scope.progress = parseInt(time / maxTime * 100);
+						$scope.$apply();
+					})
+					.on("end", function(duration) {
+						$scope.done = true;
+						$scope.$apply();
+					})
+				);
 		};
 
 	}]);
