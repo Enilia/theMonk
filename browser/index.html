@@ -16,42 +16,6 @@
 	</head>
 	<body ng-app="themonk">
 		<h1>The Monk</h1>
-		<div class="actor" ng-controller="ActorController">
-			<form ng-submit="formActor.$valid &amp;&amp; submit()" name="formActor">
-				<div class="submit">
-					<input type="submit" value="Sim ({{progress}}%)" />
-				</div>
-				<div class="formactor">
-					<tm-actor-stats></tm-actor-stats>
-					<div class="rotation">
-						<textarea class="rotation-area" ng-model="rotation"></textarea>
-					</div>
-					<div class="rotation-helper">
-						<div class="rotation-globals" ng-cloak>
-							<fieldset>
-								<legend>vars</legend>
-								<button ng-repeat="(name, infos) in rotationHelper.vars" tooltip-template="'templates/rotation-helper-tooltip.html'" tooltip-placement="left" ng-click="addVar(name, $event)">{{name}}</button>
-							</fieldset>
-							<fieldset>
-								<legend>functions</legend>
-								<button ng-repeat="(name, infos) in rotationHelper.fn" tooltip-template="'templates/rotation-helper-tooltip.html'" tooltip-placement="left" ng-click="addFn(name, infos.args, $event)">{{name}}</button>
-							</fieldset>
-						</div>
-						<div class="rotation-skills">
-							<fieldset>
-								<legend>skills</legend>
-								<div>
-									<tm-skill ng-repeat="skillInfo in skillInfos[model.name]" skill="model.skills[skillInfo.name]" skill-info="skillInfo" model="model" click="addSkill"></tm-skill>
-								<div>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</form>
-		
-			<div class="report">
-				<tm-report reporter="reporter"></tm-report>
-			</div>
-		</div>
+		<tm-actor></tm-actor>
 	</body>
 </html>

@@ -1,0 +1,14 @@
+<div class="actor">
+	<form ng-submit="formActor.$valid &amp;&amp; submit()" name="formActor">
+		<div class="submit">
+			<input type="submit" value="Sim ({{progress}}%)" />
+		</div>
+		<div class="formactor">
+			<tm-actor-stats model="model" name="name" stats="stats"></tm-actor-stats>
+			<tm-rotation></tm-rotation>
+			<tm-rotation-helper></tm-rotation-helper>
+		</div>
+	</form>
+
+	<tm-report reporter="reporter"></tm-report>
+</div>

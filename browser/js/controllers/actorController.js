@@ -1,27 +1,15 @@
 
 angular.module('themonkControllers', [])
 
-	.controller('ActorController', ['$scope', '$resource', 'webReporter', function($scope, $resource, webReporter) {
+	.controller('ActorController', ['$scope', 'webReporter', function ActorController($scope, webReporter) {
 
 		var TheMonk = require('themonk');
-
-		$scope.models = (function() {
-			var models = [];
-			for(var model in TheMonk.models)
-				models.push(new TheMonk.models[model]);
-
-			return models;
-		})();
 
 		$scope.name = "Monk";
 
 		$scope.rotation = "return \"BootshineRear\"";
 
-		$scope.model = $scope.models[0];
-
-		$scope.skillInfos = $resource('js/json/skillsInfos.json').get();
-
-		$scope.rotationHelper = $resource('js/json/rotation.json').get();
+		$scope.model = null;
 
 		$scope.stats = {
 			"weaponDamage": 				1,
@@ -80,5 +68,39 @@ angular.module('themonkControllers', [])
 					})
 				);
 		};
+
+	}])
+
+	.controller('ActorStatsController', ['$scope', function ActorStatsController($scope) {
+
+		var TheMonk = require('themonk');
+
+		$scope.models = (function() {
+			var models = [];
+			for(var model in TheMonk.models)
+				models.push(new TheMonk.models[model]);
+
+			return models;
+		})();
+
+		$scope.model = $scope.models[0];
+
+		$scope.labels = {
+			"weaponDamage": 				"Weapon Damage",
+			"weaponAutoAttack": 			"Weapon Auto Attack",
+			"weaponAutoAttackDelay": 		"Weapon Auto Attack Delay",
+			"strength": 					"Strength",
+			"critical": 					"Critical",
+			"determination": 				"Determination",
+			"skillSpeed": 					"Skill Speed",
+		};
+
+	}])
+
+	.controller('ActorRotationHelperController', ['$scope', '$resource', function ActorRotationHelperController($scope, $resource) {
+
+		$scope.skillInfos = $resource('js/json/skillsInfos.json').get();
+
+		$scope.rotationHelper = $resource('js/json/rotation.json').get();
 
 	}]);

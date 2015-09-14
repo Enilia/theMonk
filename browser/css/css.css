@@ -18,32 +18,33 @@
 	overflow: hidden;
 }
 
-.stats, .rotation, .rotation-helper {
+tm-actor-stats, tm-rotation, tm-rotation-helper {
 	flex: 1 1 33%;
 	padding: 1em;
 }
 
 /* stats */
 
-.stats span {
+.stats label {
 	display: flex;
 }
 
-.stats span label {
-	flex: 1 1 100%;
+.stats label span {
+	flex: 1 2 100%;
 }
 
-.stats span input, .stats span select {
-	flex: 1 2 100%;
+.stats label input, .stats label select {
+	flex: 1 3 100%;
+	font-weight: normal;
 }
 
 /* rotation */
 
-.rotation {
+tm-rotation, .rotation {
 	display: flex;
 }
 
-.rotation .rotation-area {
+.rotation, .rotation .rotation-area {
 	flex: 1;
 }
 

@@ -1,14 +1,45 @@
 
 angular.module('themonkDirectives', ['themonkServices'])
 
-	.directive('tmActorStats', function() {
+	.directive('tmActor', function tmActorDirective() {
 		return {
 			restrict:'E',
-			templateUrl:'/templates/actor-stats.html',
+			templateUrl:'/templates/actor.html',
+			controller:'ActorController',
+			scope:true,
 		};
 	})
 
-	.directive('tmSkill', function() {
+	.directive('tmActorStats', function tmActorStatsDirective() {
+		return {
+			restrict:'E',
+			templateUrl:'/templates/actor-stats.html',
+			controller:'ActorStatsController',
+			scope:{
+				model:'=',
+				name:'=',
+				stats:'=',
+			},
+		};
+	})
+
+	.directive('tmRotation', function tmRotationDirective() {
+		return {
+			restrict:'E',
+			templateUrl:'/templates/rotation.html',
+		};
+	})
+
+	.directive('tmRotationHelper', function tmRotationHelperDirective() {
+		return {
+			restrict:'E',
+			templateUrl:'/templates/rotation-helper.html',
+			controller:'ActorRotationHelperController',
+			scope:true,
+		};
+	})
+
+	.directive('tmSkill', function tmSkillDirective() {
 		return {
 			restrict:'E',
 			templateUrl:'/templates/skill.html',
@@ -21,7 +52,7 @@ angular.module('themonkDirectives', ['themonkServices'])
 		};
 	})
 
-	.directive('tmReport', function() {
+	.directive('tmReport', function tmReportDirective() {
 		return {
 			restrict:'E',
 			templateUrl:'/templates/reporter.html',

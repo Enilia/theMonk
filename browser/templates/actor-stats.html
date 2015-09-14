@@ -1,40 +1,16 @@
-
 <div class="stats">
-	<span>
-		<label>Name</label>
+	<label>
+		<span>Name</span>
 		<input required type="text" class="name" ng-model="name" />
-	</span>
-	<span>
-		<label>Model</label>
+	</label>
+	<label>
+		<span>Model</span>
 		<select required class="model" ng-model="model" ng-options="model.name for model in models">
 		</select>
-	</span>
-	<span>
-		<label>Weapon Damage</label>
-		<input required type="number" class="weaponDamage" ng-model="stats.weaponDamage" />
-	</span>
-	<span>
-		<label>Weapon Auto Attack</label>
-		<input required type="number" class="weaponAutoAttack" ng-model="stats.weaponAutoAttack" />
-	</span>
-	<span>
-		<label>Weapon Auto Attack Delay</label>
-		<input required type="number" class="weaponAutoAttackDelay" ng-model="stats.weaponAutoAttackDelay" />
-	</span>
-	<span>
-		<label>Strength</label>
-		<input required type="number" class="strength" ng-model="stats.strength" />
-	</span>
-	<span>
-		<label>Critical</label>
-		<input required type="number" class="critical" ng-model="stats.critical" />
-	</span>
-	<span>
-		<label>Determination</label>
-		<input required type="number" class="determination" ng-model="stats.determination" />
-	</span>
-	<span>
-		<label>Skill Speed</label>
-		<input required type="number" class="skillSpeed" ng-model="stats.skillSpeed" />
-	</span>
+	</label>
+
+	<label ng-repeat="(name, stat) in stats">
+		<span>{{labels[name]}}</span>
+		<input required type="number" ng-model="stats[name]" />
+	</label>
 </div>
