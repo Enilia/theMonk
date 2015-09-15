@@ -2181,8 +2181,10 @@ Script.prototype.free = function () {
 
 forEach(["runInContext","runInThisContext","runInNewContext"], function (name) {
     exports[name] = Script[name] = function (code) {
-        var s = Script(code);
-        return s[name].apply(s, [].slice.call(arguments, 1));
+        var s = Script(code),
+            res = s[name].apply(s, [].slice.call(arguments, 1));
+        s.free();
+        return res;
     };
 });
 
