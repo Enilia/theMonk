@@ -9,8 +9,6 @@ angular.module('themonkControllers', [])
 
 		$scope.rotation = "return \"BootshineRear\"";
 
-		$scope.model = null;
-
 		$scope.stats = {
 			"weaponDamage": 				1,
 			"weaponAutoAttack": 			1,
@@ -23,24 +21,11 @@ angular.module('themonkControllers', [])
 
 		$scope.progress = 0;
 
-		$scope.addSkill = function(skill) {
-			$scope.rotation = $scope.rotation + '"' + skill.name + '"';
-		};
-
-		$scope.addVar = function(variable, $event) {
-			$event.preventDefault();
-			$scope.rotation = $scope.rotation + variable;
-		};
-
-		$scope.addFn = function(fn, args, $event) {
-			$event.preventDefault();
-			$scope.rotation = $scope.rotation + fn + "(" + args.join(", ") + ")";
-		};
-
 		$scope.submit = function() {
 			$scope.done = false;
 			$scope.reporter = webReporter(
 					new TheMonk().on("error", function(e) {
+						console.log(e.name);
 						switch(e.name) {
 							case "RotationError":
 							case "RotationSyntaxError":
@@ -102,5 +87,19 @@ angular.module('themonkControllers', [])
 		$scope.skillInfos = $resource('js/json/skillsInfos.json').get();
 
 		$scope.rotationHelper = $resource('js/json/rotation.json').get();
+
+		$scope.addSkill = function(skill) {
+			$scope.rotation = $scope.rotation + '"' + skill.name + '"';
+		};
+
+		$scope.addVar = function(variable, $event) {
+			$event.preventDefault();
+			$scope.rotation = $scope.rotation + variable;
+		};
+
+		$scope.addFn = function(fn, args, $event) {
+			$event.preventDefault();
+			$scope.rotation = $scope.rotation + fn + "(" + args.join(", ") + ")";
+		};
 
 	}]);

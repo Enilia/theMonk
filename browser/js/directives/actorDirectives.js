@@ -27,6 +27,9 @@ angular.module('themonkDirectives', ['themonkServices'])
 		return {
 			restrict:'E',
 			templateUrl:'/templates/rotation.html',
+			scope:{
+				rotation:'=',
+			}
 		};
 	})
 
@@ -35,7 +38,10 @@ angular.module('themonkDirectives', ['themonkServices'])
 			restrict:'E',
 			templateUrl:'/templates/rotation-helper.html',
 			controller:'ActorRotationHelperController',
-			scope:true,
+			scope:{
+				rotation:'=',
+				model:'=',
+			},
 		};
 	})
 
