@@ -21,23 +21,19 @@
   },
   "scripts": {
     "build": "bower install",
-
+    "start": "http-server ./browser",
     "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
     "test-unit": "mocha",
     "test-coverage": "mocha -R html-cov -r blanket > coverage.html",
     "test-doc": "mocha -R doc > doc.html",
     "test-watch": "mocha -wb",
-
     "browserify-all": "npm run browserify-api && npm run browserify-reporter",
     "browserify-all-debug": "npm run browserify-api-debug && npm run browserify-reporter-debug",
-
     "browserify-api": "browserify -r ./index.js:themonk > browser/js/themonkAPI/themonk.js",
     "browserify-reporter": "browserify -r ./lib/Reporter.js:reporter -t brfs > browser/js/themonkAPI/reporter.js",
-
     "browserify-api-debug": "browserify -r ./index.js:themonk --debug | exorcist ./browser/js/themonkAPI/themonk.js.map > browser/js/themonkAPI/themonk.js",
     "browserify-reporter-debug": "browserify -r ./lib/Reporter.js:reporter --debug | exorcist ./browser/js/themonkAPI/reporter.js.map > browser/js/themonkAPI/reporter.js",
-
     "browserify-api-watch": "watchify -r ./index.js:themonk -o browser/js/themonkAPI/themonk.js --debug --verbose"
   },
   "config": {
@@ -54,6 +50,7 @@
     "brfs": "^1.2.0",
     "browserify": "^5.12.1",
     "exorcist": "^0.1.6",
+    "http-server": "^0.8.0",
     "mocha": "^1.21.4",
     "watchify": "^1.0.6"
   },
