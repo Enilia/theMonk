@@ -66,13 +66,9 @@ angular.module('themonkControllers', [])
 
 		var TheMonk = require('themonk');
 
-		$scope.models = (function() {
-			var models = [];
-			for(var model in TheMonk.models)
-				models.push(new TheMonk.models[model]);
-
-			return models;
-		})();
+		angular.forEach(TheMonk.models, function(model) {
+			this.push(new model);
+		}, $scope.models = []);
 
 		$scope.$parent.model = $scope.models[0];
 
