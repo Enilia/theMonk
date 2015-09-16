@@ -20,7 +20,7 @@
     "node": ">= 0.4.x"
   },
   "scripts": {
-    "build": "bower install && npm run browserify-all-debug",
+    "install": "bower install && npm run browserify-all-debug",
     "start": "http-server ./browser",
     "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
