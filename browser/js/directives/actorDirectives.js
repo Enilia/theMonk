@@ -15,11 +15,7 @@ angular.module('themonkDirectives', ['themonkServices'])
 			restrict:'E',
 			templateUrl:'/templates/actor-stats.html',
 			controller:'ActorStatsController',
-			scope:{
-				model:'=',
-				name:'=',
-				stats:'=',
-			},
+			scope:true,
 		};
 	})
 
@@ -27,9 +23,7 @@ angular.module('themonkDirectives', ['themonkServices'])
 		return {
 			restrict:'E',
 			templateUrl:'/templates/rotation.html',
-			scope:{
-				rotation:'=',
-			}
+			scope:true,
 		};
 	})
 
@@ -38,10 +32,7 @@ angular.module('themonkDirectives', ['themonkServices'])
 			restrict:'E',
 			templateUrl:'/templates/rotation-helper.html',
 			controller:'ActorRotationHelperController',
-			scope:{
-				rotation:'=',
-				model:'=',
-			},
+			scope:true,
 		};
 	})
 
@@ -49,12 +40,9 @@ angular.module('themonkDirectives', ['themonkServices'])
 		return {
 			restrict:'E',
 			templateUrl:'/templates/skill.html',
-			scope: {
-				skill: "=",
-				model: "=",
-				click: "=",
-				skillInfo: "=",
-			},
+			link:function tmSkillLink (scope) {
+				scope.skill = scope.model.skills[scope.skillInfo.name];
+			}
 		};
 	})
 

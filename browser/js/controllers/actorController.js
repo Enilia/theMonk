@@ -21,7 +21,11 @@ angular.module('themonkControllers', [])
 
 		$scope.progress = 0;
 
-		$scope.submit = function() {
+		$scope.appendRotation = function appendRotation (rotation) {
+			$scope.rotation += rotation;
+		}
+
+		$scope.submit = function Submit() {
 			$scope.done = false;
 			$scope.reporter = webReporter(
 					new TheMonk().on("error", function(e) {
@@ -68,7 +72,7 @@ angular.module('themonkControllers', [])
 			return models;
 		})();
 
-		$scope.model = $scope.models[0];
+		$scope.$parent.model = $scope.models[0];
 
 		$scope.labels = {
 			"weaponDamage": 				"Weapon Damage",
@@ -89,17 +93,17 @@ angular.module('themonkControllers', [])
 		$scope.rotationHelper = $resource('js/json/rotation.json').get();
 
 		$scope.addSkill = function(skill) {
-			$scope.rotation = $scope.rotation + '"' + skill.name + '"';
+			$scope.appendRotation('"' + skill.name + '"');
 		};
 
 		$scope.addVar = function(variable, $event) {
-			$event.preventDefault();
-			$scope.rotation = $scope.rotation + variable;
+			$event.preventDefault(); // prevents form submission
+			$scope.appendRotation(variable);
 		};
 
 		$scope.addFn = function(fn, args, $event) {
-			$event.preventDefault();
-			$scope.rotation = $scope.rotation + fn + "(" + args.join(", ") + ")";
+			$event.preventDefault(); // prevents form submission
+			$scope.appendRotation(fn + "(" + args.join(", ") + ")");
 		};
 
 	}]);

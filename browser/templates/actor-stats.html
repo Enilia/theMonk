@@ -5,7 +5,7 @@
 	</label>
 	<label>
 		<span>Model</span>
-		<select required class="model" ng-model="model" ng-options="model.name for model in models">
+		<select required class="model" ng-model="$parent.model" ng-options="model.name for model in models">
 		</select>
 	</label>
 
