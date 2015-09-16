@@ -23,11 +23,15 @@ angular.module('themonkControllers', [])
 
 		$scope.simLength = 60;
 
+		$scope.done = true;
+
 		$scope.appendRotation = function appendRotation (rotation) {
 			$scope.rotation += rotation;
 		}
 
 		$scope.submit = function Submit() {
+			if(!$scope.formActor.$valid || !$scope.done) return;
+			
 			$scope.done = false;
 			$scope.reporter = webReporter(
 					new TheMonk()
