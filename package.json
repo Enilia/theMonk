@@ -21,7 +21,7 @@
   },
   "scripts": {
     "install": "bower install && npm run browserify-all-debug",
-    "start": "http-server ./browser",
+    "start": "http-server ./browser -c-1",
     "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
     "test-unit": "mocha",
