@@ -12,6 +12,13 @@ angular.module('themonkServices', [])
 				this.rotation = [];
 				this.actors = {};
 			}, {
+
+				damageList: null,
+				criticalList: null,
+				skillList: null,
+				rotation: null,
+				actors: null,
+				
 				registerAutoattack: function(actorName, damage, critical, time) {
 					this.registerSkill(actorName, damage, critical, {name: "autoattack"}, time, "autoattack");
 				},
