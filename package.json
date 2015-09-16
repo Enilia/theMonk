@@ -20,7 +20,7 @@
     "node": ">= 0.4.x"
   },
   "scripts": {
-    "build": "bower install",
+    "build": "bower install && npm run browserify-all-debug",
     "start": "http-server ./browser",
     "test": "npm run test-unit",
     "posttest": "npm run test-coverage && npm run test-doc",
@@ -43,12 +43,12 @@
     }
   },
   "dependencies": {
-    "commander": "2.0.0"
+    "commander": "2.0.0",
+    "browserify": "^5.12.1"
   },
   "devDependencies": {
     "blanket": "^1.1.6",
     "brfs": "^1.2.0",
-    "browserify": "^5.12.1",
     "exorcist": "^0.1.6",
     "http-server": "^0.8.0",
     "mocha": "^1.21.4",
