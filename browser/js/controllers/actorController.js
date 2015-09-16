@@ -30,35 +30,43 @@ angular.module('themonkControllers', [])
 		$scope.submit = function Submit() {
 			$scope.done = false;
 			$scope.reporter = webReporter(
-					new TheMonk().on("error", function(e) {
-						console.log(e.name);
-						switch(e.name) {
-							case "RotationError":
-							case "RotationSyntaxError":
-								console.error(e.stack);
-								console.error(e.error.stack);
-								break;
-							default:
-								console.error(e.stack);
-						}
-						throw e;
-					})
-					.on("warn", function(warn) {
-						console.warn(warn);
-					})
-					.on("progress", function(time, maxTime) {
-						$scope.progress = parseInt(time / maxTime * 100);
-						$scope.$apply();
-					})
+					new TheMonk()
+					.on("error", simError)
+					.on("warn", simWarn)
+					.on("progress", simProgress)
 					.addActor($scope.model.name, $scope.name, $scope.stats, $scope.rotation)
 					.setMaxTime($scope.simLength)
 					.run()
 				)
-				.on("end", function(duration) {
-					$scope.done = true;
-					$scope.$apply();
-				});
+				.on("end", simEnd);
 		};
+
+		function simError(error) {
+			switch(error.name) {
+				case "RotationError":
+				case "RotationSyntaxError":
+					console.error(error.stack);
+					console.error(error.error.stack);
+					break;
+				default:
+					console.error(error.stack);
+			}
+			throw error;
+		}
+
+		function simWarn(warn) {
+			console.warn(warn);
+		}
+
+		function simProgress (time, maxTime) {
+			$scope.progress = parseInt(time / maxTime * 100);
+			$scope.$apply();
+		}
+
+		function simEnd (duration) {
+			$scope.done = true;
+			$scope.$apply();
+		}
 
 	}])
 
@@ -90,16 +98,16 @@ angular.module('themonkControllers', [])
 
 		$scope.rotationHelper = $resource('js/json/rotation.json').get();
 
-		$scope.addSkill = function(skill) {
+		$scope.addSkill = function addSkill(skill) {
 			$scope.appendRotation('"' + skill.name + '"');
 		};
 
-		$scope.addVar = function(variable, $event) {
+		$scope.addVar = function addVar(variable, $event) {
 			$event.preventDefault(); // prevents form submission
 			$scope.appendRotation(variable);
 		};
 
-		$scope.addFn = function(fn, args, $event) {
+		$scope.addFn = function addFn(fn, args, $event) {
 			$event.preventDefault(); // prevents form submission
 			$scope.appendRotation(fn + "(" + args.join(", ") + ")");
 		};
