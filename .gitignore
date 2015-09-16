@@ -82,5 +82,6 @@ coverage.html
 doc.html
 _index.js
 Rotations/MNK_115_BIS.stats.json
-browser/js/themonkAPI/*
+browser/js/themonkAPI/*.js
+browser/js/themonkAPI/*.map
 browser/images/action
