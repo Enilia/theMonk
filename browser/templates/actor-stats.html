@@ -1,16 +1,29 @@
 <div class="stats">
-	<label>
-		<span>Name</span>
-		<input required type="text" class="name" ng-model="name" />
-	</label>
-	<label>
-		<span>Model</span>
-		<select required class="model" ng-model="$parent.model" ng-options="model.name for model in models">
-		</select>
-	</label>
+	<fieldset>
+		<legend>Stats</legend>
 
-	<label ng-repeat="(name, stat) in stats">
-		<span>{{labels[name]}}</span>
-		<input required type="number" ng-model="stats[name]" />
-	</label>
+		<label>
+			<span>Name</span>
+			<input required type="text" class="name" ng-model="name" />
+		</label>
+
+		<label>
+			<span>Model</span>
+			<select required class="model" ng-model="$parent.model" ng-options="model.name for model in models">
+			</select>
+		</label>
+
+		<label ng-repeat="(name, stat) in stats">
+			<span>{{labels[name]}}</span>
+			<input required type="number" ng-model="stats[name]" />
+		</label>
+	</fieldset>
+	<fieldset>
+		<legend>Config</legend>
+		
+		<label>
+			<span>Duration</span>
+			<input required type="number" ng-model="$parent.simDuration" />
+		</label>
+	</fieldset>
 </div>

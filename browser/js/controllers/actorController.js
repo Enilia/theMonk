@@ -21,6 +21,8 @@ angular.module('themonkControllers', [])
 
 		$scope.progress = 0;
 
+		$scope.simDuration = 60;
+
 		$scope.appendRotation = function appendRotation (rotation) {
 			$scope.rotation += rotation;
 		}
@@ -45,7 +47,7 @@ angular.module('themonkControllers', [])
 						console.warn(warn);
 					})
 					.addActor($scope.model.name, $scope.name, $scope.stats, $scope.rotation)
-					.setMaxTime(600)
+					.setMaxTime($scope.simDuration)
 					.run()
 					.on("progress", function(time, maxTime) {
 						$scope.progress = parseInt(time / maxTime * 100);
