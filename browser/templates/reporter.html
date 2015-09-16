@@ -1,6 +1,15 @@
 <div class="report">
 	{{reporter.rotation.length}}
 	<div ng-if="done">
-		{{reporter.rotation}}
+	<tabset>
+		<tab>
+			<tab-heading>Summary</tab-heading>
+			<div>Fight length : {{reporter.simDuration | number}}s</div>
+			<div>Sim length : {{reporter.duration / 1000 | number}}s</div>
+			<div>DPS : {{reporter.dps | number}}</div>
+			<div>CC : {{reporter.cc | number}}%</div>
+		</tab>
+	</tabset>
+		
 	</div>
 </div>

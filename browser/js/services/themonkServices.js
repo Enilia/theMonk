@@ -18,7 +18,10 @@ angular.module('themonkServices', [])
 				skillList: null,
 				rotation: null,
 				actors: null,
-				
+
+				dps: 0,
+				cc: 0,
+
 				registerAutoattack: function(actorName, damage, critical, time) {
 					this.registerSkill(actorName, damage, critical, {name: "autoattack"}, time, "autoattack");
 				},
@@ -46,6 +49,18 @@ angular.module('themonkServices', [])
 				registerAuraExpire: function(actorName, aura, isExpired, time) {
 					this.rotation.push([time, actorName, 0, 0, (isExpired ? "auraexpire:" : "auracancel:")+aura.name, "auraexpire"]);
 				},
+
+				report: function report (options) {
+					function sum(array) {
+						return array.reduce(function(p,c) {
+							return p+c;
+						});
+					}
+
+					this.dps = sum(this.damageList) / this.simDuration;
+
+					this.cc = sum(this.criticalList) / this.criticalList.length * 100;
+				}
 			});
 
 		return function(mnkInstance, reporterOptions) {
